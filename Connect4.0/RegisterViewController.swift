@@ -35,8 +35,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     func iniArrayTextField(){
         arrTextField = [String]()
         
-        for i in 0 ..< 8 {
-            print(i)
+        for _ in 0 ..< 8 {
             arrTextField.append("")
         }
     }
@@ -80,6 +79,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         if arrCellData[indexPath.row].cell == 7 {
             let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
+            cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
             return cell
         }else{
             let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
@@ -104,9 +104,13 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
             if !arrTextField[indexPath.row].isEmpty {
                 cell.inputData.text = arrTextField[indexPath.row]
             }
-            print(arrTextField)
+            
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
     
     func datePickerValueChanged(sender:UIDatePicker) {
@@ -117,8 +121,26 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         dateTextField.text = dateFormatter.string(from: sender.date)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if getPosition(textField) == 4 {
+            if let selectedRange = textField.selectedTextRange {
+                // get cursor position of text field
+                let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: selectedRange.start);
+                let resultString:String = textField.text! + "-"
+                
+                switch cursorPosition {
+                case 3:
+                    textField.text = resultString
+                    break
+                case 8:
+                    textField.text = resultString
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        return true
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -140,10 +162,14 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        arrTextField[getPosition(textField)] = textField.text!
+    }
+    
+    func getPosition(_ textField: UITextField) -> Int{
         let pointInTable = textField.convert(textField.bounds.origin, to: registerTableView)
         let textFieldIndexPath = registerTableView.indexPathForRow(at: pointInTable)
         
-        arrTextField[(textFieldIndexPath?.row)!] = textField.text!
+        return (textFieldIndexPath?.row)!
     }
     
     func addDoneOnKeyBoard() -> UIToolbar {
@@ -162,5 +188,61 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         registerTableView.contentOffset = CGPoint(x: registerTableView.contentOffset.x , y: 0)
     }
     
+    func doRegister() {
+        let screenName:String = "\(arrTextField[1]) \(arrTextField[2])"
+        let registerRequest = RegisterRequest(User: User(citizen_id: arrTextField[0], first_name: arrTextField[1], last_name: arrTextField[2], screen_name: screenName ,birth_date: arrTextField[3], phone: arrTextField[4], password: arrTextField[5], re_password: arrTextField[6]))
+        
+        let jsonResult = registerRequest.toJSON()
+        print(jsonResult!)
+        
+        let url = URL(string: "http://api.psp.pakgon.com/Api/registerUser.json")
+        
+        let httpRequest = NSMutableURLRequest(url: url!)
+        httpRequest.httpMethod = "POST"
+        
+        httpRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let jsonData = try? JSONSerialization.data(withJSONObject: jsonResult!, options: .prettyPrinted)
+        
+        httpRequest.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: httpRequest as URLRequest, completionHandler: {
+            (data, response, error) -> Void in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            var response = RegisterResponse()
+            
+            //Parse Json data
+            if let data = data {
+                response = self.parseJsonData(data: data)
+                if response.result?.Success == "OK" {
+                    print(response)
+                }
+            }
+            
+        })
+        
+        task.resume()
+    }
+    
+    func parseJsonData(data: Data) -> RegisterResponse {
+        var response:RegisterResponse = RegisterResponse()
+        
+        do{
+            let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
+            print(jsonResult!)
+            
+            // Parse JSON data
+            let jsonResponse = jsonResult?["result"] as AnyObject
+            response.result?.Success = jsonResponse["Success"] as! String
+        }catch{
+            print(error)
+        }
+        
+        return response
+    }
 }
 

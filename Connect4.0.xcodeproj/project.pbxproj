@@ -17,6 +17,10 @@
 		DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816A1EBCA06800E90C16 /* ButtonCell.swift */; };
 		DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE90816B1EBCA06800E90C16 /* ButtonCell.xib */; };
 		DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816E1EBCAA2300E90C16 /* CellData.swift */; };
+		DEE609F41EC417CB00F08763 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609F31EC417CB00F08763 /* RegisterRequest.swift */; };
+		DEE609F91EC465D400F08763 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609F81EC465D400F08763 /* RegisterResponse.swift */; };
+		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
+		DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FD1EC473DF00F08763 /* ClientHttp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		DE90816A1EBCA06800E90C16 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		DE90816B1EBCA06800E90C16 /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		DE90816E1EBCAA2300E90C16 /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		DEE609F31EC417CB00F08763 /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		DEE609F81EC465D400F08763 /* RegisterResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
+		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
+		DEE609FD1EC473DF00F08763 /* ClientHttp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHttp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +56,7 @@
 		D304F5401EC381D90000AFF1 /* utilize */ = {
 			isa = PBXGroup;
 			children = (
+				DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */,
 			);
 			name = utilize;
 			sourceTree = "<group>";
@@ -79,6 +88,8 @@
 		DE90814D1EBC725100E90C16 /* Connect4.0 */ = {
 			isa = PBXGroup;
 			children = (
+				DEE609FC1EC473A300F08763 /* network */,
+				DEE609F11EC4177C00F08763 /* Models */,
 				D304F5401EC381D90000AFF1 /* utilize */,
 				D3F26FF71EBCE72C0019C805 /* Controller */,
 				DE9081631EBC9DDF00E90C16 /* RegisterCell */,
@@ -101,6 +112,39 @@
 				DE90816E1EBCAA2300E90C16 /* CellData.swift */,
 			);
 			name = RegisterCell;
+			sourceTree = "<group>";
+		};
+		DEE609F11EC4177C00F08763 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DEE609F71EC465B300F08763 /* Response */,
+				DEE609F21EC417B700F08763 /* Request */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DEE609F21EC417B700F08763 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DEE609F31EC417CB00F08763 /* RegisterRequest.swift */,
+			);
+			name = Request;
+			sourceTree = "<group>";
+		};
+		DEE609F71EC465B300F08763 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				DEE609F81EC465D400F08763 /* RegisterResponse.swift */,
+			);
+			name = Response;
+			sourceTree = "<group>";
+		};
+		DEE609FC1EC473A300F08763 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				DEE609FD1EC473DF00F08763 /* ClientHttp.swift */,
+			);
+			name = network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,7 +224,11 @@
 			files = (
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
+				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,
+				DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */,
+				DEE609F41EC417CB00F08763 /* RegisterRequest.swift in Sources */,
 				DE9081681EBC9F1C00E90C16 /* TextFieldCell.swift in Sources */,
+				DEE609F91EC465D400F08763 /* RegisterResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
 			);
