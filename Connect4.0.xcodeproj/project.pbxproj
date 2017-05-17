@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE429BFB1ECC48C00089EF03 /* LoadIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE429BFA1ECC48C00089EF03 /* LoadIndicator.swift */; };
 		DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90814E1EBC725100E90C16 /* AppDelegate.swift */; };
 		DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9081501EBC725100E90C16 /* RegisterViewController.swift */; };
 		DE9081541EBC725100E90C16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE9081521EBC725100E90C16 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 		DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816A1EBCA06800E90C16 /* ButtonCell.swift */; };
 		DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE90816B1EBCA06800E90C16 /* ButtonCell.xib */; };
 		DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816E1EBCAA2300E90C16 /* CellData.swift */; };
+		DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAD703E1EC576B20057B448 /* BaseColor.swift */; };
 		DEE609F41EC417CB00F08763 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609F31EC417CB00F08763 /* RegisterRequest.swift */; };
 		DEE609F91EC465D400F08763 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609F81EC465D400F08763 /* RegisterResponse.swift */; };
 		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
@@ -24,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE429BFA1ECC48C00089EF03 /* LoadIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadIndicator.swift; sourceTree = "<group>"; };
 		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 		DE90816A1EBCA06800E90C16 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		DE90816B1EBCA06800E90C16 /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		DE90816E1EBCAA2300E90C16 /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		DEAD703E1EC576B20057B448 /* BaseColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseColor.swift; sourceTree = "<group>"; };
 		DEE609F31EC417CB00F08763 /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		DEE609F81EC465D400F08763 /* RegisterResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
@@ -53,12 +57,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D304F5401EC381D90000AFF1 /* utilize */ = {
+		D304F5401EC381D90000AFF1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				DEE609FC1EC473A300F08763 /* Network */,
 				DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */,
+				DEAD703E1EC576B20057B448 /* BaseColor.swift */,
+				DE429BFA1ECC48C00089EF03 /* LoadIndicator.swift */,
 			);
-			name = utilize;
+			name = Utility;
 			sourceTree = "<group>";
 		};
 		D3F26FF71EBCE72C0019C805 /* Controller */ = {
@@ -88,16 +95,12 @@
 		DE90814D1EBC725100E90C16 /* Connect4.0 */ = {
 			isa = PBXGroup;
 			children = (
-				DEE609FC1EC473A300F08763 /* network */,
+				DEAD703B1EC575680057B448 /* Resource */,
+				DEAD703A1EC575090057B448 /* Supportting Files */,
 				DEE609F11EC4177C00F08763 /* Models */,
-				D304F5401EC381D90000AFF1 /* utilize */,
+				D304F5401EC381D90000AFF1 /* Utility */,
 				D3F26FF71EBCE72C0019C805 /* Controller */,
 				DE9081631EBC9DDF00E90C16 /* RegisterCell */,
-				DE90814E1EBC725100E90C16 /* AppDelegate.swift */,
-				DE9081521EBC725100E90C16 /* Main.storyboard */,
-				DE9081551EBC725100E90C16 /* Assets.xcassets */,
-				DE9081571EBC725100E90C16 /* LaunchScreen.storyboard */,
-				DE90815A1EBC725100E90C16 /* Info.plist */,
 			);
 			path = Connect4.0;
 			sourceTree = "<group>";
@@ -106,12 +109,47 @@
 			isa = PBXGroup;
 			children = (
 				DE9081661EBC9F1C00E90C16 /* TextFieldCell.swift */,
-				DE9081671EBC9F1C00E90C16 /* TextFieldCell.xib */,
 				DE90816A1EBCA06800E90C16 /* ButtonCell.swift */,
-				DE90816B1EBCA06800E90C16 /* ButtonCell.xib */,
 				DE90816E1EBCAA2300E90C16 /* CellData.swift */,
 			);
 			name = RegisterCell;
+			sourceTree = "<group>";
+		};
+		DEAD703A1EC575090057B448 /* Supportting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DE90814E1EBC725100E90C16 /* AppDelegate.swift */,
+				DE90815A1EBC725100E90C16 /* Info.plist */,
+			);
+			name = "Supportting Files";
+			sourceTree = "<group>";
+		};
+		DEAD703B1EC575680057B448 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				DEAD703D1EC575D60057B448 /* Storyboard */,
+				DE9081551EBC725100E90C16 /* Assets.xcassets */,
+				DEAD703C1EC575790057B448 /* Xib */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		DEAD703C1EC575790057B448 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				DE9081671EBC9F1C00E90C16 /* TextFieldCell.xib */,
+				DE90816B1EBCA06800E90C16 /* ButtonCell.xib */,
+			);
+			name = Xib;
+			sourceTree = "<group>";
+		};
+		DEAD703D1EC575D60057B448 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DE9081521EBC725100E90C16 /* Main.storyboard */,
+				DE9081571EBC725100E90C16 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboard;
 			sourceTree = "<group>";
 		};
 		DEE609F11EC4177C00F08763 /* Models */ = {
@@ -139,12 +177,12 @@
 			name = Response;
 			sourceTree = "<group>";
 		};
-		DEE609FC1EC473A300F08763 /* network */ = {
+		DEE609FC1EC473A300F08763 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				DEE609FD1EC473DF00F08763 /* ClientHttp.swift */,
 			);
-			name = network;
+			name = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,11 +261,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
+				DE429BFB1ECC48C00089EF03 /* LoadIndicator.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
 				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,
 				DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */,
 				DEE609F41EC417CB00F08763 /* RegisterRequest.swift in Sources */,
 				DE9081681EBC9F1C00E90C16 /* TextFieldCell.swift in Sources */,
+				DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */,
 				DEE609F91EC465D400F08763 /* RegisterResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,

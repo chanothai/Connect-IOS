@@ -8,17 +8,18 @@
 
 import Foundation
 
-struct RegisterRequest: JSONSerializable{
-    var User:User
+struct RegisterRequest {
+    var user:String = "User"
 }
 
-struct User: JSONSerializable {
-    var citizen_id:String
-    var first_name:String
-    var last_name:String
-    var screen_name:String
-    var birth_date:String
-    var phone:String
-    var password:String
-    var re_password:String
+struct User {
+    var citizenID:String = "citizen_id"
+    var firstName:String = "first_name"
+    var lastName:String = "last_name"
+    var screenName:String = "screen_name"
+    var birthDate:String = "birth_date"
+    var phone:String = "phone"
+    var username:String = "username"
+    var password:String = "password"
+    var rePassword:String = "re_password"
 }

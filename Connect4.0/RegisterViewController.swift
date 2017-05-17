@@ -35,7 +35,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     func iniArrayTextField(){
         arrTextField = [String]()
         
-        for _ in 0 ..< 8 {
+        for _ in 0 ..< 9 {
             arrTextField.append("")
         }
     }
@@ -76,7 +76,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if arrCellData[indexPath.row].cell == 7 {
+        if arrCellData[indexPath.row].cell == 8 {
             let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
             cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
@@ -97,7 +97,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 dateTextField = cell.inputData
                 
-            }else if arrCellData[indexPath.row].cell == 5 || arrCellData[indexPath.row].cell == 6 {
+            }else if arrCellData[indexPath.row].cell == 5 {
+                cell.inputData.keyboardType = UIKeyboardType.emailAddress
+            }else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
                 cell.inputData.isSecureTextEntry = true
             }
             
@@ -189,60 +191,80 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func doRegister() {
-        let screenName:String = "\(arrTextField[1]) \(arrTextField[2])"
-        let registerRequest = RegisterRequest(User: User(citizen_id: arrTextField[0], first_name: arrTextField[1], last_name: arrTextField[2], screen_name: screenName ,birth_date: arrTextField[3], phone: arrTextField[4], password: arrTextField[5], re_password: arrTextField[6]))
+        LoadIndicator(self).showLoadingDialog()
         
-        let jsonResult = registerRequest.toJSON()
-        print(jsonResult!)
+        let users = User()
+        var paramaters = [String : String]()
+        paramaters[users.citizenID] = arrTextField[0]
+        paramaters[users.firstName] = arrTextField[1]
+        paramaters[users.lastName]  = arrTextField[2]
+        paramaters[users.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
+        paramaters[users.birthDate] = arrTextField[3]
+        paramaters[users.phone] = arrTextField[4]
+        paramaters[users.username] = arrTextField[5]
+        paramaters[users.password] = arrTextField[6]
+        paramaters[users.rePassword] = arrTextField[7]
         
-        let url = URL(string: "http://api.psp.pakgon.com/Api/registerUser.json")
+        var jsonData = [String : Any]()
+        jsonData[RegisterRequest().user] = paramaters
+        print(jsonData)
         
-        let httpRequest = NSMutableURLRequest(url: url!)
+        guard let url = URL(string: "http://api.psp.pakgon.com/Api/registerUser.json") else {
+            return
+        }
+        
+        var httpRequest = URLRequest(url: url)
         httpRequest.httpMethod = "POST"
-        
         httpRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let jsonData = try? JSONSerialization.data(withJSONObject: jsonResult!, options: .prettyPrinted)
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted) else {
+            return
+        }
+        print(httpBody)
+        httpRequest.httpBody = httpBody
         
-        httpRequest.httpBody = jsonData
-        
-        let task = URLSession.shared.dataTask(with: httpRequest as URLRequest, completionHandler: {
+        let task = URLSession.shared.dataTask(with: httpRequest , completionHandler: {
             (data, response, error) -> Void in
             if let error = error {
                 print(error)
+                LoadIndicator(self).dissmissLoadingDialog()
                 return
-            }
-            
-            var response = RegisterResponse()
-            
-            //Parse Json data
-            if let data = data {
-                response = self.parseJsonData(data: data)
-                if response.result?.Success == "OK" {
+            }else{
+                if let response = response {
                     print(response)
                 }
+                
+                if let data = data {
+                    self.parseJsonData(data: data)
+                }
             }
-            
         })
         
         task.resume()
     }
     
-    func parseJsonData(data: Data) -> RegisterResponse {
+    func parseJsonData(data: Data) {
         var response:RegisterResponse = RegisterResponse()
         
         do{
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
-            print(jsonResult!)
+            print(jsonResult as AnyObject)
             
             // Parse JSON data
             let jsonResponse = jsonResult?["result"] as AnyObject
-            response.result?.Success = jsonResponse["Success"] as! String
+            let success:String = jsonResponse["Success"] as! String
+            let error:String = jsonResponse["Error"] as! String
+            
+            if success.isEmpty {
+                print(error)
+            }
+            
+            print(success)
+            response.result?.Success = success
+            
+            LoadIndicator(self).dissmissLoadingDialog()
         }catch{
             print(error)
         }
-        
-        return response
     }
 }
 
