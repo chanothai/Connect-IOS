@@ -6,25 +6,31 @@
 //  Copyright © 2560 Pakgon. All rights reserved.
 //
 
+import Alamofire
 import UIKit
 
 class RegisterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
+    // MAKE outlet
+    @IBOutlet var contentView: UIView!
     @IBOutlet var registerTableView: UITableView!
-    var dateTextField: UITextField!
     
+    // MAKE instance properties
+    var dateTextField: UITextField!
     var arrCellData:[CellData]!
-    var cellData:CellData!
     var arrTextField:[String]!
+    var manageKeyboard: ManageKeyboard? = ManageKeyboard()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        arrCellData = [CellData]()
-        cellData = CellData()
-        arrCellData = cellData?.createCell()
-        
+        initParamater()
         setTableProperty()
         iniArrayTextField()
+    }
+    
+    func initParamater(){
+        arrCellData = [CellData]()
+        arrCellData = CellData().createCell()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,22 +59,11 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        adjustingHeight(show: true, notification: notification)
+        manageKeyboard?.adjustingHeight(show: true, notification: notification, tableView: registerTableView)
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        adjustingHeight(show: false, notification: notification)
-    }
-    
-    func adjustingHeight(show:Bool, notification:NSNotification) {
-        var userInfo = notification.userInfo!
-        let keyboardFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
-        let chageInHeight = (keyboardFrame.height) * (show ? -1 : 1)
-        
-        UIView.animate(withDuration: animationDuration, animations: {() -> Void in
-            self.registerTableView.frame.origin.y += chageInHeight
-        })
+        manageKeyboard?.adjustingHeight(show: true, notification: notification, tableView: registerTableView)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -191,8 +186,6 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func doRegister() {
-        LoadIndicator(self).showLoadingDialog()
-        
         let users = User()
         var paramaters = [String : String]()
         paramaters[users.citizenID] = arrTextField[0]
@@ -209,62 +202,9 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         jsonData[RegisterRequest().user] = paramaters
         print(jsonData)
         
-        guard let url = URL(string: "http://api.psp.pakgon.com/Api/registerUser.json") else {
-            return
-        }
-        
-        var httpRequest = URLRequest(url: url)
-        httpRequest.httpMethod = "POST"
-        httpRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted) else {
-            return
-        }
-        print(httpBody)
-        httpRequest.httpBody = httpBody
-        
-        let task = URLSession.shared.dataTask(with: httpRequest , completionHandler: {
-            (data, response, error) -> Void in
-            if let error = error {
-                print(error)
-                LoadIndicator(self).dissmissLoadingDialog()
-                return
-            }else{
-                if let response = response {
-                    print(response)
-                }
-                
-                if let data = data {
-                    self.parseJsonData(data: data)
-                }
-            }
-        })
-        
-        task.resume()
-    }
-    
-    func parseJsonData(data: Data) {
-        var response:RegisterResponse = RegisterResponse()
-        
-        do{
-            let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
-            print(jsonResult as AnyObject)
-            
-            // Parse JSON data
-            let jsonResponse = jsonResult?["result"] as AnyObject
-            let success:String = jsonResponse["Success"] as! String
-            let error:String = jsonResponse["Error"] as! String
-            
-            if success.isEmpty {
-                print(error)
-            }
-            
-            print(success)
-            response.result?.Success = success
-            
-            LoadIndicator(self).dissmissLoadingDialog()
-        }catch{
-            print(error)
-        }
+        LoadIndicator.getInstance(self).showLoadingDialog()
+        ClientHttp.getInstace().requestRequest(jsonData)
+        LoadIndicator.getInstance(self).dissmissLoadingDialog()
     }
 }
 
