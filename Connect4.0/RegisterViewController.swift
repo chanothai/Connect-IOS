@@ -6,13 +6,12 @@
 //  Copyright © 2560 Pakgon. All rights reserved.
 //
 
-import Alamofire
+import SwiftEventBus
 import UIKit
 
-class RegisterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class RegisterViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MAKE outlet
-    @IBOutlet var contentView: UIView!
     @IBOutlet var registerTableView: UITableView!
     
     // MAKE instance properties
@@ -24,32 +23,33 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         initParamater()
-        setTableProperty()
+        StyleTableView(registerTableView).baseStyle()
         iniArrayTextField()
     }
     
-    func initParamater(){
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setEventBus()
+    }
+    
+    private func initParamater(){
         arrCellData = [CellData]()
-        arrCellData = CellData().createCell()
+        arrCellData = CellData().createArrRegisterCell()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        SwiftEventBus.unregister(self)
     }
     
-    func iniArrayTextField(){
+    private func iniArrayTextField(){
         arrTextField = [String]()
         
         for _ in 0 ..< 9 {
             arrTextField.append("")
         }
-    }
-    
-    func setTableProperty() {
-        registerTableView.backgroundColor = UIColor.white
-        registerTableView.tableFooterView = UIView(frame: CGRect.zero) //remove empty rows of table
-        registerTableView.separatorColor = UIColor.clear
     }
     
     func setMoveKeyboard(){
@@ -65,6 +65,11 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     func keyboardWillHide(notification: NSNotification) {
         manageKeyboard?.adjustingHeight(show: true, notification: notification, tableView: registerTableView)
     }
+    
+    @IBAction func cancelAction(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrCellData.count
@@ -84,7 +89,8 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
             
             if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
                 cell.inputData.keyboardType = UIKeyboardType.numberPad
-            }else if arrCellData[indexPath.row].cell == 3 {
+            }
+            else if arrCellData[indexPath.row].cell == 3 {
                 let datePickerView:UIDatePicker = UIDatePicker()
                 datePickerView.datePickerMode = UIDatePickerMode.date
                 cell.inputData.inputView = datePickerView
@@ -92,9 +98,11 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 dateTextField = cell.inputData
                 
-            }else if arrCellData[indexPath.row].cell == 5 {
+            }
+            else if arrCellData[indexPath.row].cell == 5 {
                 cell.inputData.keyboardType = UIKeyboardType.emailAddress
-            }else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
+            }
+            else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
                 cell.inputData.isSecureTextEntry = true
             }
             
@@ -119,24 +127,7 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if getPosition(textField) == 4 {
-            if let selectedRange = textField.selectedTextRange {
-                // get cursor position of text field
-                let cursorPosition = textField.offset(from: textField.beginningOfDocument, to: selectedRange.start);
-                let resultString:String = textField.text! + "-"
-                
-                switch cursorPosition {
-                case 3:
-                    textField.text = resultString
-                    break
-                case 8:
-                    textField.text = resultString
-                    break
-                default:
-                    break
-                }
-            }
-        }
+        arrTextField[getPosition(textField)] = textField.text! + string
         return true
     }
     
@@ -158,18 +149,15 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         return false
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        arrTextField[getPosition(textField)] = textField.text!
-    }
     
-    func getPosition(_ textField: UITextField) -> Int{
+    private func getPosition(_ textField: UITextField) -> Int{
         let pointInTable = textField.convert(textField.bounds.origin, to: registerTableView)
         let textFieldIndexPath = registerTableView.indexPathForRow(at: pointInTable)
         
         return (textFieldIndexPath?.row)!
     }
     
-    func addDoneOnKeyBoard() -> UIToolbar {
+    private func addDoneOnKeyBoard() -> UIToolbar {
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         
@@ -180,31 +168,44 @@ class RegisterViewController: UIViewController, UITableViewDelegate, UITableView
         return toolBar
     }
     
-    func doneClicked(){
+    @objc private func doneClicked(){
         view.endEditing(true)
         registerTableView.contentOffset = CGPoint(x: registerTableView.contentOffset.x , y: 0)
     }
     
-    func doRegister() {
-        let users = User()
-        var paramaters = [String : String]()
-        paramaters[users.citizenID] = arrTextField[0]
-        paramaters[users.firstName] = arrTextField[1]
-        paramaters[users.lastName]  = arrTextField[2]
-        paramaters[users.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
-        paramaters[users.birthDate] = arrTextField[3]
-        paramaters[users.phone] = arrTextField[4]
-        paramaters[users.username] = arrTextField[5]
-        paramaters[users.password] = arrTextField[6]
-        paramaters[users.rePassword] = arrTextField[7]
+    @objc private func doRegister() {
+        let users = UserRegister()
+        var parameters = [String : String]()
+        parameters[users.citizenID] = arrTextField[0]
+        parameters[users.firstName] = arrTextField[1]
+        parameters[users.lastName]  = arrTextField[2]
+        parameters[users.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
+        parameters[users.birthDate] = arrTextField[3]
+        parameters[users.phone] = arrTextField[4]
+        parameters[users.username] = arrTextField[5]
+        parameters[users.password] = arrTextField[6]
+        parameters[users.rePassword] = arrTextField[7]
         
         var jsonData = [String : Any]()
-        jsonData[RegisterRequest().user] = paramaters
+        jsonData[RegisterRequest().user] = parameters
         print(jsonData)
         
-        LoadIndicator.getInstance(self).showLoadingDialog()
-        ClientHttp.getInstace().requestRequest(jsonData)
-        LoadIndicator.getInstance(self).dissmissLoadingDialog()
+        showLoading()
+        ClientHttp.getInstace(self).requestRegister(jsonData)
+    }
+    
+    private func setEventBus(){
+        SwiftEventBus.onMainThread(self, name: "ResponseRegister") { result in
+            let response:LoginResponse = result.object as! LoginResponse
+            
+            if response.result.success.isEmpty{
+                AlertMessage.getInstance(self).showMessage(title: "Register", message: response.result.error, isAction: false)
+            }else{
+                AlertMessage.getInstance(self).showMessage(title: "Register", message: response.result.success, isAction: true)
+            }
+            
+            self.hideLoading()
+        }
     }
 }
 

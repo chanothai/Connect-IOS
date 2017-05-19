@@ -12,9 +12,19 @@ struct CellData {
     var cell:Int!
     var text:String!
     
-    func createCell() -> [CellData]{
+    public func createArrRegisterCell() -> [CellData]{
         let arrTitles = ["หมายเลขบัตรประชาชน","ชื่อ","นามสกุล","ปี-เดือน-วัน", "หมายเลขโทรศัพท์","อีเมล์", "รหัสผ่าน", "ยืนยันรหัสผ่าน", "ยืนยัน"]
         
+        return calculateCell(arrTitles: arrTitles)
+    }
+    
+    public func createArrLoginCell() -> [CellData] {
+        let arrTitles = ["อีเมล์", "รหัสผ่าน", "เข้าสู่ระบบ"]
+        
+        return calculateCell(arrTitles: arrTitles)
+    }
+    
+    private func calculateCell(arrTitles:[String]) -> [CellData] {
         var arrCellData:[CellData] = [CellData]()
         
         var maxLows = 0
@@ -24,7 +34,7 @@ struct CellData {
             detail.cell = maxLows
             
             arrCellData.append(detail)
-
+            
             maxLows += 1
             
         } while maxLows < arrTitles.count

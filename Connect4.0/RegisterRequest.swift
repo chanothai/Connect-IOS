@@ -12,7 +12,7 @@ struct RegisterRequest {
     var user:String = "User"
 }
 
-struct User {
+struct UserRegister {
     var citizenID:String = "citizen_id"
     var firstName:String = "first_name"
     var lastName:String = "last_name"
