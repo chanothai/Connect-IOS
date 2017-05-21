@@ -9,10 +9,14 @@
 import Foundation
 
 struct LoginRequest {
-    var user:String = "User"
+    static var user:String = "User"
 }
 
 struct UserLogin {
-    var username:String = "username"
-    var password:String = "password"
+    static var username:String = "username"
+    static var password:String = "password"
+}
+
+struct LoginSecure {
+    static var data:String = "Data"
 }

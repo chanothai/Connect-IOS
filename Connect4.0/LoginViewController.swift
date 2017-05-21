@@ -6,6 +6,7 @@
 //  Copyright © 2560 Pakgon. All rights reserved.
 //
 
+import CryptoSwift
 import SwiftEventBus
 import UIKit
 
@@ -18,6 +19,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     // MAKE: properties
     private var arrCellData:[CellData]!
     private var arrDataRequest:[String]!
+    private var key:[UInt8]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,9 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         StyleTableView(loginTableView).baseStyle()
         setLabelAction()
     
+        key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
+        RequireKey.key = key!
+        restore()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,10 +59,10 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     private func setEventBus(){
         SwiftEventBus.onMainThread(self, name: "ResponseLogin") { result in
             let response:LoginResponse = result.object as! LoginResponse
-            
             if response.result.success.isEmpty{
                 AlertMessage.getInstance(self).showMessage(title: "Login", message: response.result.error, isAction: false)
             }else{
+                AuthenLogin().storeLogin(self.arrDataRequest[0], self.arrDataRequest[1], KeyName.staticKey)
                 AlertMessage.getInstance(self).showMessage(title: "Login", message: response.result.success, isAction: true)
             }
             
@@ -83,6 +88,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
             let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
             cell.inputData.placeholder = arrCellData[indexPath.row].text
             cell.inputData.delegate = self
+            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
             switch arrCellData[indexPath.row].cell {
             case 0:
@@ -103,23 +109,24 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc private func doLogin(){
-        let users = UserLogin()
-        var paramaters = [String: String]()
-        paramaters[users.username] = arrDataRequest[0]
-        paramaters[users.password] = arrDataRequest[1]
-        
-        var jsonData = [String : Any]()
-        jsonData[LoginRequest().user] = paramaters
-        print(jsonData)
+        var parameters = [String: String]()
+        parameters[UserLogin.username] = arrDataRequest[0]
+        parameters[UserLogin.password] = arrDataRequest[1]
         
         showLoading()
-        ClientHttp.getInstace(self).requestLogin(jsonData)
+        ClientHttp.getInstace(self).requestLogin(FormatterRequest(key!).login(parameters))
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        textField.text = ""
-        arrDataRequest[getPosition(textField)] = textField.text!
-        return true
+    private func restore(){
+        let restore = AuthenLogin().restoreLogin()
+        if restore.count > 0 {
+            var parameters = [String: String]()
+            parameters[UserLogin.username] = restore[0]
+            parameters[UserLogin.password] = restore[1]
+            
+            showLoading()
+            ClientHttp.getInstace(self).requestLogin(FormatterRequest(key!).login(parameters))
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -127,12 +134,9 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         return false
     }
     
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        arrDataRequest[getPosition(textField)] = textField.text! + string
-        return true
+    @objc func textFieldChange(textField:UITextField) {
+        arrDataRequest[getPosition(textField)] = textField.text!
     }
-    
     
     private func getPosition(_ textField:UITextField) -> Int {
         let pointInTable = textField.convert(textField.bounds.origin, to: loginTableView)

@@ -24,6 +24,7 @@ struct LoginResponse {
 struct LoginResult {
     private var _error:String?
     private var _success:String?
+    private var _eResult:String?
     
     public var error:String {
         get{
@@ -40,6 +41,15 @@ struct LoginResult {
         }
         set{
             _success = newValue
+        }
+    }
+    
+    public var eResult:String {
+        get{
+            return _eResult!
+        }
+        set{
+            _eResult = newValue
         }
     }
 }

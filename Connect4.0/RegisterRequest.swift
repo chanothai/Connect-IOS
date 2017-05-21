@@ -9,17 +9,21 @@
 import Foundation
 
 struct RegisterRequest {
-    var user:String = "User"
+    static var user:String = "User"
 }
 
 struct UserRegister {
-    var citizenID:String = "citizen_id"
-    var firstName:String = "first_name"
-    var lastName:String = "last_name"
-    var screenName:String = "screen_name"
-    var birthDate:String = "birth_date"
-    var phone:String = "phone"
-    var username:String = "username"
-    var password:String = "password"
-    var rePassword:String = "re_password"
+    static var citizenID:String = "citizen_id"
+    static var firstName:String = "first_name"
+    static var lastName:String = "last_name"
+    static var screenName:String = "screen_name"
+    static var birthDate:String = "birth_date"
+    static var phone:String = "phone"
+    static var username:String = "username"
+    static var password:String = "password"
+    static var rePassword:String = "re_password"
+}
+
+struct RegisterSecure {
+    static var data:String = "Data"
 }

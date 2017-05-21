@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3C941430545E52F9C8727A65 /* Pods_Connect4_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */; };
+		D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */; };
+		D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */; };
+		D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0601ED1539300B39E94 /* AuthenLogin.swift */; };
+		D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0621ED161B000B39E94 /* FormatterRequest.swift */; };
 		DE3BF6A41ECEAEE300FBBB9F /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6A31ECEAEE300FBBB9F /* AlertMessage.swift */; };
 		DE3BF6A81ECECBD700FBBB9F /* NavRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6A71ECECBD700FBBB9F /* NavRegisterController.swift */; };
 		DE3BF6AA1ECED15900FBBB9F /* StyleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6A91ECED15900FBBB9F /* StyleTableView.swift */; };
@@ -38,6 +42,10 @@
 		4A1A49EDB747B220D85478B9 /* Pods-Connect4.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Connect4.0.release.xcconfig"; path = "Pods/Target Support Files/Pods-Connect4.0/Pods-Connect4.0.release.xcconfig"; sourceTree = "<group>"; };
 		9147E7DA346EB7DFEE48F097 /* Pods-Connect4.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Connect4.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Connect4.0/Pods-Connect4.0.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Connect4_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionAES.swift; sourceTree = "<group>"; };
+		D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterResponse.swift; sourceTree = "<group>"; };
+		D358D0601ED1539300B39E94 /* AuthenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenLogin.swift; sourceTree = "<group>"; };
+		D358D0621ED161B000B39E94 /* FormatterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterRequest.swift; sourceTree = "<group>"; };
 		DE3BF6A31ECEAEE300FBBB9F /* AlertMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		DE3BF6A71ECECBD700FBBB9F /* NavRegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavRegisterController.swift; sourceTree = "<group>"; };
 		DE3BF6A91ECED15900FBBB9F /* StyleTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleTableView.swift; sourceTree = "<group>"; };
@@ -90,12 +98,22 @@
 		D304F5401EC381D90000AFF1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				D358D05F1ED14D8900B39E94 /* Security */,
 				DE44CBA11ECD67040099A7D2 /* ViewModel */,
 				DEE609FC1EC473A300F08763 /* Network */,
 				DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */,
 				DEAD703E1EC576B20057B448 /* BaseColor.swift */,
 			);
 			name = Utility;
+			sourceTree = "<group>";
+		};
+		D358D05F1ED14D8900B39E94 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */,
+				D358D0601ED1539300B39E94 /* AuthenLogin.swift */,
+			);
+			name = Security;
 			sourceTree = "<group>";
 		};
 		D3F26FF71EBCE72C0019C805 /* Classes */ = {
@@ -301,6 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				DEE609FD1EC473DF00F08763 /* ClientHttp.swift */,
+				D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */,
+				D358D0621ED161B000B39E94 /* FormatterRequest.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -434,11 +454,15 @@
 				DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */,
 				DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */,
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
+				D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */,
+				D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */,
 				DE3BF6BA1ECEF66500FBBB9F /* LoginRequest.swift in Sources */,
 				DE3BF6AA1ECED15900FBBB9F /* StyleTableView.swift in Sources */,
 				DE3BF6B71ECEDC9200FBBB9F /* BaseViewController.swift in Sources */,
+				D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */,
 				DE3BF6A81ECECBD700FBBB9F /* NavRegisterController.swift in Sources */,
 				DE3BF6B41ECEDB3200FBBB9F /* BaseViewModel.swift in Sources */,
+				D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
 				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,
 				DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */,

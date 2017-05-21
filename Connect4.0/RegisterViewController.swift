@@ -19,12 +19,16 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
     var arrCellData:[CellData]!
     var arrTextField:[String]!
     var manageKeyboard: ManageKeyboard? = ManageKeyboard()
+    private var key:[UInt8]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initParamater()
         StyleTableView(registerTableView).baseStyle()
         iniArrayTextField()
+        
+        key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
+        RequireKey.key = key!
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,6 +90,7 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
             cell.inputData.placeholder = arrCellData[indexPath.row].text
             cell.inputData.delegate = self
             cell.inputData.inputAccessoryView = addDoneOnKeyBoard()
+            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
             if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
                 cell.inputData.keyboardType = UIKeyboardType.numberPad
@@ -126,9 +131,8 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         dateTextField.text = dateFormatter.string(from: sender.date)
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        arrTextField[getPosition(textField)] = textField.text! + string
-        return true
+    @objc func textFieldChange(textField: UITextField){
+        arrTextField[getPosition(textField)] = textField.text!
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -148,7 +152,6 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         view.endEditing(true)
         return false
     }
-    
     
     private func getPosition(_ textField: UITextField) -> Int{
         let pointInTable = textField.convert(textField.bounds.origin, to: registerTableView)
@@ -174,24 +177,19 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     @objc private func doRegister() {
-        let users = UserRegister()
         var parameters = [String : String]()
-        parameters[users.citizenID] = arrTextField[0]
-        parameters[users.firstName] = arrTextField[1]
-        parameters[users.lastName]  = arrTextField[2]
-        parameters[users.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
-        parameters[users.birthDate] = arrTextField[3]
-        parameters[users.phone] = arrTextField[4]
-        parameters[users.username] = arrTextField[5]
-        parameters[users.password] = arrTextField[6]
-        parameters[users.rePassword] = arrTextField[7]
-        
-        var jsonData = [String : Any]()
-        jsonData[RegisterRequest().user] = parameters
-        print(jsonData)
+        parameters[UserRegister.citizenID] = arrTextField[0]
+        parameters[UserRegister.firstName] = arrTextField[1]
+        parameters[UserRegister.lastName]  = arrTextField[2]
+        parameters[UserRegister.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
+        parameters[UserRegister.birthDate] = arrTextField[3]
+        parameters[UserRegister.phone] = arrTextField[4]
+        parameters[UserRegister.username] = arrTextField[5]
+        parameters[UserRegister.password] = arrTextField[6]
+        parameters[UserRegister.rePassword] = arrTextField[7]
         
         showLoading()
-        ClientHttp.getInstace(self).requestRegister(jsonData)
+        ClientHttp.getInstace(self).requestRegister(FormatterRequest(key!).register(parameters))
     }
     
     private func setEventBus(){
@@ -203,9 +201,12 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
             }else{
                 AlertMessage.getInstance(self).showMessage(title: "Register", message: response.result.success, isAction: true)
             }
-            
             self.hideLoading()
         }
     }
+}
+
+extension UITextView {
+    
 }
 
