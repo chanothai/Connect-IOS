@@ -9,6 +9,7 @@
 import CryptoSwift
 import SwiftEventBus
 import UIKit
+import SWRevealViewController
 
 class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
@@ -29,8 +30,9 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
         RequireKey.key = key!
-        restore()
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,13 +62,20 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         SwiftEventBus.onMainThread(self, name: "ResponseLogin") { result in
             let response:LoginResponse = result.object as! LoginResponse
             if response.result.success.isEmpty{
-                AlertMessage.getInstance(self).showMessage(title: "Login", message: response.result.error, isAction: false)
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.error, isAction: false)
             }else{
                 AuthenLogin().storeLogin(self.arrDataRequest[0], self.arrDataRequest[1], KeyName.staticKey)
-                AlertMessage.getInstance(self).showMessage(title: "Login", message: response.result.success, isAction: true)
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.success, isAction: true)
             }
             
             self.hideLoading()
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "LoginSuccess") { result in
+            let response:Bool = result.object as! Bool
+            if response {
+                self.intentToBloc()
+            }
         }
     }
     
@@ -117,18 +126,6 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         ClientHttp.getInstace(self).requestLogin(FormatterRequest(key!).login(parameters))
     }
     
-    private func restore(){
-        let restore = AuthenLogin().restoreLogin()
-        if restore.count > 0 {
-            var parameters = [String: String]()
-            parameters[UserLogin.username] = restore[0]
-            parameters[UserLogin.password] = restore[1]
-            
-            showLoading()
-            ClientHttp.getInstace(self).requestLogin(FormatterRequest(key!).login(parameters))
-        }
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return false
@@ -156,5 +153,12 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "NavRegisterController") as! NavRegisterController
         self.present(navRegisterController, animated: true, completion: nil)
     }
-    
+}
+
+extension UIViewController {
+    func intentToBloc() {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
+        self.present(navRegisterController, animated: true, completion: nil)
+    }
 }

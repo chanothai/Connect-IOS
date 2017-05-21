@@ -197,9 +197,9 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
             let response:LoginResponse = result.object as! LoginResponse
             
             if response.result.success.isEmpty{
-                AlertMessage.getInstance(self).showMessage(title: "Register", message: response.result.error, isAction: false)
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
             }else{
-                AlertMessage.getInstance(self).showMessage(title: "Register", message: response.result.success, isAction: true)
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
             }
             self.hideLoading()
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SWRevealViewController
 
 class AlertMessage {
     private static var me: AlertMessage?
@@ -22,7 +23,7 @@ class AlertMessage {
         return me!
     }
     
-    public func showMessage(title: String, message: String, isAction:Bool) {
+    public func showMessageAuthen(title: String, message: String, isAction:Bool) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if isAction {
@@ -34,7 +35,9 @@ class AlertMessage {
         mySelf?.present(alertController, animated: true, completion: nil)
     }
     
-    func setAction(action: UIAlertAction) {
-        print("Hello World Action")
+    private func setAction(action: UIAlertAction) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
+        self.mySelf?.present(navRegisterController, animated: true, completion: nil)
     }
 }
