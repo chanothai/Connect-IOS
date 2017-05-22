@@ -24,7 +24,9 @@ struct LoginResponse {
 struct LoginResult {
     private var _error:String?
     private var _success:String?
-    private var _eResult:String?
+    private var _dynamicKey:String?
+    private var _token:String?
+    private var _username:String?
     
     public var error:String {
         get{
@@ -44,12 +46,30 @@ struct LoginResult {
         }
     }
     
-    public var eResult:String {
+    public var dynamicKey:String {
         get{
-            return _eResult!
+            return _dynamicKey!
         }
         set{
-            _eResult = newValue
+            _dynamicKey = newValue
+        }
+    }
+    
+    public var token:String {
+        get{
+            return _token!
+        }
+        set{
+            _token = newValue
+        }
+    }
+    
+    public var username:String {
+        get{
+            return _username!
+        }
+        set{
+            _username = newValue
         }
     }
 }

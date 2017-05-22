@@ -27,6 +27,10 @@
 		DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6C01ECF270300FBBB9F /* RegisterRequest.swift */; };
 		DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44CB9B1ECD60420099A7D2 /* LoginViewController.swift */; };
 		DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44CB9D1ECD61110099A7D2 /* ManageKeyboard.swift */; };
+		DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E82751ED2B94E00667C5A /* ModelCart.swift */; };
+		DE4E82791ED2CA2A00667C5A /* ApplicationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E82781ED2CA2A00667C5A /* ApplicationRequest.swift */; };
+		DE4E827C1ED2EC5600667C5A /* ApplicationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E827B1ED2EC5600667C5A /* ApplicationResponse.swift */; };
+		DE4E827E1ED304FD00667C5A /* UserInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E827D1ED304FD00667C5A /* UserInfoResponse.swift */; };
 		DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90814E1EBC725100E90C16 /* AppDelegate.swift */; };
 		DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9081501EBC725100E90C16 /* RegisterViewController.swift */; };
 		DE9081541EBC725100E90C16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE9081521EBC725100E90C16 /* Main.storyboard */; };
@@ -65,6 +69,10 @@
 		DE3BF6C01ECF270300FBBB9F /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		DE44CB9B1ECD60420099A7D2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DE44CB9D1ECD61110099A7D2 /* ManageKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageKeyboard.swift; sourceTree = "<group>"; };
+		DE4E82751ED2B94E00667C5A /* ModelCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCart.swift; sourceTree = "<group>"; };
+		DE4E82781ED2CA2A00667C5A /* ApplicationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationRequest.swift; sourceTree = "<group>"; };
+		DE4E827B1ED2EC5600667C5A /* ApplicationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationResponse.swift; sourceTree = "<group>"; };
+		DE4E827D1ED304FD00667C5A /* UserInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoResponse.swift; sourceTree = "<group>"; };
 		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +119,7 @@
 				DEE609FC1EC473A300F08763 /* Network */,
 				DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */,
 				DEAD703E1EC576B20057B448 /* BaseColor.swift */,
+				DE4E82751ED2B94E00667C5A /* ModelCart.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -127,6 +136,8 @@
 		D358D0641ED1DC7C00B39E94 /* Bloc */ = {
 			isa = PBXGroup;
 			children = (
+				DE4E827A1ED2CDCF00667C5A /* ViewModel */,
+				DE4E82771ED2C9ED00667C5A /* Model */,
 				D358D0651ED1DCA900B39E94 /* BlocController */,
 			);
 			name = Bloc;
@@ -279,6 +290,23 @@
 				DE44CB9D1ECD61110099A7D2 /* ManageKeyboard.swift */,
 				DE3BF6A31ECEAEE300FBBB9F /* AlertMessage.swift */,
 				DE3BF6A91ECED15900FBBB9F /* StyleTableView.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE4E82771ED2C9ED00667C5A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE4E82781ED2CA2A00667C5A /* ApplicationRequest.swift */,
+				DE4E827B1ED2EC5600667C5A /* ApplicationResponse.swift */,
+				DE4E827D1ED304FD00667C5A /* UserInfoResponse.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DE4E827A1ED2CDCF00667C5A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -496,8 +524,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */,
+				DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */,
 				DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */,
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
+				DE4E827E1ED304FD00667C5A /* UserInfoResponse.swift in Sources */,
 				D358D0691ED1DD7400B39E94 /* BlocViewController.swift in Sources */,
 				D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */,
 				D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */,
@@ -507,6 +537,7 @@
 				D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */,
 				DE3BF6A81ECECBD700FBBB9F /* NavRegisterController.swift in Sources */,
 				DE3BF6B41ECEDB3200FBBB9F /* BaseViewModel.swift in Sources */,
+				DE4E827C1ED2EC5600667C5A /* ApplicationResponse.swift in Sources */,
 				D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
 				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,
@@ -521,6 +552,7 @@
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
 				DE3BF6B11ECEDAF300FBBB9F /* BasePotocol.swift in Sources */,
+				DE4E82791ED2CA2A00667C5A /* ApplicationRequest.swift in Sources */,
 				DE3BF6BE1ECF124C00FBBB9F /* LoginResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

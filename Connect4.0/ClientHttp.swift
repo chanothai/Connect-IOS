@@ -11,10 +11,17 @@ import UIKit
 
 struct PathURL {
     static var urlServer = "http://api.psp.pakgon.com/"
+    
     static var apiRegister = "Api/registerUser.json"
     static var apiRegisterSecure = "Api/secure/registerUser.json"
+    
     static var apiLogin = "Api/login.json"
     static var apiLoginSecure = "Api/secure/login.json"
+    
+    static var apiAuthToken = "Api/getOauthTokenFromUserToken.json"
+    static var apiAuthSecure = "Api/secure/getOauthTokenFromUserToken.json"
+    
+    static var apiUserInfo = "Api/getUserInfo.json?authToken="
 }
 
 class ClientHttp {
@@ -56,7 +63,6 @@ class ClientHttp {
         }
     }
     
-    
     public func requestRegister(_ jsonData: Dictionary<String, Any>) {
         let apiPath:String? = "\(url!)\(PathURL.apiRegisterSecure)"
         guard let realUrl = URL(string: apiPath!) else {
@@ -70,6 +76,42 @@ class ClientHttp {
                 break
             case .failure(let error):
                 print(error)
+            }
+        }
+    }
+    
+    public func requestAuthToken(_ jsonData: [String: Any]) {
+        let apiPath:String? = "\(url!)\(PathURL.apiAuthSecure)"
+        guard let realUrl = URL(string: apiPath!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                FormatterResponse.parseJsonAuthToken(data: response.result.value as AnyObject)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
+    
+    public func requestUserInfo(_ authToken:String) {
+        let apiPath:String? = "\(url!)\(PathURL.apiUserInfo)\(authToken)"
+        guard let realUrl = URL(string: apiPath!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .get).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                FormatterResponse.parseJsonUserInfo(data: response.result.value! as AnyObject)
+                break
+            case .failure(let error):
+                print(error)
+                break
             }
         }
     }

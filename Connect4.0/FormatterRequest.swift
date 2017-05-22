@@ -23,7 +23,7 @@ class FormatterRequest {
         jsonData?[LoginRequest.user] = parameter
         print(jsonData!)
         
-        resultJson![LoginSecure.data] = converToJson(jsonData!)
+        resultJson![LoginSecure.data] = convertToJson(jsonData!)
         return resultJson!
     }
     
@@ -31,11 +31,19 @@ class FormatterRequest {
         jsonData?[RegisterRequest.user] = parameters
         print(jsonData!)
         
-        resultJson![RegisterSecure.data] = converToJson(jsonData!)
+        resultJson![RegisterSecure.data] = convertToJson(jsonData!)
         return resultJson!
     }
     
-    private func converToJson(_ json:[String : Any]) -> String{
+    public func application(_ parameters:[String : Any], _ username:[String:String]) -> [String : Any]{
+        var resultJson = [String:Any]()
+        resultJson["Data"] = convertToJson(parameters)
+        resultJson["User"] = ["username" : username]
+        
+        return resultJson
+    }
+    
+    private func convertToJson(_ json:[String : Any]) -> String{
         let convertToJson = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         let jsonString = String(data: convertToJson, encoding: .utf8)!
         let encrypt:String = try! EncryptionAES(key!).aesEncrypt(plainText: jsonString)

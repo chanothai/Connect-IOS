@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = revealController
             self.window?.makeKeyAndVisible()
         }
-
         return true
     }
 

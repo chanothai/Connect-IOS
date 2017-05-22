@@ -32,8 +32,6 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         RequireKey.key = key!
     }
     
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEventBus()
@@ -64,7 +62,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
             if response.result.success.isEmpty{
                 AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.error, isAction: false)
             }else{
-                AuthenLogin().storeLogin(self.arrDataRequest[0], self.arrDataRequest[1], KeyName.staticKey)
+                AuthenLogin().storeLogin(self.arrDataRequest[0], response.result.token, response.result.dynamicKey)
                 AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.success, isAction: true)
             }
             
@@ -160,5 +158,6 @@ extension UIViewController {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
         self.present(navRegisterController, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

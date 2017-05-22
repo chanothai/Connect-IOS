@@ -10,8 +10,8 @@ import Foundation
 
 struct DefaultKey {
     static let usernameKey = "username_key"
-    static let passwordKey = "password_key"
-    static let encryptionKey = "encryption_key"
+    static let tokenKey = "token_key"
+    static let dynamicKey = "dynamic_key"
 }
 class AuthenLogin {
     private var preference: UserDefaults?
@@ -20,10 +20,10 @@ class AuthenLogin {
         preference = UserDefaults.standard
     }
     
-    public func storeLogin(_ username:String, _ password:String, _ key:String) {
+    public func storeLogin(_ username:String, _ token:String, _ key:String) {
         preference?.set(username, forKey: DefaultKey.usernameKey)
-        preference?.set(password, forKey: DefaultKey.passwordKey)
-        preference?.set(key, forKey: DefaultKey.encryptionKey)
+        preference?.set(token, forKey: DefaultKey.tokenKey)
+        preference?.set(key, forKey: DefaultKey.dynamicKey)
         preference?.synchronize()
     }
     
@@ -33,8 +33,12 @@ class AuthenLogin {
             arrLogin.append(username)
         }
         
-        if let password = preference?.string(forKey: DefaultKey.passwordKey) {
-            arrLogin.append(password)
+        if let token = preference?.string(forKey: DefaultKey.tokenKey) {
+            arrLogin.append(token)
+        }
+        
+        if let dynamicKey = preference?.string(forKey: DefaultKey.dynamicKey){
+            arrLogin.append(dynamicKey)
         }
         
         //clear preference
