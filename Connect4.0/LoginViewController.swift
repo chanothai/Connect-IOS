@@ -25,7 +25,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         iniProperties()
-        StyleTableView(loginTableView).baseStyle()
+        loginTableView.baseTableStyle()
         setLabelAction()
     
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
@@ -121,7 +121,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         parameters[UserLogin.password] = arrDataRequest[1]
         
         showLoading()
-        ClientHttp.getInstace(self).requestLogin(FormatterRequest(key!).login(parameters))
+        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

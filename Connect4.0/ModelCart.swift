@@ -11,9 +11,11 @@ import Foundation
 class ModelCart {
     private static var me:ModelCart?
     private var logingResult:LoginResult?
+    private var userInfo:UserInfoResponse?
     
     init() {
         logingResult = LoginResult()
+        userInfo = UserInfoResponse()
     }
     
     public static func getInstance() -> ModelCart {
@@ -25,5 +27,15 @@ class ModelCart {
     
     public func getLoginResult() -> LoginResult {
         return logingResult!
+    }
+    
+    
+    var getUserInfo:UserInfoResponse {
+        get{
+            return userInfo!
+        }
+        set{
+            userInfo = newValue
+        }
     }
 }

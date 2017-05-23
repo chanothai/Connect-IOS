@@ -22,6 +22,9 @@ struct PathURL {
     static var apiAuthSecure = "Api/secure/getOauthTokenFromUserToken.json"
     
     static var apiUserInfo = "Api/getUserInfo.json?authToken="
+    
+    static var apiVersion = "Api/version.json"
+    static var currentVersion = "0.0.1"
 }
 
 class ClientHttp {
@@ -30,18 +33,38 @@ class ClientHttp {
     private var mySelf:BaseViewController?
     private let header: HTTPHeaders?
     
-    init(_ mySelf:BaseViewController) {
+    init() {
         self.url = PathURL.urlServer
-        self.mySelf = mySelf
+
         
         header = ["Accept":"application/json"]
     }
     
-    public static func getInstace(_ mySelf: BaseViewController) -> ClientHttp {
+    public static func getInstace() -> ClientHttp {
         if me == nil {
-            me = ClientHttp(mySelf)
+            me = ClientHttp()
         }
         return me!
+    }
+    
+    public func checkVersion(){
+        let apiPath:String? = ("\(url!)\(PathURL.apiVersion)")
+        print(apiPath!)
+        
+        guard let realUrl = URL(string: apiPath!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .get).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                FormatterResponse.parseJsonVersion(data: response.result.value! as AnyObject)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
     }
     
     public func requestLogin(_ jsonData: Dictionary<String, Any>){
@@ -114,5 +137,10 @@ class ClientHttp {
                 break
             }
         }
+    }
+}
+extension DataResponse {
+    func checkResponse(_ formatt:FormatterResponse) {
+        
     }
 }

@@ -105,7 +105,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-4z-lF9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-4z-lF9">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="aI2-UY-EFU">
@@ -147,25 +147,27 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="80" id="ceR-Z0-8z6">
-                                        <rect key="frame" x="0.0" y="184" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellMenuSideBar" rowHeight="56" id="ceR-Z0-8z6" customClass="SideMenuTableViewCell" customModule="Connect4_0" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="184" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ceR-Z0-8z6" id="9aa-wv-BEs">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="gBU-Gx-Plu">
-                                                    <rect key="frame" x="16" y="8" width="343" height="63.5"/>
+                                                    <rect key="frame" x="16" y="8.5" width="343" height="40"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9QE-Fz-48c">
-                                                            <rect key="frame" x="0.0" y="12" width="40" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="4Rc-yr-xfW"/>
                                                                 <constraint firstAttribute="width" constant="40" id="Am2-Cf-p1F"/>
+                                                                <constraint firstAttribute="width" secondItem="9QE-Fz-48c" secondAttribute="height" multiplier="1:1" id="xYj-aI-JEf"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECn-fv-EwW">
-                                                            <rect key="frame" x="64" y="22" width="279" height="19.5"/>
+                                                            <rect key="frame" x="64" y="10.5" width="279" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -181,8 +183,16 @@
                                                 <constraint firstItem="gBU-Gx-Plu" firstAttribute="leading" secondItem="9aa-wv-BEs" secondAttribute="leading" constant="16" id="c6x-Tl-6DZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="sectionImg" destination="9QE-Fz-48c" id="Ztf-Z3-xz4"/>
+                                            <outlet property="sectionLabel" destination="ECn-fv-EwW" id="fGT-E5-VhC"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="G19-cm-viI" id="2gh-sn-921"/>
+                                    <outlet property="delegate" destination="G19-cm-viI" id="3mW-zu-l7Z"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -193,6 +203,11 @@
                             <constraint firstItem="gwC-sc-WAM" firstAttribute="top" secondItem="t5B-4z-lF9" secondAttribute="bottom" id="kLU-wT-mx3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nameLabel" destination="2hF-OB-pr9" id="BPz-3d-n3p"/>
+                        <outlet property="profileIMG" destination="mVf-hl-2VJ" id="fOc-Wd-RGE"/>
+                        <outlet property="sidebarMenuTableView" destination="t5B-4z-lF9" id="W2n-En-KVf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ZQ-lV-t0h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -333,7 +348,7 @@
         <!--Bloc View Controller-->
         <scene sceneID="i86-ah-P3c">
             <objects>
-                <viewController storyboardIdentifier="BlocController" id="1dM-z4-W21" customClass="BlocViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BlocController" id="1dM-z4-W21" customClass="BlocViewController" customModule="Connect4_0" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="snQ-GN-RKx"/>
                         <viewControllerLayoutGuide type="bottom" id="02S-Rf-aWg"/>

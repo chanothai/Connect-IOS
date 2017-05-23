@@ -134,6 +134,21 @@ class FormatterResponse {
             SwiftEventBus.post("UserInfoResponse", sender: userInfo)
         }
     }
+    
+    public static func parseJsonVersion(data: AnyObject){
+        let jsonResult = data as? NSDictionary
+        
+        let result = jsonResult?["result"] as AnyObject
+        let success:String = (result["Success"] as? String)!
+        let data = result["Data"] as AnyObject
+        let newVersion = (data["version"] as? String)!
+        
+        if success == "OK" {
+            if newVersion == PathURL.currentVersion {
+                SwiftEventBus.post("CheckVersion")
+            }
+        }
+    }
 }
 
 extension String {

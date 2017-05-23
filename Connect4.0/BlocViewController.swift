@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import IGListKit
 import SWRevealViewController
 import SwiftEventBus
 
 class BlocViewController: BaseViewController {
     
     private var restoreInformation:[String]?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSideBar()
@@ -52,28 +52,19 @@ class BlocViewController: BaseViewController {
             let response:ApplicationResponse = result.object as! ApplicationResponse
             if response.success == "OK" {
                 print(response.result.authToken)
-                ClientHttp.getInstace(self).requestUserInfo(response.result.authToken)
+                ClientHttp.getInstace().requestUserInfo(response.result.authToken)
             }
         }
         
         SwiftEventBus.onMainThread(self, name: "UserInfoResponse") { (result) in
             let response:UserInfoResponse = result.object as! UserInfoResponse
-            print(response)
+            ModelCart.getInstance().getUserInfo = response            
             self.hideLoading()
         }
     }
 }
 
 extension BaseViewController {
-    func setSideBar() {
-        if (self.revealViewController() != nil) {
-            self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            self.navigationItem.leftBarButtonItem?.target = revealViewController()
-            self.navigationItem.leftBarButtonItem?.action = #selector(SWRevealViewController.revealToggle(_:))
-        }
-    }
-    
     func setModelUser(_ information:[String]){
         var application = [String: String]()
         application[ApplicationKey.clientID] = "abcdef"
@@ -93,6 +84,6 @@ extension BaseViewController {
         requestUser["username"] = information[0]
         
         self.showLoading()
-        ClientHttp.getInstace(self).requestAuthToken(FormatterRequest(RequireKey.key).application(request, requestUser))
+        ClientHttp.getInstace().requestAuthToken(FormatterRequest(RequireKey.key).application(request, requestUser))
     }
 }

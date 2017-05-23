@@ -42,3 +42,11 @@ extension BaseViewController: BaseViewModelDelegate {
     }
 }
 
+extension UITableView {
+    public func baseTableStyle(){
+        self.backgroundColor = UIColor.white
+        self.tableFooterView = UIView(frame: CGRect.zero) //remove empty rows of table
+        self.separatorColor = UIColor.clear
+    }
+}
+

@@ -24,7 +24,7 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         initParamater()
-        StyleTableView(registerTableView).baseStyle()
+        registerTableView.baseTableStyle()
         iniArrayTextField()
         
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
@@ -189,7 +189,7 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         parameters[UserRegister.rePassword] = arrTextField[7]
         
         showLoading()
-        ClientHttp.getInstace(self).requestRegister(FormatterRequest(key!).register(parameters))
+        ClientHttp.getInstace().requestRegister(FormatterRequest(key!).register(parameters))
     }
     
     private func setEventBus(){
