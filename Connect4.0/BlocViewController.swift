@@ -46,21 +46,35 @@ class BlocViewController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     
-    private func setEventBus() {
+    func setEventBus() {
         SwiftEventBus.onMainThread(self, name: "ResponseApplication"){
             (result) in
             let response:ApplicationResponse = result.object as! ApplicationResponse
             if response.success == "OK" {
                 print(response.result.authToken)
                 ClientHttp.getInstace().requestUserInfo(response.result.authToken)
+                ClientHttp.getInstace().requestUserBloc(response.result.authToken)
             }
         }
         
         SwiftEventBus.onMainThread(self, name: "UserInfoResponse") { (result) in
             let response:UserInfoResponse = result.object as! UserInfoResponse
-            ModelCart.getInstance().getUserInfo = response            
+            ModelCart.getInstance().getUserInfo = response
+            
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
             self.hideLoading()
         }
+    }
+    
+    func setCategory() {
+        let categoryBlocView:CategoryBlocView = Bundle.main.loadNibNamed("CategoryBloc", owner: self, options: nil)?.first as! CategoryBlocView
+        let url = URL(string: ModelCart.getInstance().getUserInfo.profile_image_path)!
+        
+        categoryBlocView.categoryIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+
+        
     }
 }
 

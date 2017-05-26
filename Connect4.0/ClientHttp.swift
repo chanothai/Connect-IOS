@@ -25,6 +25,8 @@ struct PathURL {
     
     static var apiVersion = "Api/version.json"
     static var currentVersion = "0.0.1"
+    
+    static var apiUserBloc = "Api/getUserBlocs.json?authToken="
 }
 
 class ClientHttp {
@@ -138,9 +140,22 @@ class ClientHttp {
             }
         }
     }
-}
-extension DataResponse {
-    func checkResponse(_ formatt:FormatterResponse) {
+    
+    public func requestUserBloc(_ authToken:String) {
+        let apiPath:String? = "\(url!)\(PathURL.apiUserBloc)\(authToken)"
+        guard let realUrl = URL(string: apiPath!) else {
+            return
+        }
         
+        Alamofire.request(realUrl, method: .get).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                print(response.result.value!)
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
     }
 }

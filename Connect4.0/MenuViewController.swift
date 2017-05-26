@@ -39,7 +39,7 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         arrMenu = SidebarMenuModel.setMenu()
         if (arrMenu?.count)! > 0 {
@@ -51,7 +51,7 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellMenuSideBar", for: indexPath) as! SideMenuTableViewCell
-        
+    
         cell.sectionImg.image = UIImage(named: arrImage[indexPath.row])
         cell.sectionImg.image = cell.sectionImg.image!.withRenderingMode(.alwaysTemplate)
         cell.sectionImg.tintColor = UIColor.lightGray
@@ -61,6 +61,27 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        sidebarMenuTableView.deselectRow(at: indexPath, animated: false)
+        
+        switch indexPath.row {
+        case 0:
+            print("Feed")
+            break
+        case 1:
+            print("ข้อมูลส่วนตัว")
+            break
+        case 2:
+            break
+        case 3:
+            break
+        default:
+            print("ออกจากระบบ")
+            self.actionSignOut()
+            break
+        }
+    }
+
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -81,6 +102,32 @@ extension BaseViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             self.navigationItem.leftBarButtonItem?.target = revealViewController()
             self.navigationItem.leftBarButtonItem?.action = #selector(SWRevealViewController.revealToggle(_:))
+        }
+    }
+    
+    func actionSignOut(){
+        let optionMenu = UIAlertController(title: nil, message: "if you sign out of your account, all your information will be removed from this app", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let callActionHandler = { (action:UIAlertAction!) -> Void in
+            self.intentToLogin()
+        }
+        
+        let signOutAction = UIAlertAction(title: "Sign Out", style: .default, handler: callActionHandler)
+        
+        optionMenu.addAction(cancelAction)
+        optionMenu.addAction(signOutAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func intentToLogin(){
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
+        
+        self.present(loginController, animated: true) {
+            if let bundle = Bundle.main.bundleIdentifier {
+                UserDefaults.standard.removePersistentDomain(forName: bundle)
+            }
         }
     }
 }

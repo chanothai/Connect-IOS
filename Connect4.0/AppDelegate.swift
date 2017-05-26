@@ -30,6 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let revealController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
                 self.window?.rootViewController = revealController
                 self.window?.makeKeyAndVisible()
+            }else{
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
+                self.window?.rootViewController = loginController
+                self.window?.makeKeyAndVisible()
             }
         }
     }

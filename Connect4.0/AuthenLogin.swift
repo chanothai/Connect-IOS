@@ -40,12 +40,6 @@ class AuthenLogin {
         if let dynamicKey = preference?.string(forKey: DefaultKey.dynamicKey){
             arrLogin.append(dynamicKey)
         }
-        
-        //clear preference
-//        if let bundle = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundle)
-//        }
-        
         return arrLogin
     }
 }

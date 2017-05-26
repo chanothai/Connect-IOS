@@ -149,6 +149,26 @@ class FormatterResponse {
             }
         }
     }
+    
+    public static func parseJsonUserBloc(data: AnyObject) {
+        let jsonResult = data as? NSDictionary
+        
+        let result = jsonResult?["result"] as AnyObject
+        guard let success:String = result["Success"] as? String else {
+            let error:String = (result["Error"] as? String)!
+            print(error)
+            return
+        }
+        
+        if success == "OK" {
+            let datas = result["Data"] as? [[String: Any]]
+            
+            for i in 0 ..< (datas?.count)! {
+                let blocCategory = datas?[i]["BlocCategory"] as AnyObject
+                
+            }
+        }
+    }
 }
 
 extension String {
