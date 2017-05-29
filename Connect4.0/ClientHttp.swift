@@ -143,6 +143,7 @@ class ClientHttp {
     
     public func requestUserBloc(_ authToken:String) {
         let apiPath:String? = "\(url!)\(PathURL.apiUserBloc)\(authToken)"
+        print(apiPath!)
         guard let realUrl = URL(string: apiPath!) else {
             return
         }
@@ -150,7 +151,7 @@ class ClientHttp {
         Alamofire.request(realUrl, method: .get).responseJSON { (response) in
             switch response.result {
             case .success:
-                print(response.result.value!)
+                FormatterResponse.parseJsonUserBloc(data: response.result.value! as AnyObject)
                 break
             case .failure(let error):
                 print(error)

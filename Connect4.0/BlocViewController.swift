@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IGListKit
 import SWRevealViewController
 import SwiftEventBus
 
@@ -23,8 +22,10 @@ class BlocViewController: BaseViewController {
     
     private func initParameter(){
         restoreInformation = AuthenLogin().restoreLogin() //0 user, 1 token, 2 dynamickey
-        let key = [UInt8](Data(base64Encoded: (restoreInformation?[2])!)!)
-        RequireKey.key = key
+        if (restoreInformation?.count)! > 0 {
+            let key = [UInt8](Data(base64Encoded: (restoreInformation?[2])!)!)
+            RequireKey.key = key
+        }
         
         self.setModelUser(restoreInformation!)
     }
@@ -64,6 +65,10 @@ class BlocViewController: BaseViewController {
         }
         
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
+            if let responses:[ResultCategory] = result.object as? [ResultCategory] {
+                print(responses.count)
+            }
+            
             self.hideLoading()
         }
     }
