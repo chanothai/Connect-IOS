@@ -151,7 +151,7 @@
                                         <rect key="frame" x="0.0" y="184" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ceR-Z0-8z6" id="9aa-wv-BEs">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="gBU-Gx-Plu">
@@ -383,24 +383,25 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6P-oY-fw8">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                                         <subviews>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="xSJ-av-fjT">
-                                                <rect key="frame" x="0.0" y="164" width="375" height="37"/>
-                                                <color key="pageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                <color key="currentPageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </pageControl>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayw-IP-mwe">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayw-IP-mwe">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="1dM-z4-W21" id="ruB-nB-bIz"/>
+                                                </connections>
                                             </scrollView>
+                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="20x-vi-Z2I">
+                                                <rect key="frame" x="0.0" y="164" width="375" height="37"/>
+                                            </pageControl>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="xSJ-av-fjT" secondAttribute="bottom" id="1qj-Pk-7Fy"/>
-                                            <constraint firstAttribute="trailing" secondItem="ayw-IP-mwe" secondAttribute="trailing" id="SRS-sW-OPf"/>
-                                            <constraint firstItem="xSJ-av-fjT" firstAttribute="leading" secondItem="w6P-oY-fw8" secondAttribute="leading" id="ZLC-8L-XzK"/>
-                                            <constraint firstItem="ayw-IP-mwe" firstAttribute="top" secondItem="w6P-oY-fw8" secondAttribute="top" id="cIj-OU-awU"/>
-                                            <constraint firstAttribute="trailing" secondItem="xSJ-av-fjT" secondAttribute="trailing" id="r9K-hT-Mb8"/>
-                                            <constraint firstAttribute="bottom" secondItem="ayw-IP-mwe" secondAttribute="bottom" id="vvu-eA-PL1"/>
-                                            <constraint firstItem="ayw-IP-mwe" firstAttribute="leading" secondItem="w6P-oY-fw8" secondAttribute="leading" id="z00-Ur-hIl"/>
+                                            <constraint firstItem="ayw-IP-mwe" firstAttribute="top" secondItem="w6P-oY-fw8" secondAttribute="top" id="2ny-4Q-VCN"/>
+                                            <constraint firstAttribute="trailing" secondItem="ayw-IP-mwe" secondAttribute="trailing" id="6HG-Q3-nr6"/>
+                                            <constraint firstAttribute="bottom" secondItem="20x-vi-Z2I" secondAttribute="bottom" id="YOI-l2-Rxr"/>
+                                            <constraint firstItem="20x-vi-Z2I" firstAttribute="leading" secondItem="w6P-oY-fw8" secondAttribute="leading" id="YiT-L9-SwH"/>
+                                            <constraint firstItem="ayw-IP-mwe" firstAttribute="leading" secondItem="w6P-oY-fw8" secondAttribute="leading" id="iWm-Qh-FvM"/>
+                                            <constraint firstAttribute="bottom" secondItem="ayw-IP-mwe" secondAttribute="bottom" id="wn8-iv-bls"/>
+                                            <constraint firstAttribute="trailing" secondItem="20x-vi-Z2I" secondAttribute="trailing" id="xEp-EZ-CrY"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zpp-lQ-o3M">
@@ -426,6 +427,11 @@
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="categoryScrollView" destination="ayw-IP-mwe" id="Cqh-KJ-99Z"/>
+                        <outlet property="layoutCategory" destination="w6P-oY-fw8" id="nWC-cf-ELh"/>
+                        <outlet property="pageControl" destination="20x-vi-Z2I" id="Rf7-ov-Utm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDK-jL-avV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

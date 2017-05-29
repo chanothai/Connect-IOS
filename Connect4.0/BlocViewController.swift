@@ -10,9 +10,16 @@ import UIKit
 import SWRevealViewController
 import SwiftEventBus
 
-class BlocViewController: BaseViewController {
+class BlocViewController: BaseViewController, UIScrollViewDelegate {
     
+    //MAKE : outlet
+    @IBOutlet var categoryScrollView: UIScrollView!
+    @IBOutlet var pageControl: UIPageControl!
+    @IBOutlet var layoutCategory: UIView!
+    //MAKE : Properties
     private var restoreInformation:[String]?
+    private var categoryBlocView:[CategoryBlocView]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSideBar()
@@ -28,6 +35,15 @@ class BlocViewController: BaseViewController {
         }
         
         self.setModelUser(restoreInformation!)
+    }
+    
+    private func initCategory(_ category:[ResultCategory]){
+        categoryBlocView = createSlideCategory(category)
+        setCategoryScrollView()
+        
+        pageControl.numberOfPages = (categoryBlocView?.count)!
+        pageControl.currentPage = 0
+        view.bringSubview(toFront: pageControl)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,19 +83,40 @@ class BlocViewController: BaseViewController {
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
             if let responses:[ResultCategory] = result.object as? [ResultCategory] {
                 print(responses.count)
+                self.initCategory(responses)
             }
             
             self.hideLoading()
         }
     }
     
-    func setCategory() {
-        let categoryBlocView:CategoryBlocView = Bundle.main.loadNibNamed("CategoryBloc", owner: self, options: nil)?.first as! CategoryBlocView
-        let url = URL(string: ModelCart.getInstance().getUserInfo.profile_image_path)!
+    func createSlideCategory(_ category:[ResultCategory]) -> [CategoryBlocView]{
+        var numberCategoryView = [CategoryBlocView]()
+        for i in 0 ..< category.count {
+            let categoryView:CategoryBlocView = Bundle.main.loadNibNamed("CategoryBloc", owner: self, options: nil)?.first as! CategoryBlocView
+            
+            let url = URL(string: category[i].resultCategory.bloc_category_image_path)!
+            categoryView.categoryIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+            
+            numberCategoryView.append(categoryView)
+        }
         
-        categoryBlocView.categoryIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
-
+        return numberCategoryView
+    }
+    
+    func setCategoryScrollView() {
+        categoryScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        categoryScrollView.contentSize = CGSize(width: view.frame.width * CGFloat((categoryBlocView?.count)!), height: layoutCategory.frame.height)
         
+        for i in 0 ..< (categoryBlocView?.count)! {
+            categoryBlocView?[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: -65, width: view.frame.width, height: view.frame.height)
+            categoryScrollView.addSubview((categoryBlocView?[i])!)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
+        pageControl.currentPage = Int(pageIndex)
     }
 }
 
