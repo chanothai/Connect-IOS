@@ -10,7 +10,7 @@ import Foundation
 
 struct ResultCategory {
     private var _resultCategory:BlocCategoryResponse?
-    private var _resultBloc:Bloc?
+    private var _resultBloc:[Bloc]?
     
     var resultCategory:BlocCategoryResponse {
         get {
@@ -21,7 +21,7 @@ struct ResultCategory {
         }
     }
     
-    var resultBloc:Bloc {
+    var resultBloc:[Bloc] {
         get {
             return _resultBloc!
         }

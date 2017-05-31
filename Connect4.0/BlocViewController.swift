@@ -7,24 +7,30 @@
 //
 
 import UIKit
+import IGListKit
 import SWRevealViewController
 import SwiftEventBus
 
-class BlocViewController: BaseViewController, UIScrollViewDelegate {
+class BlocViewController: BaseViewController, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     //MAKE : outlet
     @IBOutlet var categoryScrollView: UIScrollView!
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var layoutCategory: UIView!
+    @IBOutlet var blocCollectionView: UICollectionView!
+    
     //MAKE : Properties
     private var restoreInformation:[String]?
     private var categoryBlocView:[CategoryBlocView]?
+    var arrBloc:[ResultCategory]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSideBar()
         setEventBus()
         initParameter()
+        
+        blocCollectionView.delegate = self
     }
     
     private func initParameter(){
@@ -34,7 +40,7 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate {
             RequireKey.key = key
         }
         
-        self.setModelUser(restoreInformation!)
+        setModelUser(restoreInformation!)
     }
     
     private func initCategory(_ category:[ResultCategory]){
@@ -43,7 +49,6 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate {
         
         pageControl.numberOfPages = (categoryBlocView?.count)!
         pageControl.currentPage = 0
-        view.bringSubview(toFront: pageControl)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,8 +87,14 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate {
         
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
             if let responses:[ResultCategory] = result.object as? [ResultCategory] {
-                print(responses.count)
+                self.arrBloc = responses
+                print(responses[0].resultBloc.count)
+                
+                let str:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[0])!
+                print(str.bloc_icon_path)
                 self.initCategory(responses)
+                
+                self.blocCollectionView.dataSource = self
             }
             
             self.hideLoading()
@@ -117,10 +128,47 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
         pageControl.currentPage = Int(pageIndex)
+        
+        switch pageControl.currentPage {
+        case 0:
+            blocCollectionView.reloadData()
+            break
+        case 1:
+            blocCollectionView.reloadData()
+            break
+        default:
+            break
+        }
     }
+    
+    
+    //Collection View
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (arrBloc?[pageControl.currentPage].resultBloc.count)!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = Bundle.main.loadNibNamed("blocCell", owner: self, options: nil)?.first as! BlocCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlocCell", for: indexPath) as! BlocCollectionViewCell
+        
+        let bloc:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[indexPath.row])!
+        let url = URL(string: bloc.bloc_icon_path)!
+        
+        cell.blocIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        
+        cell.blocLabel.text = bloc.bloc_name
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat = (collectionView.frame.width / 2) - 2
+        
+        return CGSize(width: width, height: width - 10)
+    }
+    
 }
 
-extension BaseViewController {
+extension BlocViewController {
     func setModelUser(_ information:[String]){
         var application = [String: String]()
         application[ApplicationKey.clientID] = "abcdef"

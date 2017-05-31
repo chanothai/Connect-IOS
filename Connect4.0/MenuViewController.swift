@@ -17,6 +17,7 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var profileIMG: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     
+    
     //Make: property
     var arrMenu:[String]!
     var arrImage:[String]!

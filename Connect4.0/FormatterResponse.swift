@@ -183,8 +183,8 @@ class FormatterResponse {
                 }
                 
                 resultCategory.resultCategory = categoryModel
-            
                 
+                var arrBloc = [Bloc]()
                 let bloc = datas?[i]["Bloc"] as! [[String: Any]]
                 for j in 0 ..< bloc.count {
                     var blocModel = Bloc()
@@ -221,14 +221,17 @@ class FormatterResponse {
                         blocModel.modified = modified
                     }
                     
-                    resultCategory.resultBloc = blocModel
+                    arrBloc.append(blocModel)
+                    resultCategory.resultBloc = arrBloc
                 }
                 
                 resultResponse.append(resultCategory)
                 print(resultResponse)
-                
-                SwiftEventBus.post("UserBlocResponse", sender: resultResponse)
             }
+            
+            SwiftEventBus.post("UserBlocResponse", sender: resultResponse)
+        }else{
+            
         }
     }
 }
