@@ -37,8 +37,6 @@ class ClientHttp {
     
     init() {
         self.url = PathURL.urlServer
-
-        
         header = ["Accept":"application/json"]
     }
     

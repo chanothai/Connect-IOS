@@ -11,7 +11,7 @@ import IGListKit
 import SWRevealViewController
 import SwiftEventBus
 
-class BlocViewController: BaseViewController, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+class BlocViewController: BaseViewController {
     
     //MAKE : outlet
     @IBOutlet var categoryScrollView: UIScrollView!
@@ -64,8 +64,12 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate, UICollection
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowBlocDetail" {
+            if let indexPaths = blocCollectionView?.indexPathsForSelectedItems{
+//                performSegue(withIdentifier: "ShowBlocDetail", sender: self)
+                blocCollectionView?.deselectItem(at: indexPaths[0], animated: false)
+            }
+        }
     }
     
     func setEventBus() {
@@ -124,48 +128,6 @@ class BlocViewController: BaseViewController, UIScrollViewDelegate, UICollection
             categoryScrollView.addSubview((categoryBlocView?[i])!)
         }
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
-        pageControl.currentPage = Int(pageIndex)
-        
-        switch pageControl.currentPage {
-        case 0:
-            blocCollectionView.reloadData()
-            break
-        case 1:
-            blocCollectionView.reloadData()
-            break
-        default:
-            break
-        }
-    }
-    
-    
-    //Collection View
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (arrBloc?[pageControl.currentPage].resultBloc.count)!
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = Bundle.main.loadNibNamed("blocCell", owner: self, options: nil)?.first as! BlocCollectionViewCell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlocCell", for: indexPath) as! BlocCollectionViewCell
-        
-        let bloc:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[indexPath.row])!
-        let url = URL(string: bloc.bloc_icon_path)!
-        
-        cell.blocIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
-        
-        cell.blocLabel.text = bloc.bloc_name
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = (collectionView.frame.width / 2) - 2
-        
-        return CGSize(width: width, height: width - 10)
-    }
-    
 }
 
 extension BlocViewController {
@@ -189,5 +151,50 @@ extension BlocViewController {
         
         self.showLoading()
         ClientHttp.getInstace().requestAuthToken(FormatterRequest(RequireKey.key).application(request, requestUser))
+    }
+}
+
+extension BlocViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
+        pageControl.currentPage = Int(pageIndex)
+        
+        switch pageControl.currentPage {
+        case 0:
+            blocCollectionView.reloadData()
+            break
+        case 1:
+            blocCollectionView.reloadData()
+            break
+        default:
+            break
+        }
+    }
+}
+
+extension BlocViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat = (collectionView.frame.width / 2) - 2
+        
+        return CGSize(width: width, height: width - 10)
+    }
+}
+
+extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+    //Collection View
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (arrBloc?[pageControl.currentPage].resultBloc.count)!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlocCell", for: indexPath) as! BlocCollectionViewCell
+        
+        let bloc:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[indexPath.row])!
+        let url = URL(string: bloc.bloc_icon_path)!
+        
+        cell.blocIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        
+        cell.blocLabel.text = bloc.bloc_name
+        return cell
     }
 }

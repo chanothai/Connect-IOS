@@ -35,8 +35,9 @@
 		DE64D7761ED5679000FE71CC /* CategoryBloc.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE64D7751ED5679000FE71CC /* CategoryBloc.xib */; };
 		DE64D7781ED5687400FE71CC /* CategoryBlocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */; };
 		DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */; };
+		DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
-		DE7E9FA81EDEFF0B00112EC5 /* blocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* blocCell.xib */; };
+		DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */; };
 		DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90814E1EBC725100E90C16 /* AppDelegate.swift */; };
 		DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9081501EBC725100E90C16 /* RegisterViewController.swift */; };
 		DE9081541EBC725100E90C16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE9081521EBC725100E90C16 /* Main.storyboard */; };
@@ -83,8 +84,9 @@
 		DE64D7751ED5679000FE71CC /* CategoryBloc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryBloc.xib; sourceTree = "<group>"; };
 		DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBlocView.swift; sourceTree = "<group>"; };
 		DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBlocResponse.swift; sourceTree = "<group>"; };
+		DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocContentViewController.swift; sourceTree = "<group>"; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
-		DE7E9FA71EDEFF0B00112EC5 /* blocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = blocCell.xib; sourceTree = "<group>"; };
+		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
 		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				D358D0681ED1DD7400B39E94 /* BlocViewController.swift */,
 				D358D0701ED1E0A700B39E94 /* NavBlocController.swift */,
 				D358D0721ED1E3FB00B39E94 /* RevealViewController.swift */,
+				DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */,
 			);
 			name = BlocController;
 			sourceTree = "<group>";
@@ -407,7 +410,7 @@
 				DE9081671EBC9F1C00E90C16 /* TextFieldCell.xib */,
 				DE90816B1EBCA06800E90C16 /* ButtonCell.xib */,
 				DE64D7751ED5679000FE71CC /* CategoryBloc.xib */,
-				DE7E9FA71EDEFF0B00112EC5 /* blocCell.xib */,
+				DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */,
 			);
 			name = Xib;
 			sourceTree = "<group>";
@@ -498,7 +501,7 @@
 				DE64D7761ED5679000FE71CC /* CategoryBloc.xib in Resources */,
 				DE9081561EBC725100E90C16 /* Assets.xcassets in Resources */,
 				DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */,
-				DE7E9FA81EDEFF0B00112EC5 /* blocCell.xib in Resources */,
+				DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */,
 				DE9081541EBC725100E90C16 /* Main.storyboard in Resources */,
 				DE9081691EBC9F1C00E90C16 /* TextFieldCell.xib in Resources */,
 			);
@@ -587,6 +590,7 @@
 				DE9081681EBC9F1C00E90C16 /* TextFieldCell.swift in Sources */,
 				DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */,
 				DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */,
+				DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */,
 				DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,

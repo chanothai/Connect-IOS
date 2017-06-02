@@ -9,7 +9,7 @@
 import SwiftEventBus
 import UIKit
 
-class RegisterViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFieldDelegate {
 
     // MAKE outlet
     @IBOutlet var registerTableView: UITableView!
@@ -74,55 +74,6 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         dismiss(animated: true, completion: nil)
     }
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrCellData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if arrCellData[indexPath.row].cell == 8 {
-            let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
-            cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
-            cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
-            return cell
-        }else{
-            let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
-            cell.inputData.placeholder = arrCellData[indexPath.row].text
-            cell.inputData.delegate = self
-            cell.inputData.inputAccessoryView = addDoneOnKeyBoard()
-            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
-            
-            if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
-                cell.inputData.keyboardType = UIKeyboardType.numberPad
-            }
-            else if arrCellData[indexPath.row].cell == 3 {
-                let datePickerView:UIDatePicker = UIDatePicker()
-                datePickerView.datePickerMode = UIDatePickerMode.date
-                cell.inputData.inputView = datePickerView
-                datePickerView.addTarget(self, action: #selector(self.datePickerValueChanged), for: UIControlEvents.valueChanged)
-                
-                dateTextField = cell.inputData
-                
-            }
-            else if arrCellData[indexPath.row].cell == 5 {
-                cell.inputData.keyboardType = UIKeyboardType.emailAddress
-            }
-            else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
-                cell.inputData.isSecureTextEntry = true
-            }
-            
-            if !arrTextField[indexPath.row].isEmpty {
-                cell.inputData.text = arrTextField[indexPath.row]
-            }
-            
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
-    }
-    
     func datePickerValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.medium
@@ -160,20 +111,65 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         return (textFieldIndexPath?.row)!
     }
     
-    private func addDoneOnKeyBoard() -> UIToolbar {
-        let toolBar = UIToolbar()
-        toolBar.sizeToFit()
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.doneClicked))
-        
-        toolBar.setItems([flexibleSpace, doneButton], animated: false)
-        return toolBar
+    private func setEventBus(){
+        SwiftEventBus.onMainThread(self, name: "ResponseRegister") { result in
+            let response:LoginResponse = result.object as! LoginResponse
+            
+            if response.result.success.isEmpty{
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
+            }else{
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
+            }
+            self.hideLoading()
+        }
+    }
+}
+
+extension RegisterViewController : UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrCellData.count
     }
     
-    @objc private func doneClicked(){
-        view.endEditing(true)
-        registerTableView.contentOffset = CGPoint(x: registerTableView.contentOffset.x , y: 0)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if arrCellData[indexPath.row].cell == 8 {
+            let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
+            cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
+            cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
+            return cell
+        }else{
+            let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
+            cell.inputData.placeholder = arrCellData[indexPath.row].text
+            cell.inputData.delegate = self
+            cell.inputData.inputAccessoryView = addDoneOnKeyBoard()
+            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
+            
+            if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
+cell.inputData.keyboardType = UIKeyboardType.numberPad
+            }
+            else if arrCellData[indexPath.row].cell == 3 {
+                let datePickerView:UIDatePicker = UIDatePicker()
+                datePickerView.datePickerMode = UIDatePickerMode.date
+                cell.inputData.inputView = datePickerView
+                datePickerView.addTarget(self, action: #selector(self.datePickerValueChanged), for: UIControlEvents.valueChanged)
+                
+                dateTextField = cell.inputData
+                
+            }
+            else if arrCellData[indexPath.row].cell == 5 {
+                cell.inputData.keyboardType = UIKeyboardType.emailAddress
+            }
+            else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
+                cell.inputData.isSecureTextEntry = true
+            }
+            
+            cell.inputData.text = arrTextField[indexPath.row]
+            
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
     
     @objc private func doRegister() {
@@ -189,24 +185,24 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITableVi
         parameters[UserRegister.rePassword] = arrTextField[7]
         
         showLoading()
-        ClientHttp.getInstace().requestRegister(FormatterRequest(key!).register(parameters))
+        ClientHttp.getInstace().requestRegister(FormatterRequest(RequireKey.key).register(parameters))
     }
     
-    private func setEventBus(){
-        SwiftEventBus.onMainThread(self, name: "ResponseRegister") { result in
-            let response:LoginResponse = result.object as! LoginResponse
-            
-            if response.result.success.isEmpty{
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
-            }else{
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
-            }
-            self.hideLoading()
-        }
+    private func addDoneOnKeyBoard() -> UIToolbar {
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(self.doneClicked))
+        
+        toolBar.setItems([flexibleSpace, doneButton], animated: false)
+        return toolBar
     }
-}
+    
+    @objc private func doneClicked(){
+        view.endEditing(true)
+        registerTableView.contentOffset = CGPoint(x: registerTableView.contentOffset.x , y: 0)
+    }
 
-extension UITextView {
-    
 }
 
