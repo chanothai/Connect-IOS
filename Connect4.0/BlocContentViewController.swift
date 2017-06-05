@@ -12,29 +12,36 @@ import WebKit
 class BlocContentViewController: UIViewController {
 
     //MAKE: outlet
-    var webView: WKWebView!
+    var webView = WKWebView()
+    var progBar = UIProgressView()
     
     //MAKE: properties
     var pathURL:String?
+    var blocInformation:Bloc?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let url = URL(string: "http://www.appcoda.com/contact") {
+        webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        progBar = UIProgressView(frame: CGRect(x: 0, y: 64, width: self.view.frame.width, height: 50))
+        progBar.progress = 0.0
+        progBar.tintColor = UIColor.cyan
+        webView.addSubview(progBar)
+
+        
+        if let url = URL(string: (blocInformation?.bloc_url)!) {
             let request = URLRequest(url: url)
             webView.load(request)
+            webView.navigationDelegate = self
         }
-    }
-    
-    override func loadView() {
-        webView = WKWebView()
-        view = webView
+        
+        view.addSubview(webView)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     /*
     // MARK: - Navigation
@@ -45,5 +52,14 @@ class BlocContentViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+extension BlocContentViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let restore = AuthenLogin().restoreLogin()
+        print(restore[1])
+        let injectToken:String = "javascript:(function() {var inputs = document.getElementById('UserToken');inputs.value='"+restore[1]+"';document.forms[0].submit();})();"
+        print(injectToken)
+        webView.evaluateJavaScript(injectToken, completionHandler: nil)
+    }
 }

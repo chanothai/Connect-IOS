@@ -27,7 +27,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         iniProperties()
         loginTableView.baseTableStyle()
         setLabelAction()
-    
+        
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
         RequireKey.key = key!
     }
@@ -153,11 +153,10 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
 }
 
-extension UIViewController {
+extension LoginViewController {
     func intentToBloc() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
-        self.present(navRegisterController, animated: true, completion: nil)
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.pushViewController(navRegisterController, animated: true)
     }
 }

@@ -80,6 +80,7 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
         dateFormatter.timeStyle = DateFormatter.Style.none
         
         dateTextField.text = dateFormatter.string(from: sender.date)
+        arrTextField[getPosition(dateTextField)] = dateTextField.text!
     }
     
     @objc func textFieldChange(textField: UITextField){
@@ -144,7 +145,7 @@ extension RegisterViewController : UITableViewDataSource {
             cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
             if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
-cell.inputData.keyboardType = UIKeyboardType.numberPad
+                cell.inputData.keyboardType = UIKeyboardType.numberPad
             }
             else if arrCellData[indexPath.row].cell == 3 {
                 let datePickerView:UIDatePicker = UIDatePicker()

@@ -12,6 +12,7 @@ class ModelCart {
     private static var me:ModelCart?
     private var logingResult:LoginResult?
     private var userInfo:UserInfoResponse?
+    private var loginController:LoginViewController?
     
     init() {
         logingResult = LoginResult()

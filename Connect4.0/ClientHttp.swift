@@ -10,7 +10,7 @@ import Alamofire
 import UIKit
 
 struct PathURL {
-    static var urlServer = "http://api.psp.pakgon.com/"
+    static var urlServer = "api.psp.pakgon.com/"
     
     static var apiRegister = "Api/registerUser.json"
     static var apiRegisterSecure = "Api/secure/registerUser.json"
@@ -36,7 +36,9 @@ class ClientHttp {
     private let header: HTTPHeaders?
     
     init() {
-        self.url = PathURL.urlServer
+        let https:String = "https://"
+        self.url = "\(https)\(PathURL.urlServer)"
+        
         header = ["Accept":"application/json"]
     }
     

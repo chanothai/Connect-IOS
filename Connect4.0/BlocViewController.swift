@@ -31,6 +31,7 @@ class BlocViewController: BaseViewController {
         initParameter()
         
         blocCollectionView.delegate = self
+        
     }
     
     private func initParameter(){
@@ -59,17 +60,6 @@ class BlocViewController: BaseViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-    }
-    
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowBlocDetail" {
-            if let indexPaths = blocCollectionView?.indexPathsForSelectedItems{
-//                performSegue(withIdentifier: "ShowBlocDetail", sender: self)
-                blocCollectionView?.deselectItem(at: indexPaths[0], animated: false)
-            }
-        }
     }
     
     func setEventBus() {
@@ -196,5 +186,16 @@ extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSou
         
         cell.blocLabel.text = bloc.bloc_name
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let blocInformation:Bloc = (arrBloc?[pageControl.currentPage].resultBloc[indexPath.row])!
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let blocContent = storyBoard.instantiateViewController(withIdentifier: "ShowBlocDetail") as! BlocContentViewController
+        blocContent.blocInformation = blocInformation
+        
+        navigationController?.pushViewController(blocContent, animated: true)
+//        performSegue(withIdentifier: "ShowBlocDetail", sender: self)
+        collectionView.deselectItem(at: indexPath, animated: false)
     }
 }
