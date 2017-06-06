@@ -20,7 +20,6 @@ class BlocViewController: BaseViewController {
     @IBOutlet var blocCollectionView: UICollectionView!
     
     //MAKE : Properties
-    private var restoreInformation:[String]?
     private var categoryBlocView:[CategoryBlocView]?
     var arrBloc:[ResultCategory]?
     
@@ -29,19 +28,19 @@ class BlocViewController: BaseViewController {
         self.setSideBar()
         setEventBus()
         initParameter()
-        
+    
         blocCollectionView.delegate = self
         
     }
     
-    private func initParameter(){
-        restoreInformation = AuthenLogin().restoreLogin() //0 user, 1 token, 2 dynamickey
-        if (restoreInformation?.count)! > 0 {
-            let key = [UInt8](Data(base64Encoded: (restoreInformation?[2])!)!)
+    public func initParameter(){
+        var restoreInformation:[String] = AuthenLogin().restoreLogin() //0 user, 1 token, 2 dynamickey
+        if (restoreInformation.count) > 0 {
+            let key = [UInt8](Data(base64Encoded: (restoreInformation[2]))!)
             RequireKey.key = key
         }
         
-        setModelUser(restoreInformation!)
+        setModelUser(restoreInformation)
     }
     
     private func initCategory(_ category:[ResultCategory]){
@@ -76,7 +75,6 @@ class BlocViewController: BaseViewController {
         SwiftEventBus.onMainThread(self, name: "UserInfoResponse") { (result) in
             let response:UserInfoResponse = result.object as! UserInfoResponse
             ModelCart.getInstance().getUserInfo = response
-            
         }
         
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in

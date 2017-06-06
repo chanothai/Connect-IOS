@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SWRevealViewController
+import SwiftEventBus
 
 class AlertMessage {
     private static var me: AlertMessage?
@@ -36,8 +37,6 @@ class AlertMessage {
     }
     
     private func setAction(action: UIAlertAction) {
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
-        self.mySelf?.present(navRegisterController, animated: true, completion: nil)
+        SwiftEventBus.post("LoginSuccess", sender: true)
     }
 }

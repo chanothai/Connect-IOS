@@ -43,9 +43,10 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.dismiss(animated: true, completion: nil)
         SwiftEventBus.unregister(self)
     }
-    
+
     private func iniProperties(){
         arrCellData = [CellData]()
         arrCellData = CellData().createArrLoginCell()
@@ -155,6 +156,8 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
 extension LoginViewController {
     func intentToBloc() {
+        self.dismiss(animated: false, completion: nil)
+
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
         navigationController?.pushViewController(navRegisterController, animated: true)

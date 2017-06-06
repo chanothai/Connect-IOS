@@ -32,6 +32,8 @@
 		DE4E82791ED2CA2A00667C5A /* ApplicationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E82781ED2CA2A00667C5A /* ApplicationRequest.swift */; };
 		DE4E827C1ED2EC5600667C5A /* ApplicationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E827B1ED2EC5600667C5A /* ApplicationResponse.swift */; };
 		DE4E827E1ED304FD00667C5A /* UserInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E827D1ED304FD00667C5A /* UserInfoResponse.swift */; };
+		DE516C991EE6A58100109A3D /* IDCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE516C981EE6A58100109A3D /* IDCardViewController.swift */; };
+		DE516C9E1EE6E76F00109A3D /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE516C9D1EE6E76F00109A3D /* UserInfoViewModel.swift */; };
 		DE64D7761ED5679000FE71CC /* CategoryBloc.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE64D7751ED5679000FE71CC /* CategoryBloc.xib */; };
 		DE64D7781ED5687400FE71CC /* CategoryBlocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */; };
 		DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */; };
@@ -81,6 +83,8 @@
 		DE4E82781ED2CA2A00667C5A /* ApplicationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationRequest.swift; sourceTree = "<group>"; };
 		DE4E827B1ED2EC5600667C5A /* ApplicationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationResponse.swift; sourceTree = "<group>"; };
 		DE4E827D1ED304FD00667C5A /* UserInfoResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoResponse.swift; sourceTree = "<group>"; };
+		DE516C981EE6A58100109A3D /* IDCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDCardViewController.swift; sourceTree = "<group>"; };
+		DE516C9D1EE6E76F00109A3D /* UserInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		DE64D7751ED5679000FE71CC /* CategoryBloc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryBloc.xib; sourceTree = "<group>"; };
 		DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBlocView.swift; sourceTree = "<group>"; };
 		DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBlocResponse.swift; sourceTree = "<group>"; };
@@ -152,12 +156,12 @@
 			children = (
 				DE4E827A1ED2CDCF00667C5A /* View */,
 				DE4E82771ED2C9ED00667C5A /* Model */,
-				D358D0651ED1DCA900B39E94 /* BlocController */,
+				D358D0651ED1DCA900B39E94 /* ViewController */,
 			);
 			name = Bloc;
 			sourceTree = "<group>";
 		};
-		D358D0651ED1DCA900B39E94 /* BlocController */ = {
+		D358D0651ED1DCA900B39E94 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				D358D0681ED1DD7400B39E94 /* BlocViewController.swift */,
@@ -165,12 +169,13 @@
 				D358D0721ED1E3FB00B39E94 /* RevealViewController.swift */,
 				DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */,
 			);
-			name = BlocController;
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 		D358D06A1ED1DE7100B39E94 /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				DE516C9C1EE6E6E500109A3D /* ViewModel */,
 				DE3AF7CF1ED43DE60013D526 /* Model */,
 				DE3AF7CC1ED43C0A0013D526 /* View */,
 				D358D06B1ED1DEA000B39E94 /* MenuController */,
@@ -189,6 +194,7 @@
 		D3F26FF71EBCE72C0019C805 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DE516C961EE6A15500109A3D /* IDCard */,
 				D358D06A1ED1DE7100B39E94 /* SideMenu */,
 				D358D0641ED1DC7C00B39E94 /* Bloc */,
 				DE3BF6AB1ECEDA5200FBBB9F /* BaseClass */,
@@ -344,6 +350,30 @@
 				DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		DE516C961EE6A15500109A3D /* IDCard */ = {
+			isa = PBXGroup;
+			children = (
+				DE516C971EE6A17F00109A3D /* ViewController */,
+			);
+			name = IDCard;
+			sourceTree = "<group>";
+		};
+		DE516C971EE6A17F00109A3D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DE516C981EE6A58100109A3D /* IDCardViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		DE516C9C1EE6E6E500109A3D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DE516C9D1EE6E76F00109A3D /* UserInfoViewModel.swift */,
+			);
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		DE9081421EBC725100E90C16 = {
@@ -567,6 +597,7 @@
 				DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */,
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
 				DE4E827E1ED304FD00667C5A /* UserInfoResponse.swift in Sources */,
+				DE516C991EE6A58100109A3D /* IDCardViewController.swift in Sources */,
 				DE3AF7CE1ED43C3D0013D526 /* SideMenuTableViewCell.swift in Sources */,
 				D358D0691ED1DD7400B39E94 /* BlocViewController.swift in Sources */,
 				D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */,
@@ -594,6 +625,7 @@
 				DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
+				DE516C9E1EE6E76F00109A3D /* UserInfoViewModel.swift in Sources */,
 				DE3BF6B11ECEDAF300FBBB9F /* BasePotocol.swift in Sources */,
 				DE4E82791ED2CA2A00667C5A /* ApplicationRequest.swift in Sources */,
 				DE3AF7D31ED44F070013D526 /* SlidebarMenuModel.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import SWRevealViewController
 
 class BaseViewController: UIViewController {
 
@@ -17,6 +18,14 @@ class BaseViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+}
+
+extension BaseViewController {
+    public func createBarButtonItemBase() -> UIBarButtonItem{
+        let toggle = UIBarButtonItem(image: UIImage(named: "menu_toggle"), style: .plain, target: self, action: nil)
+        toggle.tintColor = UIColor.darkGray
+        return toggle
     }
 }
 
@@ -39,6 +48,16 @@ extension BaseViewController: BaseViewModelDelegate {
     
     public func onDataDidLoadErrorWithMessage(errorMessage: String) {
         
+    }
+    
+    func setSideBar() {
+        if (self.revealViewController() != nil) {
+            self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 80
+            self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            self.navigationItem.leftBarButtonItem?.target = revealViewController()
+            self.navigationItem.leftBarButtonItem?.action = #selector(SWRevealViewController.revealToggle(_:))
+        }
     }
 }
 

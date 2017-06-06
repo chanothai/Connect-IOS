@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SWRevealViewController
 
 class NavBlocController: UINavigationController {
-
+    
+    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
 
     override func didReceiveMemoryWarning() {

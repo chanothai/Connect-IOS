@@ -10,7 +10,7 @@ import UIKit
 import SWRevealViewController
 import AlamofireImage
 
-class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class MenuViewController: BaseViewController {
     
     //Make: outlet
     @IBOutlet var sidebarMenuTableView: UITableView!
@@ -21,7 +21,10 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     //Make: property
     var arrMenu:[String]!
     var arrImage:[String]!
+    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
+    lazy var viewModel: UserInfoViewModelProtocol = UserInfoViewModel(delegate: self)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         sidebarMenuTableView.baseTableStyle()
@@ -29,83 +32,28 @@ class MenuViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         profileIMG.layer.borderColor = UIColor.white.cgColor
         profileIMG.layer.borderWidth = CGFloat(2.0)
-        nameLabel.text = ModelCart.getInstance().getUserInfo.screenName
+        nameLabel.text = viewModel.userInfomation.screenName
         
-        let url = URL(string: ModelCart.getInstance().getUserInfo.profile_image_path)!
+        let url = URL(string: (viewModel.userInfomation.profile_image_path))!
         profileIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
         
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        arrMenu = SidebarMenuModel.setMenu()
-        if (arrMenu?.count)! > 0 {
-            return (arrMenu?.count)!
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellMenuSideBar", for: indexPath) as! SideMenuTableViewCell
-    
-        cell.sectionImg.image = UIImage(named: arrImage[indexPath.row])
-        cell.sectionImg.image = cell.sectionImg.image!.withRenderingMode(.alwaysTemplate)
-        cell.sectionImg.tintColor = UIColor.lightGray
-        cell.sectionLabel.text = arrMenu[indexPath.row]
-        cell.sectionLabel.textColor = UIColor.lightGray
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        sidebarMenuTableView.deselectRow(at: indexPath, animated: false)
-        
-        switch indexPath.row {
-        case 0:
-            print("Feed")
-            break
-        case 1:
-            print("ข้อมูลส่วนตัว")
-            break
-        case 2:
-            break
-        case 3:
-            break
-        default:
-            print("ออกจากระบบ")
-            self.actionSignOut()
-            break
-        }
-    }
-
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
     }
-    
 }
 
-
-
-extension BaseViewController {
-    func setSideBar() {
-        if (self.revealViewController() != nil) {
-            self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 80
-            self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            self.navigationItem.leftBarButtonItem?.target = revealViewController()
-            self.navigationItem.leftBarButtonItem?.action = #selector(SWRevealViewController.revealToggle(_:))
-        }
-    }
-    
+extension MenuViewController {
     func actionSignOut(){
         let optionMenu = UIAlertController(title: nil, message: "if you sign out of your account, all your information will be removed from this app", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -129,6 +77,58 @@ extension BaseViewController {
             if let bundle = Bundle.main.bundleIdentifier {
                 UserDefaults.standard.removePersistentDomain(forName: bundle)
             }
+        }
+    }
+}
+
+extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        arrMenu = SidebarMenuModel.setMenu()
+        if (arrMenu?.count)! > 0 {
+            return (arrMenu?.count)!
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellMenuSideBar", for: indexPath) as! SideMenuTableViewCell
+        
+        cell.sectionImg.image = UIImage(named: arrImage[indexPath.row])
+        cell.sectionImg.image = cell.sectionImg.image!.withRenderingMode(.alwaysTemplate)
+        cell.sectionImg.tintColor = UIColor.lightGray
+        cell.sectionLabel.text = arrMenu[indexPath.row]
+        cell.sectionLabel.textColor = UIColor.lightGray
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        sidebarMenuTableView.deselectRow(at: indexPath, animated: false)
+        
+        switch indexPath.row {
+        case 0:
+            print("Feed")
+            let mainBloc = storyBoard.instantiateViewController(withIdentifier: "NavBlocController") as! NavBlocController
+            self.revealViewController().pushFrontViewController(mainBloc, animated: true)
+            break
+        case 1:
+            print("ข้อมูลส่วนตัว")
+            break
+        case 2:
+            let destinationController = self.storyBoard.instantiateViewController(withIdentifier: "IDCardController") as! IDCardViewController
+            destinationController.userInfomation = ModelCart.getInstance().getUserInfo
+            let nav = UINavigationController(rootViewController: destinationController)
+            destinationController.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
+            self.revealViewController().pushFrontViewController(nav, animated: true)
+            
+            break
+        case 3:
+            break
+        default:
+            print("ออกจากระบบ")
+            self.actionSignOut()
+            break
         }
     }
 }
