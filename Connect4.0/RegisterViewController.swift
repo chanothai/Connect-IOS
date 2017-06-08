@@ -24,7 +24,7 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
     override func viewDidLoad() {
         super.viewDidLoad()
         initParamater()
-        registerTableView.baseTableStyle()
+        registerTableView.setBaseTableStyle()
         iniArrayTextField()
         
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)

@@ -24,8 +24,15 @@ class BaseViewController: UIViewController {
 extension BaseViewController {
     public func createBarButtonItemBase() -> UIBarButtonItem{
         let toggle = UIBarButtonItem(image: UIImage(named: "menu_toggle"), style: .plain, target: self, action: nil)
-        toggle.tintColor = UIColor.darkGray
         return toggle
+    }
+    
+    public func createTitleBarImage() -> UIImageView {
+        let logo = UIImage(named: "logo-titlebar")
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 38, height: 38))
+        imgView.image = logo
+        
+        return imgView
     }
 }
 
@@ -62,7 +69,7 @@ extension BaseViewController: BaseViewModelDelegate {
 }
 
 extension UITableView {
-    public func baseTableStyle(){
+    public func setBaseTableStyle(){
         self.backgroundColor = UIColor.white
         self.tableFooterView = UIView(frame: CGRect.zero) //remove empty rows of table
         self.separatorColor = UIColor.clear

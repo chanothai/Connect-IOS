@@ -27,15 +27,20 @@ class MenuViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sidebarMenuTableView.baseTableStyle()
+        sidebarMenuTableView.setBaseTableStyle()
         arrImage = SidebarMenuModel.setImageMenu()
         
         profileIMG.layer.borderColor = UIColor.white.cgColor
         profileIMG.layer.borderWidth = CGFloat(2.0)
-        nameLabel.text = viewModel.userInfomation.screenName
         
-        let url = URL(string: (viewModel.userInfomation.profile_image_path))!
-        profileIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        nameLabel?.text = viewModel.userInfomation.screenName
+        
+    
+        guard let url = URL(string: (viewModel.userInfomation.profile_image_path)) else {
+            return
+        }
+        
+        profileIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
         
     }
     
@@ -120,6 +125,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             destinationController.userInfomation = ModelCart.getInstance().getUserInfo
             let nav = UINavigationController(rootViewController: destinationController)
             destinationController.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
+            destinationController.navigationItem.titleView = self.createTitleBarImage()
             self.revealViewController().pushFrontViewController(nav, animated: true)
             
             break

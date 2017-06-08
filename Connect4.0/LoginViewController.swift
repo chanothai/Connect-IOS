@@ -25,7 +25,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         iniProperties()
-        loginTableView.baseTableStyle()
+        loginTableView.setBaseTableStyle()
         setLabelAction()
         
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
@@ -41,9 +41,8 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.dismiss(animated: true, completion: nil)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         SwiftEventBus.unregister(self)
     }
 
@@ -64,7 +63,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
                 AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.error, isAction: false)
             }else{
                 AuthenLogin().storeLogin(self.arrDataRequest[0], response.result.token, response.result.dynamicKey)
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.success, isAction: true)
+                self.intentToBloc()
             }
             
             self.hideLoading()
@@ -72,6 +71,7 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         
         SwiftEventBus.onMainThread(self, name: "LoginSuccess") { result in
             let response:Bool = result.object as! Bool
+            print(response)
             if response {
                 self.intentToBloc()
             }
@@ -121,8 +121,9 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         parameters[UserLogin.username] = arrDataRequest[0]
         parameters[UserLogin.password] = arrDataRequest[1]
         
-        showLoading()
-        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
+//        showLoading()
+//        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
+        intentToBloc()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -157,9 +158,5 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
 extension LoginViewController {
     func intentToBloc() {
         self.dismiss(animated: false, completion: nil)
-
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RevealController") as! SWRevealViewController
-        navigationController?.pushViewController(navRegisterController, animated: true)
     }
 }

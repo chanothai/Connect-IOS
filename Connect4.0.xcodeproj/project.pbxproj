@@ -40,6 +40,8 @@
 		DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
 		DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */; };
+		DE8A28671EE7CD810001E493 /* IDCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */; };
+		DE8A286A1EE7D13B0001E493 /* supermarket.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE8A28691EE7D13B0001E493 /* supermarket.ttf */; };
 		DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90814E1EBC725100E90C16 /* AppDelegate.swift */; };
 		DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9081501EBC725100E90C16 /* RegisterViewController.swift */; };
 		DE9081541EBC725100E90C16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE9081521EBC725100E90C16 /* Main.storyboard */; };
@@ -91,6 +93,8 @@
 		DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocContentViewController.swift; sourceTree = "<group>"; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
+		DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDCardTableViewCell.swift; sourceTree = "<group>"; };
+		DE8A28691EE7D13B0001E493 /* supermarket.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = supermarket.ttf; sourceTree = "<group>"; };
 		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -355,6 +359,7 @@
 		DE516C961EE6A15500109A3D /* IDCard */ = {
 			isa = PBXGroup;
 			children = (
+				DE8A28651EE7CD520001E493 /* View */,
 				DE516C971EE6A17F00109A3D /* ViewController */,
 			);
 			name = IDCard;
@@ -374,6 +379,22 @@
 				DE516C9D1EE6E76F00109A3D /* UserInfoViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE8A28651EE7CD520001E493 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		DE8A28681EE7D12A0001E493 /* Fronts */ = {
+			isa = PBXGroup;
+			children = (
+				DE8A28691EE7D13B0001E493 /* supermarket.ttf */,
+			);
+			name = Fronts;
 			sourceTree = "<group>";
 		};
 		DE9081421EBC725100E90C16 = {
@@ -427,6 +448,7 @@
 		DEAD703B1EC575680057B448 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				DE8A28681EE7D12A0001E493 /* Fronts */,
 				DEAD703D1EC575D60057B448 /* Storyboard */,
 				DE9081551EBC725100E90C16 /* Assets.xcassets */,
 				DEAD703C1EC575790057B448 /* Xib */,
@@ -533,6 +555,7 @@
 				DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */,
 				DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */,
 				DE9081541EBC725100E90C16 /* Main.storyboard in Resources */,
+				DE8A286A1EE7D13B0001E493 /* supermarket.ttf in Resources */,
 				DE9081691EBC9F1C00E90C16 /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,6 +648,7 @@
 				DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
+				DE8A28671EE7CD810001E493 /* IDCardTableViewCell.swift in Sources */,
 				DE516C9E1EE6E76F00109A3D /* UserInfoViewModel.swift in Sources */,
 				DE3BF6B11ECEDAF300FBBB9F /* BasePotocol.swift in Sources */,
 				DE4E82791ED2CA2A00667C5A /* ApplicationRequest.swift in Sources */,

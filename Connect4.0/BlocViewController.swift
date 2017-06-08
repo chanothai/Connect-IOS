@@ -25,12 +25,18 @@ class BlocViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.titleView = self.createTitleBarImage()
+        
         self.setSideBar()
         setEventBus()
-        initParameter()
     
         blocCollectionView.delegate = self
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initParameter()
     }
     
     public func initParameter(){
@@ -38,9 +44,10 @@ class BlocViewController: BaseViewController {
         if (restoreInformation.count) > 0 {
             let key = [UInt8](Data(base64Encoded: (restoreInformation[2]))!)
             RequireKey.key = key
+            setModelUser(restoreInformation)
+        }else{
+//            pushToLogin()
         }
-        
-        setModelUser(restoreInformation)
     }
     
     private func initCategory(_ category:[ResultCategory]){
@@ -139,6 +146,12 @@ extension BlocViewController {
         
         self.showLoading()
         ClientHttp.getInstace().requestAuthToken(FormatterRequest(RequireKey.key).application(request, requestUser))
+    }
+    
+    func pushToLogin() {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
+        self.present(loginController, animated: true, completion: nil)
     }
 }
 

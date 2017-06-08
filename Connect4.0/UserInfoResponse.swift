@@ -9,16 +9,16 @@
 import Foundation
 
 class UserInfoResponse {
-    private var _birthDate:String?
-    private var _citizenID:String?
-    private var _firstName:String?
-    private var _lastName:String?
-    private var _screenName:String?
-    private var _phone:String?
-    private var _username:String?
-    private var _profile_image_path:String?
-    private var _created:String?
-    private var _modified:String?
+    private var _birthDate:String? = ""
+    private var _citizenID:String? = ""
+    private var _firstName:String? = ""
+    private var _lastName:String? = ""
+    private var _screenName:String? = ""
+    private var _phone:String? = ""
+    private var _username:String? = ""
+    private var _profile_image_path:String? = ""
+    private var _created:String? = ""
+    private var _modified:String? = ""
     
     var birthDate:String {
         get{
