@@ -46,7 +46,7 @@ class BlocViewController: BaseViewController {
             RequireKey.key = key
             setModelUser(restoreInformation)
         }else{
-//            pushToLogin()
+            pushToLogin()
         }
     }
     
@@ -151,7 +151,7 @@ extension BlocViewController {
     func pushToLogin() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
-        self.present(loginController, animated: true, completion: nil)
+        self.present(loginController, animated: false, completion: nil)
     }
 }
 

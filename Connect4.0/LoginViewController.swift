@@ -157,6 +157,6 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
 extension LoginViewController {
     func intentToBloc() {
-        self.dismiss(animated: false, completion: nil)
+        performSegue(withIdentifier: "showMainController", sender: nil)
     }
 }

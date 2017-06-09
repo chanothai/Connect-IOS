@@ -38,6 +38,8 @@
 		DE64D7781ED5687400FE71CC /* CategoryBlocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */; };
 		DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */; };
 		DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */; };
+		DE79AC8C1EEACAC6009309D4 /* FingerPrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */; };
+		DE79AC8E1EEACB3C009309D4 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
 		DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */; };
 		DE8A28671EE7CD810001E493 /* IDCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */; };
@@ -91,11 +93,13 @@
 		DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBlocView.swift; sourceTree = "<group>"; };
 		DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBlocResponse.swift; sourceTree = "<group>"; };
 		DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocContentViewController.swift; sourceTree = "<group>"; };
+		DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerPrintViewController.swift; sourceTree = "<group>"; };
+		DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
 		DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDCardTableViewCell.swift; sourceTree = "<group>"; };
 		DE8A28691EE7D13B0001E493 /* supermarket.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = supermarket.ttf; sourceTree = "<group>"; };
-		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE90814B1EBC725100E90C16 /* CampusConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CampusConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DE9081531EBC725100E90C16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE79AC8E1EEACB3C009309D4 /* LocalAuthentication.framework in Frameworks */,
 				3C941430545E52F9C8727A65 /* Pods_Connect4_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,6 +203,7 @@
 		D3F26FF71EBCE72C0019C805 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DE79AC891EEACA93009309D4 /* FingerPrint */,
 				DE516C961EE6A15500109A3D /* IDCard */,
 				D358D06A1ED1DE7100B39E94 /* SideMenu */,
 				D358D0641ED1DC7C00B39E94 /* Bloc */,
@@ -212,6 +218,7 @@
 		DDE79F0425946D5473469E54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */,
 				9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */,
 			);
 			name = Frameworks;
@@ -381,6 +388,22 @@
 			name = ViewModel;
 			sourceTree = "<group>";
 		};
+		DE79AC891EEACA93009309D4 /* FingerPrint */ = {
+			isa = PBXGroup;
+			children = (
+				DE79AC8A1EEACAAB009309D4 /* ViewController */,
+			);
+			name = FingerPrint;
+			sourceTree = "<group>";
+		};
+		DE79AC8A1EEACAAB009309D4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
 		DE8A28651EE7CD520001E493 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,7 +423,7 @@
 		DE9081421EBC725100E90C16 = {
 			isa = PBXGroup;
 			children = (
-				DE90814D1EBC725100E90C16 /* Connect4.0 */,
+				DE90814D1EBC725100E90C16 /* CampusConnect */,
 				DE90814C1EBC725100E90C16 /* Products */,
 				65D024D9EBD07C4AD8449231 /* Pods */,
 				DDE79F0425946D5473469E54 /* Frameworks */,
@@ -410,12 +433,12 @@
 		DE90814C1EBC725100E90C16 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DE90814B1EBC725100E90C16 /* Connect4.0.app */,
+				DE90814B1EBC725100E90C16 /* CampusConnect.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DE90814D1EBC725100E90C16 /* Connect4.0 */ = {
+		DE90814D1EBC725100E90C16 /* CampusConnect */ = {
 			isa = PBXGroup;
 			children = (
 				DEAD703B1EC575680057B448 /* Resource */,
@@ -423,6 +446,7 @@
 				D304F5401EC381D90000AFF1 /* Utility */,
 				D3F26FF71EBCE72C0019C805 /* Classes */,
 			);
+			name = CampusConnect;
 			path = Connect4.0;
 			sourceTree = "<group>";
 		};
@@ -489,9 +513,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DE90814A1EBC725100E90C16 /* Connect4.0 */ = {
+		DE90814A1EBC725100E90C16 /* CampusConnect */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "Connect4.0" */;
+			buildConfigurationList = DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "CampusConnect" */;
 			buildPhases = (
 				E93472C7C4AFF58844982A95 /* [CP] Check Pods Manifest.lock */,
 				DE9081471EBC725100E90C16 /* Sources */,
@@ -504,9 +528,9 @@
 			);
 			dependencies = (
 			);
-			name = Connect4.0;
+			name = CampusConnect;
 			productName = Connect4.0;
-			productReference = DE90814B1EBC725100E90C16 /* Connect4.0.app */;
+			productReference = DE90814B1EBC725100E90C16 /* CampusConnect.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -526,7 +550,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "Connect4.0" */;
+			buildConfigurationList = DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "CampusConnect" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -539,7 +563,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DE90814A1EBC725100E90C16 /* Connect4.0 */,
+				DE90814A1EBC725100E90C16 /* CampusConnect */,
 			);
 		};
 /* End PBXProject section */
@@ -616,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */,
+				DE79AC8C1EEACAC6009309D4 /* FingerPrintViewController.swift in Sources */,
 				DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */,
 				DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */,
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
@@ -781,7 +806,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zicure.Connect4-0";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -796,7 +821,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zicure.Connect4-0";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -805,7 +830,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "Connect4.0" */ = {
+		DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "CampusConnect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DE90815B1EBC725100E90C16 /* Debug */,
@@ -814,7 +839,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "Connect4.0" */ = {
+		DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "CampusConnect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DE90815E1EBC725100E90C16 /* Debug */,
