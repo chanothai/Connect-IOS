@@ -60,6 +60,9 @@ class FingerPrintViewController: BaseViewController {
                         print("Authentication was canceled by user")
                     case LAError.touchIDNotEnrolled:
                         print("Authentication cloud not start because Touch ID has no enrolled your fingers.")
+                        OperationQueue.main.addOperation {
+                            self.performSegue(withIdentifier: "showPinPassword", sender: nil)
+                        }
                     case LAError.touchIDNotAvailable:
                         print("Authentication cloud not start because Touch ID is not available")
                     case LAError.userFallback:

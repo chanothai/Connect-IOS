@@ -12,12 +12,26 @@ struct DefaultKey {
     static let usernameKey = "username_key"
     static let tokenKey = "token_key"
     static let dynamicKey = "dynamic_key"
+    static let pinpasswordKey = "pinpassword_key"
 }
 class AuthenLogin {
     private var preference: UserDefaults?
     
     init() {
         preference = UserDefaults.standard
+    }
+    
+    public func storePinPassword(_ pin: String) {
+        preference?.set(pin, forKey: DefaultKey.pinpasswordKey)
+        preference?.synchronize()
+    }
+    
+    public func restorePinPassword() -> String {
+        if let pinPassword = preference?.string(forKey: DefaultKey.pinpasswordKey){
+            return pinPassword
+        }
+        
+        return ""
     }
     
     public func storeLogin(_ username:String, _ token:String, _ key:String) {

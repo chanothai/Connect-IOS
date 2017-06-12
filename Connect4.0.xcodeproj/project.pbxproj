@@ -54,6 +54,7 @@
 		DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816A1EBCA06800E90C16 /* ButtonCell.swift */; };
 		DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE90816B1EBCA06800E90C16 /* ButtonCell.xib */; };
 		DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816E1EBCAA2300E90C16 /* CellData.swift */; };
+		DEA927931EEE70B5004AA898 /* PinPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA927921EEE70B5004AA898 /* PinPasswordViewController.swift */; };
 		DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAD703E1EC576B20057B448 /* BaseColor.swift */; };
 		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
 		DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FD1EC473DF00F08763 /* ClientHttp.swift */; };
@@ -99,7 +100,7 @@
 		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
 		DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDCardTableViewCell.swift; sourceTree = "<group>"; };
 		DE8A28691EE7D13B0001E493 /* supermarket.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = supermarket.ttf; sourceTree = "<group>"; };
-		DE90814B1EBC725100E90C16 /* CampusConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CampusConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE90814E1EBC725100E90C16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE9081501EBC725100E90C16 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DE9081531EBC725100E90C16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 		DE90816A1EBCA06800E90C16 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		DE90816B1EBCA06800E90C16 /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		DE90816E1EBCAA2300E90C16 /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		DEA927921EEE70B5004AA898 /* PinPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinPasswordViewController.swift; sourceTree = "<group>"; };
 		DEAD703E1EC576B20057B448 /* BaseColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseColor.swift; sourceTree = "<group>"; };
 		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
 		DEE609FD1EC473DF00F08763 /* ClientHttp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHttp.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */,
+				DEA927921EEE70B5004AA898 /* PinPasswordViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -423,7 +426,7 @@
 		DE9081421EBC725100E90C16 = {
 			isa = PBXGroup;
 			children = (
-				DE90814D1EBC725100E90C16 /* CampusConnect */,
+				DE90814D1EBC725100E90C16 /* Connect4.0 */,
 				DE90814C1EBC725100E90C16 /* Products */,
 				65D024D9EBD07C4AD8449231 /* Pods */,
 				DDE79F0425946D5473469E54 /* Frameworks */,
@@ -433,12 +436,12 @@
 		DE90814C1EBC725100E90C16 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DE90814B1EBC725100E90C16 /* CampusConnect.app */,
+				DE90814B1EBC725100E90C16 /* Connect4.0.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DE90814D1EBC725100E90C16 /* CampusConnect */ = {
+		DE90814D1EBC725100E90C16 /* Connect4.0 */ = {
 			isa = PBXGroup;
 			children = (
 				DEAD703B1EC575680057B448 /* Resource */,
@@ -446,7 +449,6 @@
 				D304F5401EC381D90000AFF1 /* Utility */,
 				D3F26FF71EBCE72C0019C805 /* Classes */,
 			);
-			name = CampusConnect;
 			path = Connect4.0;
 			sourceTree = "<group>";
 		};
@@ -513,9 +515,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DE90814A1EBC725100E90C16 /* CampusConnect */ = {
+		DE90814A1EBC725100E90C16 /* Connect4.0 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "CampusConnect" */;
+			buildConfigurationList = DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "Connect4.0" */;
 			buildPhases = (
 				E93472C7C4AFF58844982A95 /* [CP] Check Pods Manifest.lock */,
 				DE9081471EBC725100E90C16 /* Sources */,
@@ -528,9 +530,9 @@
 			);
 			dependencies = (
 			);
-			name = CampusConnect;
+			name = Connect4.0;
 			productName = Connect4.0;
-			productReference = DE90814B1EBC725100E90C16 /* CampusConnect.app */;
+			productReference = DE90814B1EBC725100E90C16 /* Connect4.0.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -550,7 +552,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "CampusConnect" */;
+			buildConfigurationList = DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "Connect4.0" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -563,7 +565,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DE90814A1EBC725100E90C16 /* CampusConnect */,
+				DE90814A1EBC725100E90C16 /* Connect4.0 */,
 			);
 		};
 /* End PBXProject section */
@@ -663,6 +665,7 @@
 				DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */,
 				D358D06D1ED1DEBA00B39E94 /* MenuViewController.swift in Sources */,
 				D358D0711ED1E0A700B39E94 /* NavBlocController.swift in Sources */,
+				DEA927931EEE70B5004AA898 /* PinPasswordViewController.swift in Sources */,
 				DE3BF6A41ECEAEE300FBBB9F /* AlertMessage.swift in Sources */,
 				D358D0731ED1E3FB00B39E94 /* RevealViewController.swift in Sources */,
 				DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */,
@@ -806,7 +809,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.Connect4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -821,7 +824,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.Connect4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -830,7 +833,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "CampusConnect" */ = {
+		DE9081461EBC725100E90C16 /* Build configuration list for PBXProject "Connect4.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DE90815B1EBC725100E90C16 /* Debug */,
@@ -839,7 +842,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "CampusConnect" */ = {
+		DE90815D1EBC725100E90C16 /* Build configuration list for PBXNativeTarget "Connect4.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DE90815E1EBC725100E90C16 /* Debug */,

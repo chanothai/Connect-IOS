@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1mr-bw-LpC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rXf-X8-bDa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -336,7 +336,7 @@
         <!--Finger Print View Controller-->
         <scene sceneID="izf-BX-Yyi">
             <objects>
-                <viewController id="rXf-X8-bDa" customClass="FingerPrintViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FingerPrintController" id="rXf-X8-bDa" customClass="FingerPrintViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tIW-Yd-5xJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Umo-Dd-M7b"/>
@@ -346,10 +346,65 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="JHP-Vf-PXH" kind="presentation" identifier="showPinPassword" modalTransitionStyle="crossDissolve" id="0jG-fz-AjP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M1V-k3-Xa0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="-695"/>
+            <point key="canvasLocation" x="105" y="-698"/>
+        </scene>
+        <!--Pin Password View Controller-->
+        <scene sceneID="eEg-Oq-Bbs">
+            <objects>
+                <viewController storyboardIdentifier="PinPasswordController" id="JHP-Vf-PXH" customClass="PinPasswordViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SBD-su-bKX"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Xb-3V-jF1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FBC-nv-J1p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ใส่รหัสผ่าน" textAlignment="center" lineBreakMode="middleTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSH-0r-uqo">
+                                <rect key="frame" x="0.0" y="28" width="375" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="JkN-rb-8YN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="26"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mn8-3u-8XX">
+                                <rect key="frame" x="24" y="84" width="327" height="575"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="pSH-0r-uqo" firstAttribute="leading" secondItem="FBC-nv-J1p" secondAttribute="leading" id="F0N-GI-ryj"/>
+                            <constraint firstItem="mn8-3u-8XX" firstAttribute="top" secondItem="pSH-0r-uqo" secondAttribute="bottom" id="Q8m-uL-qLF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mn8-3u-8XX" secondAttribute="trailing" constant="8" id="Wui-j1-fWX"/>
+                            <constraint firstAttribute="trailing" secondItem="pSH-0r-uqo" secondAttribute="trailing" id="bDf-xT-ozM"/>
+                            <constraint firstItem="7Xb-3V-jF1" firstAttribute="top" secondItem="mn8-3u-8XX" secondAttribute="bottom" constant="8" id="i1b-ge-DKp"/>
+                            <constraint firstItem="mn8-3u-8XX" firstAttribute="leading" secondItem="FBC-nv-J1p" secondAttribute="leadingMargin" constant="8" id="l4z-2u-uLv"/>
+                            <constraint firstItem="pSH-0r-uqo" firstAttribute="top" secondItem="SBD-su-bKX" secondAttribute="bottom" constant="8" id="sKt-is-d8O"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Vil-KE-mop">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="9W0-sd-xGb">
+                            <connections>
+                                <action selector="dismissPinPassword:" destination="JHP-Vf-PXH" id="tyk-5D-rD7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pinPasswordLayout" destination="mn8-3u-8XX" id="LL7-Cv-9fD"/>
+                        <outlet property="titlePinLabel" destination="pSH-0r-uqo" id="r45-iQ-ozV"/>
+                        <segue destination="1mr-bw-LpC" kind="presentation" identifier="showMainBloc" modalTransitionStyle="crossDissolve" id="qRZ-Qh-fgi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bKW-D1-akc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="993" y="-698"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="NxG-5m-34U">
@@ -540,6 +595,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavRegisterController" automaticallyAdjustsScrollViewInsets="NO" id="1A1-sc-y7A" customClass="NavRegisterController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="667"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="g4r-Kt-93B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -704,13 +760,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4q-rT-Wpl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909.5999999999999" y="-743.47826086956525"/>
+            <point key="canvasLocation" x="1910" y="-697"/>
         </scene>
         <!--Nav Bloc Controller-->
         <scene sceneID="WXS-CT-ifN">
             <objects>
                 <navigationController storyboardIdentifier="NavBlocController" automaticallyAdjustsScrollViewInsets="NO" id="sh9-aO-uNk" customClass="NavBlocController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="667"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Apb-PS-YX7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -730,4 +787,7 @@
         <image name="menu_toggle" width="25" height="15"/>
         <image name="people" width="40" height="40"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qRZ-Qh-fgi"/>
+    </inferredMetricsTieBreakers>
 </document>
