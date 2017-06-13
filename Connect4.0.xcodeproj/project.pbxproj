@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C941430545E52F9C8727A65 /* Pods_Connect4_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */; };
+		3C941430545E52F9C8727A65 /* Pods_Connect4_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */; };
 		D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */; };
 		D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0601ED1539300B39E94 /* AuthenLogin.swift */; };
@@ -38,6 +38,8 @@
 		DE64D7781ED5687400FE71CC /* CategoryBlocView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */; };
 		DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */; };
 		DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */; };
+		DE76B3D91EF01B0E00FDA40E /* ForgotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE76B3D81EF01B0E00FDA40E /* ForgotCell.xib */; };
+		DE76B3DC1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76B3DB1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift */; };
 		DE79AC8C1EEACAC6009309D4 /* FingerPrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */; };
 		DE79AC8E1EEACB3C009309D4 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
@@ -94,6 +96,8 @@
 		DE64D7771ED5687400FE71CC /* CategoryBlocView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBlocView.swift; sourceTree = "<group>"; };
 		DE64D7791ED577CC00FE71CC /* UserBlocResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBlocResponse.swift; sourceTree = "<group>"; };
 		DE6E529B1EE02EAB004BCDDD /* BlocContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocContentViewController.swift; sourceTree = "<group>"; };
+		DE76B3D81EF01B0E00FDA40E /* ForgotCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotCell.xib; sourceTree = "<group>"; };
+		DE76B3DB1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerPrintViewController.swift; sourceTree = "<group>"; };
 		DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -313,6 +317,7 @@
 		DE44CB9A1ECD5FFD0099A7D2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				DE76B3DA1EF01CC600FDA40E /* View */,
 				DE3BF6B81ECEF64700FBBB9F /* Model */,
 				DE44CBA01ECD624D0099A7D2 /* ViewController */,
 			);
@@ -388,6 +393,14 @@
 				DE516C9D1EE6E76F00109A3D /* UserInfoViewModel.swift */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE76B3DA1EF01CC600FDA40E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE76B3DB1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		DE79AC891EEACA93009309D4 /* FingerPrint */ = {
@@ -489,6 +502,7 @@
 				DE90816B1EBCA06800E90C16 /* ButtonCell.xib */,
 				DE64D7751ED5679000FE71CC /* CategoryBloc.xib */,
 				DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */,
+				DE76B3D81EF01B0E00FDA40E /* ForgotCell.xib */,
 			);
 			name = Xib;
 			sourceTree = "<group>";
@@ -579,6 +593,7 @@
 				DE64D7761ED5679000FE71CC /* CategoryBloc.xib in Resources */,
 				DE9081561EBC725100E90C16 /* Assets.xcassets in Resources */,
 				DE90816D1EBCA06800E90C16 /* ButtonCell.xib in Resources */,
+				DE76B3D91EF01B0E00FDA40E /* ForgotCell.xib in Resources */,
 				DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */,
 				DE9081541EBC725100E90C16 /* Main.storyboard in Resources */,
 				DE8A286A1EE7D13B0001E493 /* supermarket.ttf in Resources */,
@@ -676,6 +691,7 @@
 				DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
+				DE76B3DC1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift in Sources */,
 				DE8A28671EE7CD810001E493 /* IDCardTableViewCell.swift in Sources */,
 				DE516C9E1EE6E76F00109A3D /* UserInfoViewModel.swift in Sources */,
 				DE3BF6B11ECEDAF300FBBB9F /* BasePotocol.swift in Sources */,
@@ -809,7 +825,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.Connect4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -824,7 +840,7 @@
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.Connect4.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

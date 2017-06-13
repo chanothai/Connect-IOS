@@ -18,7 +18,6 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
     var dateTextField: UITextField!
     var arrCellData:[CellData]!
     var arrTextField:[String]!
-    var manageKeyboard: ManageKeyboard? = ManageKeyboard()
     private var key:[UInt8]?
     
     override func viewDidLoad() {
@@ -54,20 +53,6 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
         for _ in 0 ..< 9 {
             arrTextField.append("")
         }
-    }
-    
-    func setMoveKeyboard(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        manageKeyboard?.adjustingHeight(show: true, notification: notification, tableView: registerTableView)
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        manageKeyboard?.adjustingHeight(show: true, notification: notification, tableView: registerTableView)
     }
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {

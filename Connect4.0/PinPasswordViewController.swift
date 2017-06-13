@@ -16,15 +16,22 @@ class PinPasswordViewController: BaseViewController {
     @IBOutlet var titlePinLabel: UILabel!
     
     //Make: Properties
-    let kPasswordDigit = 4
-    var hasPin:Bool? = nil
+    let kPasswordDigit = 6
+    var hasPin:Bool? = false
     var pinPassword:String?
+    var blurEffectView:UIVisualEffectView?
+    var screenSize = Int(UIScreen.main.bounds.width)
+    var baseSize = 350
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pinPassword = checkPinPassword()
+        pinPassword = checkPinPassword("")
         setBackground()
         createPinPassword()
+        
+        if screenSize < baseSize {
+            titlePinLabel.font = UIFont(name: "supermarket", size: 36.0)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +56,9 @@ extension PinPasswordViewController: PasswordInputCompleteProtocol {
     func touchAuthenticationComplete(_ passwordContainerView: PasswordContainerView, success: Bool, error: Error?) {
         if success {
             //authentication success
-            
+            OperationQueue.main.addOperation {
+                self.performSegue(withIdentifier: "showMainBloc", sender: nil)
+            }
         }else{
             passwordContainerView.clearInput()
         }
@@ -60,15 +69,19 @@ extension PinPasswordViewController: PasswordInputCompleteProtocol {
         //Handler validate wrong || success
         if hasPin! {
             if input == pinPassword {
+                AuthenLogin().storePinPassword(input)
                 intentToBloc()
             }else{
+                titlePinLabel.text = setTitlePin(3)
                 passwordContainerView.wrongPassword()
             }
         }else{
-            AuthenLogin().storePinPassword(input)
-            titlePinLabel.text = setTitlePin(1)
+            DispatchQueue.main.async {
+                self.titlePinLabel.text = self.setTitlePin(1)
+            }
+            
             hasPin = true
-            pinPassword = checkPinPassword()
+            pinPassword = checkPinPassword(input)
             passwordContainerView.clearInput()
         }
     }
@@ -76,6 +89,11 @@ extension PinPasswordViewController: PasswordInputCompleteProtocol {
 
 extension PinPasswordViewController {
     func createPinPassword() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = view.bounds
+        view.insertSubview(blurEffectView!, at: 1)
+        
         let passwordContainerView = PasswordContainerView.create(withDigit: kPasswordDigit)
         passwordContainerView.frame = CGRect(x: 0, y: 0, width: pinPasswordLayout.frame.width, height: pinPasswordLayout.frame.height)
         passwordContainerView.tintColor = UIColor(colorLiteralRed: 136/255, green: 152/255, blue: 174/255, alpha: 0.2)
@@ -83,8 +101,9 @@ extension PinPasswordViewController {
         passwordContainerView.isVibrancyEffect = false
         passwordContainerView.deleteButtonLocalizedTitle = "ลบ"
         passwordContainerView.delegate = self
-        
+        passwordContainerView.showTouchDialog()
         pinPasswordLayout.addSubview(passwordContainerView)
+
     }
     
     func setBackground() {
@@ -97,7 +116,7 @@ extension PinPasswordViewController {
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func checkPinPassword() -> String {
+    func checkPinPassword(_ input: String) -> String {
         let pin = AuthenLogin().restorePinPassword()
         
         if  pin != "" {
@@ -105,7 +124,7 @@ extension PinPasswordViewController {
             hasPin = true
         }else{
             titlePinLabel.text = setTitlePin(0)
-            hasPin = false
+            return input
         }
         
         return pin
@@ -116,11 +135,14 @@ extension PinPasswordViewController {
         
         switch status {
         case 0:
-            title = "ตั้งค่ารหัสผ่าน"
+            title = "สร้างรหัสผ่าน"
+            break
         case 1:
             title = "ยืนยันรหัสผ่าน"
+            break
         default:
-            title = ""
+            title = "ลองอีกครั้ง"
+            break
         }
         
         return title!

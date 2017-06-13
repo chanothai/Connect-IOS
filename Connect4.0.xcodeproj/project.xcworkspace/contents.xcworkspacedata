@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Connect4.0.xcodeproj">
+      location = "self:/Users/Pakgon/Desktop/project_connect/ConnectCampus/Connect4.0.xcodeproj">
    </FileRef>
 </Workspace>

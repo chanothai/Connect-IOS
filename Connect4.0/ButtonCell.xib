@@ -8,38 +8,45 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="supermarket.ttf">
+            <string>supermarket</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellButton" rowHeight="80" id="KGk-i7-Jjw" customClass="ButtonCell" customModule="Connect4_0" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellButton" rowHeight="86" id="KGk-i7-Jjw" customClass="ButtonCell" customModule="Connect4_0" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="319" height="88"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="319" height="87.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gKp-ak-Nbm">
-                        <rect key="frame" x="0.0" y="4" width="320" height="71.5"/>
-                        <color key="backgroundColor" red="0.30196078430000001" green="0.71372549019999998" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                        <state key="normal" title="Button">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="selected">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gKp-ak-Nbm">
+                        <rect key="frame" x="16" y="16" width="287" height="67.5"/>
+                        <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="26"/>
+                        <state key="normal" title="เข้าสู่ระบบ" backgroundImage="bg_btn"/>
+                        <state key="highlighted">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" red="0.25069231450000001" green="0.53364692479999998" blue="0.51865113159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="gKp-ak-Nbm" secondAttribute="bottom" constant="4" id="Ube-I2-Lyp"/>
-                    <constraint firstItem="gKp-ak-Nbm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="eFV-pL-2WT"/>
-                    <constraint firstItem="gKp-ak-Nbm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="kOf-nP-JZR"/>
-                    <constraint firstAttribute="trailing" secondItem="gKp-ak-Nbm" secondAttribute="trailing" id="uvd-gi-KjQ"/>
+                    <constraint firstItem="gKp-ak-Nbm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="eFV-pL-2WT"/>
+                    <constraint firstItem="gKp-ak-Nbm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="kOf-nP-JZR"/>
+                    <constraint firstAttribute="trailing" secondItem="gKp-ak-Nbm" secondAttribute="trailing" constant="16" id="uvd-gi-KjQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="confirmBtn" destination="gKp-ak-Nbm" id="z64-L8-oAv"/>
             </connections>
+            <point key="canvasLocation" x="24.5" y="55"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bg_btn" width="265" height="57"/>
+    </resources>
 </document>

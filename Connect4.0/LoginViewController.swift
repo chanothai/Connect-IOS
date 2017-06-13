@@ -11,16 +11,20 @@ import SwiftEventBus
 import UIKit
 import SWRevealViewController
 
-class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class LoginViewController: BaseViewController {
 
     // MAKE: outlet variable
     @IBOutlet var loginTableView: UITableView!
     @IBOutlet var createAccountLabel: UILabel!
     
     // MAKE: properties
-    private var arrCellData:[CellData]!
-    private var arrDataRequest:[String]!
-    private var key:[UInt8]?
+    var arrCellData:[CellData]!
+    var arrDataRequest:[String]!
+    var key:[UInt8]?
+    let screenSize:Int = Int(UIScreen.main.bounds.width)
+    let baseScreen:Int = 350
+    
+    var manageKeyboard: ManageKeyboard? = ManageKeyboard()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,59 +82,6 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if arrCellData.count > 0 {
-            return arrCellData.count
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if arrCellData[indexPath.row].cell == 2 {
-            let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
-            cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
-            cell.confirmBtn.addTarget(self, action: #selector(self.doLogin), for: .touchUpInside)
-            return cell
-        }else{
-            let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
-            cell.inputData.placeholder = arrCellData[indexPath.row].text
-            cell.inputData.delegate = self
-            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
-            
-            switch arrCellData[indexPath.row].cell {
-            case 0:
-                cell.inputData.keyboardType = UIKeyboardType.emailAddress
-                break
-            case 1:
-                cell.inputData.isSecureTextEntry = true
-                break
-            default:
-                break
-            }
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
-    }
-    
-    @objc private func doLogin(){
-        var parameters = [String: String]()
-        parameters[UserLogin.username] = arrDataRequest[0]
-        parameters[UserLogin.password] = arrDataRequest[1]
-        
-//        showLoading()
-//        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
-        intentToBloc()
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return false
-    }
-    
     @objc func textFieldChange(textField:UITextField) {
         arrDataRequest[getPosition(textField)] = textField.text!
     }
@@ -158,5 +109,118 @@ class LoginViewController: BaseViewController, UITableViewDelegate, UITableViewD
 extension LoginViewController {
     func intentToBloc() {
         performSegue(withIdentifier: "showMainController", sender: nil)
+    }
+}
+
+extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if arrCellData.count > 0 {
+            return arrCellData.count
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if arrCellData[indexPath.row].cell == 2 {
+            let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
+            cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
+            cell.confirmBtn.addTarget(self, action: #selector(self.doLogin), for: .touchUpInside)
+            
+            if screenSize < baseScreen {
+                cell.confirmBtn.titleLabel?.font = UIFont(name: "supermarket", size: 20)
+            }else{
+                cell.confirmBtn.titleLabel?.font = UIFont(name: "supermarket", size: 26)
+            }
+            return cell
+        }
+        else if arrCellData[indexPath.row].cell == 3 {
+            let cell = Bundle.main.loadNibNamed("ForgotCell", owner: self, options: nil)?.first as! ForgotPasswordTableViewCell
+            cell.forgotpasswordLabel.text = "ลืมรหัสผ่าน?"
+            cell.forgotpasswordLabel.isUserInteractionEnabled = true
+            cell.forgotpasswordLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapForgotPassword)))
+            
+            return cell
+        }
+            
+        else{
+            let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
+            cell.inputData.placeholder = arrCellData[indexPath.row].text
+            cell.inputData.delegate = self
+            cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
+            
+            if screenSize < baseScreen {
+                cell.inputData.font = UIFont(name: "supermarket", size: 20)
+            }else{
+                cell.inputData.font = UIFont(name: "supermarket", size: 26)
+            }
+            
+            switch arrCellData[indexPath.row].cell {
+            case 0:
+                cell.inputData.keyboardType = UIKeyboardType.emailAddress
+                break
+            case 1:
+                cell.inputData.isSecureTextEntry = true
+                break
+            default:
+                break
+            }
+            
+            cell.inputData.text = arrDataRequest[indexPath.row]
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 2 {
+            if screenSize < baseScreen {
+                return 72
+            }
+            return 88
+        }else if indexPath.row == 3 {
+            return 36
+        }
+        
+        if screenSize <= baseScreen {
+            return 56
+        }
+        
+        return 72
+    }
+    
+    @objc private func doLogin(){
+        var parameters = [String: String]()
+        parameters[UserLogin.username] = arrDataRequest[0]
+        parameters[UserLogin.password] = arrDataRequest[1]
+        
+        //        showLoading()
+        //        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
+        intentToBloc()
+    }
+    
+    @objc func tapForgotPassword(sender: UITapGestureRecognizer) {
+        print("Tap success")
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let pointInTable:CGPoint = textField.superview!.convert(textField.frame.origin, to: loginTableView)
+        var contentOffset:CGPoint = loginTableView.contentOffset
+        contentOffset.y = pointInTable.y
+        
+        if let accessoryView = textField.inputAccessoryView {
+            contentOffset.y -= accessoryView.frame.size.height
+        }
+        
+        loginTableView.contentOffset = contentOffset
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        loginTableView.contentOffset = CGPoint(x: loginTableView.contentOffset.x, y: 0)
+        return false
     }
 }

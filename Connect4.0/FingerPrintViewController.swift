@@ -11,7 +11,6 @@ import LocalAuthentication
 
 class FingerPrintViewController: BaseViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,17 +51,19 @@ class FingerPrintViewController: BaseViewController {
                     case LAError.systemCancel:
                         print("Authentication was canceled by system")
                         // Fallback to password Authentication
-//                        OperationQueue.main.addOperation {
-//                            
-//                        }
                         
                     case LAError.userCancel:
                         print("Authentication was canceled by user")
+                        OperationQueue.main.addOperation {
+                            self.performSegue(withIdentifier: "showPinPassword", sender: nil)
+                        }
+                        
                     case LAError.touchIDNotEnrolled:
                         print("Authentication cloud not start because Touch ID has no enrolled your fingers.")
                         OperationQueue.main.addOperation {
                             self.performSegue(withIdentifier: "showPinPassword", sender: nil)
                         }
+                        
                     case LAError.touchIDNotAvailable:
                         print("Authentication cloud not start because Touch ID is not available")
                     case LAError.userFallback:
