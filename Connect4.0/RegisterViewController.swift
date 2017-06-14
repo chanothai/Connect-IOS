@@ -9,10 +9,12 @@
 import SwiftEventBus
 import UIKit
 
-class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFieldDelegate {
+class RegisterViewController: BaseViewController {
 
     // MAKE outlet
     @IBOutlet var registerTableView: UITableView!
+    @IBOutlet var signInLabel: UILabel!
+    @IBOutlet var titleTable: UILabel!
     
     // MAKE instance properties
     var dateTextField: UITextField!
@@ -28,16 +30,16 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
         
         key = [UInt8](Data(base64Encoded: KeyName.staticKey)!)
         RequireKey.key = key!
+        
+        signInLabel.isUserInteractionEnabled = true
+        signInLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapSignIn)))
+        
+        resizeView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEventBus()
-    }
-    
-    private func initParamater(){
-        arrCellData = [CellData]()
-        arrCellData = CellData().createArrRegisterCell()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,13 +49,10 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
         SwiftEventBus.unregister(self)
     }
     
-    private func iniArrayTextField(){
-        arrTextField = [String]()
-        
-        for _ in 0 ..< 9 {
-            arrTextField.append("")
-        }
+    func tapSignIn(sender: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
+    
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -70,24 +69,6 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
     
     @objc func textFieldChange(textField: UITextField){
         arrTextField[getPosition(textField)] = textField.text!
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        let pointInTable:CGPoint = textField.superview!.convert(textField.frame.origin, to: registerTableView)
-        var contentOffset:CGPoint = registerTableView.contentOffset
-        contentOffset.y = pointInTable.y
-        
-        if let accessoryView = textField.inputAccessoryView {
-            contentOffset.y -= accessoryView.frame.size.height
-        }
-        
-        registerTableView.contentOffset = contentOffset
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return false
     }
     
     private func getPosition(_ textField: UITextField) -> Int{
@@ -111,7 +92,49 @@ class RegisterViewController: BaseViewController, UITableViewDelegate, UITextFie
     }
 }
 
-extension RegisterViewController : UITableViewDataSource {
+extension RegisterViewController {
+    func initParamater(){
+        arrCellData = [CellData]()
+        arrCellData = CellData().createArrRegisterCell()
+    }
+    
+    func iniArrayTextField(){
+        arrTextField = [String]()
+        
+        for _ in 0 ..< 9 {
+            arrTextField.append("")
+        }
+    }
+    
+    func resizeView() {
+        titleTable.text = "ลงทะเบียน"
+        if screenSize < baseScreen {
+            titleTable.font = UIFont(name: baseFont, size: 36)
+        }
+    }
+}
+
+extension RegisterViewController : UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let pointInTable:CGPoint = textField.superview!.convert(textField.frame.origin, to: registerTableView)
+        var contentOffset:CGPoint = registerTableView.contentOffset
+        contentOffset.y = pointInTable.y
+        
+        if let accessoryView = textField.inputAccessoryView {
+            contentOffset.y -= accessoryView.frame.size.height
+        }
+        
+        registerTableView.contentOffset = contentOffset
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return false
+    }
+}
+
+extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrCellData.count
     }
@@ -121,6 +144,10 @@ extension RegisterViewController : UITableViewDataSource {
             let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
             cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
+            
+            if screenSize < baseScreen {
+                cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
+            }
             return cell
         }else{
             let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
@@ -128,6 +155,10 @@ extension RegisterViewController : UITableViewDataSource {
             cell.inputData.delegate = self
             cell.inputData.inputAccessoryView = addDoneOnKeyBoard()
             cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
+            
+            if screenSize < baseScreen {
+                cell.inputData.font = UIFont(name: baseFont, size: 20)
+            }
             
             if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
                 cell.inputData.keyboardType = UIKeyboardType.numberPad
@@ -155,7 +186,19 @@ extension RegisterViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
+        if indexPath.row == 8 {
+            if screenSize < baseScreen {
+                return 72
+            }
+            
+            return 88
+        }
+        
+        if screenSize <= baseScreen {
+            return 56
+        }
+        
+        return 72
     }
     
     @objc private func doRegister() {

@@ -12,16 +12,17 @@ class IDCardViewController: BaseViewController {
 
     //Make: outlet
     @IBOutlet var userIMG: UIImageView!
-    @IBOutlet var switchIMG: UIImageView!
+    @IBOutlet var switchIMG: UIButton!
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var userInformationTableView: UITableView!
     @IBOutlet var fullNameEn: UILabel!
-    @IBOutlet var cameraChangeIMG: UIImageView!
+    @IBOutlet var cameraChangeIMG: UIButton!
     @IBOutlet var layoutProfile: UIView!
     @IBOutlet var layoutName: UIStackView!
     
     //Make: properties
     var userInfomation: UserInfoResponse?
+    var statusSwitch = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,7 @@ extension IDCardViewController {
             fullNameEn.font = font
             fullNameLabel.font = font
         }
+        
         
         setProfileIMG(screenSize)
         setIconQRCode(screenSize)
@@ -101,8 +103,27 @@ extension IDCardViewController {
         switchIMG.layer.borderWidth = 1
         switchIMG.layer.borderColor = UIColor.lightGray.cgColor
         switchIMG.backgroundColor = UIColor.white
-        switchIMG.image = UIImage(named: "people")
         switchIMG.clipsToBounds = true
+        switchIMG.setImage(UIImage(named:"icon_qrcode"), for: .normal)
+        switchIMG.addTarget(self, action: #selector(self.tapQrcode(sender:)), for: .touchUpInside)
+        
+    }
+    
+    @objc func tapQrcode(sender: UIGestureRecognizer) {
+        print("tap qrcode")
+        let imgPerson = UIImage(named: "icon_person")
+        let imgQrcode = UIImage(named: "icon_qrcode")
+        
+        switch statusSwitch {
+        case 0:
+            switchIMG.setImage(imgPerson, for: .normal)
+            statusSwitch = 1
+            break
+        default:
+            switchIMG.setImage(imgQrcode, for: .normal)
+            statusSwitch = 0
+            break
+        }
     }
     
     func setIconCamera(_ screenSize: Int) {
@@ -118,20 +139,70 @@ extension IDCardViewController {
         cameraChangeIMG.layer.borderWidth = 1
         cameraChangeIMG.layer.borderColor = UIColor.lightGray.cgColor
         cameraChangeIMG.backgroundColor = UIColor.white
-        cameraChangeIMG.image = UIImage(named: "people")
         cameraChangeIMG.clipsToBounds = true
+        cameraChangeIMG.setImage(UIImage(named:"icon_camera"), for: .normal)
+        cameraChangeIMG.addTarget(self, action: #selector(self.tapCamera), for: .touchUpInside)
+    }
+    
+    @objc func tapCamera(sender: UIGestureRecognizer){
+        print("tap camera")
+        actionGallary()
+    }
+    
+    func actionGallary(){
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "ยกเลิก", style: .cancel, handler: nil)
+        
+        let callActionHandler = { (action:UIAlertAction!) -> Void in
+            
+        }
+        
+        let takePhoto = UIAlertAction(title: "ถ่ายรูป", style: .default, handler: callActionHandler)
+        
+        let callGallary = {(action: UIAlertAction!) -> Void in
+            self.callPhotoLibrary()
+        }
+        let gallary = UIAlertAction(title: "เลือกรูปจากอัลบั้ม", style: .default, handler: callGallary)
+        
+        optionMenu.addAction(cancelAction)
+        optionMenu.addAction(takePhoto)
+        optionMenu.addAction(gallary)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func callPhotoLibrary(){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            
+            imagePicker.delegate = self
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+}
+
+extension IDCardViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let selectImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            userIMG.image = selectImage
+        }
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension IDCardViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InformationCell") as! IDCardTableViewCell
-        cell.userDetailLabel.text = userInfomation?.citizenID
+        cell.userDetailLabel.text = "Test"
+        
         return cell
     }
 }

@@ -20,8 +20,6 @@ class PinPasswordViewController: BaseViewController {
     var hasPin:Bool? = false
     var pinPassword:String?
     var blurEffectView:UIVisualEffectView?
-    var screenSize = Int(UIScreen.main.bounds.width)
-    var baseSize = 350
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +27,7 @@ class PinPasswordViewController: BaseViewController {
         setBackground()
         createPinPassword()
         
-        if screenSize < baseSize {
+        if screenSize < baseScreen {
             titlePinLabel.font = UIFont(name: "supermarket", size: 36.0)
         }
     }

@@ -12,6 +12,10 @@ import SWRevealViewController
 
 class BaseViewController: UIViewController {
 
+    let screenSize:Int = Int(UIScreen.main.bounds.width)
+    let baseScreen:Int = 350
+    let baseFont = "supermarket"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

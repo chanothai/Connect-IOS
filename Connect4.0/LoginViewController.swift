@@ -21,8 +21,7 @@ class LoginViewController: BaseViewController {
     var arrCellData:[CellData]!
     var arrDataRequest:[String]!
     var key:[UInt8]?
-    let screenSize:Int = Int(UIScreen.main.bounds.width)
-    let baseScreen:Int = 350
+    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
     var manageKeyboard: ManageKeyboard? = ManageKeyboard()
     
@@ -51,7 +50,6 @@ class LoginViewController: BaseViewController {
     }
 
     private func iniProperties(){
-        arrCellData = [CellData]()
         arrCellData = CellData().createArrLoginCell()
         arrDataRequest = [String]()
         
@@ -100,8 +98,7 @@ class LoginViewController: BaseViewController {
     }
     
     @objc private func actionToCreateAccount(sender: UIGestureRecognizer) {
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "NavRegisterController") as! NavRegisterController
+        let navRegisterController = storyBoard.instantiateViewController(withIdentifier: "RegisterController") as! RegisterViewController
         self.present(navRegisterController, animated: true, completion: nil)
     }
 }
@@ -129,15 +126,14 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.confirmBtn.addTarget(self, action: #selector(self.doLogin), for: .touchUpInside)
             
             if screenSize < baseScreen {
-                cell.confirmBtn.titleLabel?.font = UIFont(name: "supermarket", size: 20)
-            }else{
-                cell.confirmBtn.titleLabel?.font = UIFont(name: "supermarket", size: 26)
+                cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
             }
+            
             return cell
         }
         else if arrCellData[indexPath.row].cell == 3 {
             let cell = Bundle.main.loadNibNamed("ForgotCell", owner: self, options: nil)?.first as! ForgotPasswordTableViewCell
-            cell.forgotpasswordLabel.text = "ลืมรหัสผ่าน?"
+            cell.forgotpasswordLabel.text = arrCellData[indexPath.row].text
             cell.forgotpasswordLabel.isUserInteractionEnabled = true
             cell.forgotpasswordLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapForgotPassword)))
             
@@ -151,9 +147,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
             if screenSize < baseScreen {
-                cell.inputData.font = UIFont(name: "supermarket", size: 20)
-            }else{
-                cell.inputData.font = UIFont(name: "supermarket", size: 26)
+                cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
             switch arrCellData[indexPath.row].cell {
@@ -200,7 +194,8 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func tapForgotPassword(sender: UITapGestureRecognizer) {
-        print("Tap success")
+        let forgotController = storyboard?.instantiateViewController(withIdentifier: "NavForgotPassword") as! NavForgotPasswordNavigationController
+        self.show(forgotController, sender: nil)
     }
 }
 

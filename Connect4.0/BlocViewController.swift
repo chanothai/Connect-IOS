@@ -46,7 +46,7 @@ class BlocViewController: BaseViewController {
             RequireKey.key = key
             setModelUser(restoreInformation)
         }else{
-            pushToLogin()
+//            pushToLogin()
         }
     }
     

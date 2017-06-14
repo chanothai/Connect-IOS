@@ -19,8 +19,13 @@ struct CellData {
     }
     
     public func createArrLoginCell() -> [CellData] {
-        let arrTitles = ["อีเมล์", "รหัสผ่าน", "เข้าสู่ระบบ", "ลืมรหัสผ่าน"]
+        let arrTitles = ["อีเมล์", "รหัสผ่าน", "เข้าสู่ระบบ", "ลืมรหัสผ่าน?"]
         
+        return calculateCell(arrTitles: arrTitles)
+    }
+    
+    public func createListForgot() -> [CellData] {
+        let arrTitles = ["เลขบัตรประชาชน", "อีเมล์", "ตรวจสอบ"]
         return calculateCell(arrTitles: arrTitles)
     }
     

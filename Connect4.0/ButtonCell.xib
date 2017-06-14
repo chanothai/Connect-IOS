@@ -26,7 +26,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gKp-ak-Nbm">
                         <rect key="frame" x="16" y="16" width="287" height="67.5"/>
                         <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="26"/>
-                        <state key="normal" title="เข้าสู่ระบบ" backgroundImage="bg_btn"/>
+                        <state key="normal" backgroundImage="bg_btn"/>
                         <state key="highlighted">
                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" red="0.25069231450000001" green="0.53364692479999998" blue="0.51865113159999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
