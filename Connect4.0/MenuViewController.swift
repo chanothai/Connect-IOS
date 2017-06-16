@@ -22,11 +22,13 @@ class MenuViewController: BaseViewController {
     var arrMenu:[String]!
     var arrImage:[String]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    var blurEffectView:UIVisualEffectView?
     
     lazy var viewModel: UserInfoViewModelProtocol = UserInfoViewModel(delegate: self)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBackground()
         sidebarMenuTableView.setBaseTableStyle()
         arrImage = SidebarMenuModel.setImageMenu()
         
@@ -84,6 +86,16 @@ extension MenuViewController {
             }
         }
     }
+    
+    func setBackground() {
+        let color1 = UIColor(colorLiteralRed: 57/255, green: 65/255, blue: 75/255, alpha: 1)
+        let color2 = UIColor(colorLiteralRed: 114/255, green: 124/255, blue: 137/255, alpha: 1)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [color1.cgColor , color2.cgColor]
+        gradientLayer.frame = view.frame
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
 }
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
@@ -102,8 +114,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         cell.sectionImg.image = UIImage(named: arrImage[indexPath.row])
         cell.sectionImg.image = cell.sectionImg.image!.withRenderingMode(.alwaysTemplate)
         cell.sectionImg.tintColor = UIColor.lightGray
+        cell.backgroundColor = UIColor.clear
         cell.sectionLabel.text = arrMenu[indexPath.row]
-        cell.sectionLabel.textColor = UIColor.lightGray
+        cell.sectionLabel.textColor = UIColor.white
         
         return cell
     }
@@ -130,6 +143,12 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             break
         case 3:
+            let destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
+            let nav = UINavigationController(rootViewController: destinationController)
+            destinationController.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
+            destinationController.navigationItem.titleView = self.createTitleBarImage()
+            destinationController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: nil)
+            self.revealViewController().pushFrontViewController(nav, animated: true)
             break
         default:
             print("ออกจากระบบ")

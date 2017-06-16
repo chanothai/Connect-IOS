@@ -87,11 +87,6 @@ extension PinPasswordViewController: PasswordInputCompleteProtocol {
 
 extension PinPasswordViewController {
     func createPinPassword() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView?.frame = view.bounds
-        view.insertSubview(blurEffectView!, at: 1)
-        
         let passwordContainerView = PasswordContainerView.create(withDigit: kPasswordDigit)
         passwordContainerView.frame = CGRect(x: 0, y: 0, width: pinPasswordLayout.frame.width, height: pinPasswordLayout.frame.height)
         passwordContainerView.tintColor = UIColor(colorLiteralRed: 136/255, green: 152/255, blue: 174/255, alpha: 0.2)
@@ -112,6 +107,11 @@ extension PinPasswordViewController {
         gradientLayer.frame = view.frame
         
         view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = view.bounds
+        view.insertSubview(blurEffectView!, at: 1)
     }
     
     func checkPinPassword(_ input: String) -> String {

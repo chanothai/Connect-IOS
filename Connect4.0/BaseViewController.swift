@@ -74,7 +74,7 @@ extension BaseViewController: BaseViewModelDelegate {
 
 extension UITableView {
     public func setBaseTableStyle(){
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         self.tableFooterView = UIView(frame: CGRect.zero) //remove empty rows of table
         self.separatorColor = UIColor.clear
     }
