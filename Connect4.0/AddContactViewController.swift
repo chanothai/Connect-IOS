@@ -7,13 +7,23 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AddContactViewController: BaseViewController {
 
+    //Make: Outlet
+    @IBOutlet var scanScreen: UIImageView!
+    
+    
+    //Make: Properties
+    var captureSession: AVCaptureSession?
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    var qrCodeFrameView:UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        print("Start add contact")
+        createVideoCapture()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +31,67 @@ class AddContactViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func backScreenAddContact(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
+    
+    
+    func createVideoCapture() {
+        let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            
+            captureSession = AVCaptureSession()
+            captureSession?.addInput(input)
+            
+            let captureMetadataOutPut = AVCaptureMetadataOutput()
+            captureSession?.addOutput(captureMetadataOutPut)
+            
+            captureMetadataOutPut.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            captureMetadataOutPut.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
+            
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+            videoPreviewLayer?.frame = view.layer.bounds
+            view.layer.addSublayer(videoPreviewLayer!)
+            
+            captureSession?.startRunning()
+            
+            view.bringSubview(toFront: scanScreen)
+            
+            qrCodeFrameView = UIView()
+            
+            if let qrCodeFrameView = qrCodeFrameView {
+                qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
+                qrCodeFrameView.layer.borderWidth = 2
+                view.addSubview(qrCodeFrameView)
+                view.bringSubview(toFront: qrCodeFrameView)
+            }
+        } catch {
+            print(error)
+            return
+        }
+    }
+}
 
+
+extension AddContactViewController: AVCaptureMetadataOutputObjectsDelegate {
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+        
+        if metadataObjects == nil || metadataObjects.count == 0 {
+            qrCodeFrameView?.frame = CGRect.zero
+            return
+        }
+        
+        let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
+        if metadataObj.type == AVMetadataObjectTypeQRCode {
+            let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
+            qrCodeFrameView?.frame = barCodeObject!.bounds
+            
+            if metadataObj.stringValue != nil {
+                print(metadataObj.stringValue)
+            }
+        }
+    }
 }

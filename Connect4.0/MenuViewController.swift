@@ -23,6 +23,7 @@ class MenuViewController: BaseViewController {
     var arrImage:[String]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     var blurEffectView:UIVisualEffectView?
+    var destinationController:UIViewController?
     
     lazy var viewModel: UserInfoViewModelProtocol = UserInfoViewModel(delegate: self)
 
@@ -143,17 +144,25 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             break
         case 3:
-            let destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
-            let nav = UINavigationController(rootViewController: destinationController)
-            destinationController.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
-            destinationController.navigationItem.titleView = self.createTitleBarImage()
-            destinationController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: nil)
+            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
+            let nav = UINavigationController(rootViewController: destinationController!)
+            destinationController?.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
+            destinationController?.navigationItem.titleView = self.createTitleBarImage()
+            destinationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
             self.revealViewController().pushFrontViewController(nav, animated: true)
+            
+            
             break
         default:
             print("ออกจากระบบ")
             self.actionSignOut()
             break
         }
+    }
+    
+    @objc func selectAddContact() {
+        print("Add Contact")
+        let navAddContactController = self.storyBoard.instantiateViewController(withIdentifier: "NavAddContact") as! NavContactController
+        self.destinationController?.show(navAddContactController, sender: nil)
     }
 }

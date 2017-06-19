@@ -63,6 +63,7 @@
 		DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90816E1EBCAA2300E90C16 /* CellData.swift */; };
 		DEA927931EEE70B5004AA898 /* PinPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA927921EEE70B5004AA898 /* PinPasswordViewController.swift */; };
 		DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAD703E1EC576B20057B448 /* BaseColor.swift */; };
+		DEB407551EF7A576006C025B /* NavContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB407541EF7A576006C025B /* NavContactController.swift */; };
 		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
 		DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FD1EC473DF00F08763 /* ClientHttp.swift */; };
 /* End PBXBuildFile section */
@@ -128,6 +129,7 @@
 		DE90816E1EBCAA2300E90C16 /* CellData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
 		DEA927921EEE70B5004AA898 /* PinPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinPasswordViewController.swift; sourceTree = "<group>"; };
 		DEAD703E1EC576B20057B448 /* BaseColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseColor.swift; sourceTree = "<group>"; };
+		DEB407541EF7A576006C025B /* NavContactController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavContactController.swift; sourceTree = "<group>"; };
 		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
 		DEE609FD1EC473DF00F08763 /* ClientHttp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHttp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -463,6 +465,7 @@
 			children = (
 				DE8055511EF3BF0500EDBD68 /* ContactViewController.swift */,
 				DE8055561EF3ED4C00EDBD68 /* AddContactViewController.swift */,
+				DEB407541EF7A576006C025B /* NavContactController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -737,6 +740,7 @@
 				DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */,
 				D358D06D1ED1DEBA00B39E94 /* MenuViewController.swift in Sources */,
 				D358D0711ED1E0A700B39E94 /* NavBlocController.swift in Sources */,
+				DEB407551EF7A576006C025B /* NavContactController.swift in Sources */,
 				DEA927931EEE70B5004AA898 /* PinPasswordViewController.swift in Sources */,
 				DE3BF6A41ECEAEE300FBBB9F /* AlertMessage.swift in Sources */,
 				D358D0731ED1E3FB00B39E94 /* RevealViewController.swift in Sources */,

@@ -422,7 +422,7 @@
             </objects>
             <point key="canvasLocation" x="2788" y="-699.40029985007504"/>
         </scene>
-        <!--Add Contact View Controller-->
+        <!--Scan QR-->
         <scene sceneID="RMU-oQ-wDo">
             <objects>
                 <viewController id="nYc-aW-EAc" customClass="AddContactViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
@@ -433,11 +433,29 @@
                     <view key="view" contentMode="scaleToFill" id="8c8-gX-owt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan-screen" translatesAutoresizingMaskIntoConstraints="NO" id="6Py-KU-idK">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6Py-KU-idK" firstAttribute="top" secondItem="ZC2-iv-DkC" secondAttribute="bottom" id="4DZ-AQ-iYV"/>
+                            <constraint firstItem="6Py-KU-idK" firstAttribute="leading" secondItem="8c8-gX-owt" secondAttribute="leading" id="64a-RO-4lX"/>
+                            <constraint firstItem="Srv-Kb-abH" firstAttribute="top" secondItem="6Py-KU-idK" secondAttribute="bottom" id="FAm-m1-yHy"/>
+                            <constraint firstAttribute="trailing" secondItem="6Py-KU-idK" secondAttribute="trailing" id="MFV-na-X4y"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="PS3-bs-P2f">
-                        <barButtonItem key="leftBarButtonItem" image="back_screen" id="ZlZ-kx-CbI"/>
+                    <navigationItem key="navigationItem" title="Scan QR" id="PS3-bs-P2f">
+                        <barButtonItem key="leftBarButtonItem" image="back_screen" id="ZlZ-kx-CbI">
+                            <connections>
+                                <action selector="backScreenAddContact:" destination="nYc-aW-EAc" id="UO8-en-ReK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="scanScreen" destination="6Py-KU-idK" id="srr-ev-GzP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JVg-gQ-Y92" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1011,10 +1029,10 @@
             </objects>
             <point key="canvasLocation" x="-1671.2" y="760.56971514242889"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Contact Controller-->
         <scene sceneID="9db-Ft-wHt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MV9-EX-XSR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavAddContact" automaticallyAdjustsScrollViewInsets="NO" id="MV9-EX-XSR" customClass="NavContactController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="d8C-Ia-UhH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1038,6 +1056,7 @@
         <image name="menu_toggle" width="25" height="15"/>
         <image name="people" width="40" height="40"/>
         <image name="phone" width="30" height="27"/>
+        <image name="scan-screen" width="427" height="691"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ziC-fh-R5q"/>
