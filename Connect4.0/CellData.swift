@@ -29,6 +29,11 @@ struct CellData {
         return calculateCell(arrTitles: arrTitles)
     }
     
+    public func createListNewPassword() -> [CellData] {
+        let arrTextField = ["รหัสผ่านใหม่", "รหัสผ่าน", "บันทึก"]
+        return calculateCell(arrTitles: arrTextField)
+    }
+    
     private func calculateCell(arrTitles:[String]) -> [CellData] {
         var arrCellData:[CellData] = [CellData]()
         

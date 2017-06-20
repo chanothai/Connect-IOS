@@ -12,6 +12,7 @@ class IDCardViewController: BaseViewController {
 
     //Make: outlet
     @IBOutlet var userIMG: UIImageView!
+    @IBOutlet var qrcodeIMG: UIImageView!
     @IBOutlet var switchIMG: UIButton!
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var userInformationTableView: UITableView!
@@ -19,15 +20,20 @@ class IDCardViewController: BaseViewController {
     @IBOutlet var cameraChangeIMG: UIButton!
     @IBOutlet var layoutProfile: UIView!
     @IBOutlet var layoutName: UIStackView!
+    @IBOutlet var layoutProfileIMG: UIView!
+    
     
     //Make: properties
     var userInfomation: UserInfoResponse?
     var statusSwitch = 0
+    var image:CIImage!
+    var newImage:UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSideBar()
         setView()
+        newImage = generateQRCode(from: "1719900291478")!
         
         userInformationTableView.setBaseTableStyle()
         fullNameLabel.text = "Chanothai Duangrahva"
@@ -61,15 +67,15 @@ extension IDCardViewController {
             fullNameLabel.font = font
         }
         
-        
+        setLayoutIMG(screenSize)
         setProfileIMG(screenSize)
         setIconQRCode(screenSize)
         setIconCamera(screenSize)
     }
     
-    func setProfileIMG(_ screenSize: Int) {
-        let heightConstriant = NSLayoutConstraint(item: userIMG, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(screenSize))
-        let widthConstraint = NSLayoutConstraint(item: userIMG, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(screenSize))
+    func setLayoutIMG(_ screenSize: Int) {
+        let heightConstriant = NSLayoutConstraint(item: layoutProfileIMG, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(screenSize))
+        let widthConstraint = NSLayoutConstraint(item: layoutProfileIMG, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(screenSize))
         
         var constantSize:CGFloat = 24
         
@@ -77,17 +83,23 @@ extension IDCardViewController {
             constantSize = 16
         }
         
-        let topConstriant = NSLayoutConstraint(item: userIMG, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: layoutProfile, attribute: NSLayoutAttribute.top, multiplier: 1, constant: constantSize)
-        let bottomConstriant = NSLayoutConstraint(item: userIMG, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: layoutName, attribute: NSLayoutAttribute.top, multiplier: 1, constant: -constantSize)
+        let topConstriant = NSLayoutConstraint(item: layoutProfileIMG, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: layoutProfile, attribute: NSLayoutAttribute.top, multiplier: 1, constant: constantSize)
+        let bottomConstriant = NSLayoutConstraint(item: layoutProfileIMG, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: layoutName, attribute: NSLayoutAttribute.top, multiplier: 1, constant: -constantSize)
         
         layoutProfile.addConstraints([widthConstraint, heightConstriant,topConstriant, bottomConstriant])
 
-        
+        layoutProfileIMG.layer.cornerRadius = CGFloat(screenSize / 2)
+        layoutProfileIMG.layer.borderColor = UIColor.lightGray.cgColor
+        layoutProfileIMG.layer.borderWidth = 1
+        layoutProfileIMG.backgroundColor = UIColor.white
+
+    }
+    
+    func setProfileIMG(_ screenSize: Int) {
         userIMG.layer.cornerRadius = CGFloat(screenSize / 2)
         userIMG.layer.borderColor = UIColor.lightGray.cgColor
         userIMG.layer.borderWidth = 1
         userIMG.backgroundColor = UIColor.white
-
     }
     
     func setIconQRCode(_ screenSize: Int) {
@@ -105,7 +117,7 @@ extension IDCardViewController {
         switchIMG.backgroundColor = UIColor.white
         switchIMG.clipsToBounds = true
         switchIMG.setImage(UIImage(named:"icon_qrcode"), for: .normal)
-        switchIMG.addTarget(self, action: #selector(self.tapQrcode(sender:)), for: .touchUpInside)
+        switchIMG.addTarget(self, action: #selector(self.tapQrcode), for: .touchUpInside)
         
     }
     
@@ -118,12 +130,38 @@ extension IDCardViewController {
         case 0:
             switchIMG.setImage(imgPerson, for: .normal)
             statusSwitch = 1
+            
+            qrcodeIMG.image = newImage
+            userIMG.isHidden = true
             break
         default:
+            userIMG.isHidden = false
             switchIMG.setImage(imgQrcode, for: .normal)
             statusSwitch = 0
+            
+            userIMG.image = UIImage(named: "people")
             break
         }
+    }
+    
+    func generateQRCode(from string: String) -> UIImage? {
+        let data = string.data(using: String.Encoding.ascii)
+        
+        if let filter = CIFilter(name: "CIQRCodeGenerator") {
+            filter.setValue(data, forKey: "inputMessage")
+            image = filter.outputImage
+            
+            let scaleX = userIMG.frame.size.width
+            let scallY = userIMG.frame.size.height
+            
+            let transform = CGAffineTransform(scaleX: CGFloat(scaleX), y: CGFloat(scallY))
+            
+            if let output = image?.applying(transform) {
+                return UIImage(ciImage: output)
+            }
+        }
+        
+        return nil
     }
     
     func setIconCamera(_ screenSize: Int) {

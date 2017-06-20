@@ -151,7 +151,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             destinationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
             self.revealViewController().pushFrontViewController(nav, animated: true)
             
-            
             break
         default:
             print("ออกจากระบบ")

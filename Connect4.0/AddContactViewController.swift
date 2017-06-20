@@ -75,7 +75,6 @@ class AddContactViewController: BaseViewController {
     }
 }
 
-
 extension AddContactViewController: AVCaptureMetadataOutputObjectsDelegate {
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         

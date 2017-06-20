@@ -1,26 +1,26 @@
 //
-//  ForgotPasswordViewController.swift
+//  NewPasswordViewController.swift
 //  Connect4.0
 //
-//  Created by Pakgon on 6/14/2560 BE.
+//  Created by Pakgon on 6/20/2560 BE.
 //  Copyright © 2560 Pakgon. All rights reserved.
 //
 
 import UIKit
 
-class ForgotPasswordViewController: BaseViewController {
+class NewPasswordViewController: BaseViewController {
 
-    //MAKE: Outlet
-    @IBOutlet var titleTable: UILabel!
-    @IBOutlet var forgotPassTable: UITableView!
+    //Make: Outlet
+    @IBOutlet var listNewPassword: UITableView!
     
-    //MAKE: Properties
+    //Make: Properties
     var arrCellData:[CellData]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        arrCellData = CellData().createListForgot()
-        forgotPassTable.setBaseTableStyle()
+        listNewPassword.setBaseTableStyle()
+        arrCellData = CellData().createListNewPassword()
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,24 +28,20 @@ class ForgotPasswordViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToLoginScreen(_ sender: UIBarButtonItem) {
+    @IBAction func backScreen(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSource {
+extension NewPasswordViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (arrCellData?.count)! > 0 {
-            return (arrCellData?.count)!
-        }
-        return 0
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 2 {
             let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
             cell.confirmBtn.setTitle(arrCellData![indexPath.row].text, for: .normal)
-            cell.confirmBtn.addTarget(self, action: #selector(selectValidate), for: .touchUpInside)
             print(arrCellData![indexPath.row].text)
             
             if screenSize < baseScreen {
@@ -55,16 +51,12 @@ extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSour
         }else{
             let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
             cell.inputData.placeholder = arrCellData![indexPath.row].text
+            cell.inputData.isSecureTextEntry = true
             
             if screenSize < baseScreen {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
-            if indexPath.row == 0 {
-                cell.inputData.keyboardType = UIKeyboardType.numberPad
-            }else{
-                cell.inputData.keyboardType = UIKeyboardType.emailAddress
-            }
             return cell
         }
     }
@@ -82,12 +74,5 @@ extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSour
         }
         
         return 72
-    }
-    
-    @objc func selectValidate() {
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let destinationController = storyBoard.instantiateViewController(withIdentifier: "NavNewPassword") as! NavNewPasswordController
-        self.show(destinationController, sender: nil)
-        print("Check")
     }
 }

@@ -44,6 +44,8 @@
 		DE76B3DC1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76B3DB1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift */; };
 		DE79AC8C1EEACAC6009309D4 /* FingerPrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */; };
 		DE79AC8E1EEACB3C009309D4 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */; };
+		DE7A9A9F1EF8FC2A0012F0CD /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A9A9E1EF8FC2A0012F0CD /* NewPasswordViewController.swift */; };
+		DE7A9AA11EF9051E0012F0CD /* NavNewPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A9AA01EF9051E0012F0CD /* NavNewPasswordController.swift */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
 		DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */; };
 		DE8055521EF3BF0500EDBD68 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8055511EF3BF0500EDBD68 /* ContactViewController.swift */; };
@@ -108,6 +110,8 @@
 		DE76B3DB1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		DE79AC8B1EEACAC6009309D4 /* FingerPrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerPrintViewController.swift; sourceTree = "<group>"; };
 		DE79AC8D1EEACB3C009309D4 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		DE7A9A9E1EF8FC2A0012F0CD /* NewPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
+		DE7A9AA01EF9051E0012F0CD /* NavNewPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavNewPasswordController.swift; sourceTree = "<group>"; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
 		DE8055511EF3BF0500EDBD68 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
@@ -422,6 +426,8 @@
 			children = (
 				DE70E0CD1EF1148E00966FDB /* ForgotPasswordViewController.swift */,
 				DE70E0CF1EF1318300966FDB /* NavForgotPasswordNavigationController.swift */,
+				DE7A9A9E1EF8FC2A0012F0CD /* NewPasswordViewController.swift */,
+				DE7A9AA01EF9051E0012F0CD /* NavNewPasswordController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -730,6 +736,7 @@
 				DE64D7781ED5687400FE71CC /* CategoryBlocView.swift in Sources */,
 				DE8055521EF3BF0500EDBD68 /* ContactViewController.swift in Sources */,
 				D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */,
+				DE7A9A9F1EF8FC2A0012F0CD /* NewPasswordViewController.swift in Sources */,
 				DE70E0CE1EF1148E00966FDB /* ForgotPasswordViewController.swift in Sources */,
 				DE3BF6A81ECECBD700FBBB9F /* NavRegisterController.swift in Sources */,
 				DE3BF6B41ECEDB3200FBBB9F /* BaseViewModel.swift in Sources */,
@@ -750,6 +757,7 @@
 				DEAD703F1EC576B20057B448 /* BaseColor.swift in Sources */,
 				DE6E529C1EE02EAB004BCDDD /* BlocContentViewController.swift in Sources */,
 				DE64D77A1ED577CC00FE71CC /* UserBlocResponse.swift in Sources */,
+				DE7A9AA11EF9051E0012F0CD /* NavNewPasswordController.swift in Sources */,
 				DE90816F1EBCAA2300E90C16 /* CellData.swift in Sources */,
 				DE90816C1EBCA06800E90C16 /* ButtonCell.swift in Sources */,
 				DE76B3DC1EF01CE200FDA40E /* ForgotPasswordTableViewCell.swift in Sources */,
