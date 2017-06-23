@@ -8,15 +8,18 @@
 
 import Alamofire
 import UIKit
+import SwiftyJSON
+import AlamofireObjectMapper
+import SwiftEventBus
 
 struct PathURL {
-    static var urlServer = "api.psp.pakgon.com/"
+    static var urlServer = "connect01.pakgon.com/"
     
     static var apiRegister = "Api/registerUser.json"
     static var apiRegisterSecure = "Api/secure/registerUser.json"
     
-    static var apiLogin = "Api/login.json"
-    static var apiLoginSecure = "Api/secure/login.json"
+    static var apiLogin = "ApiNotEncrypt/login.json"
+    static var apiLoginSecure = "Api/login.json"
     
     static var apiAuthToken = "Api/getOauthTokenFromUserToken.json"
     static var apiAuthSecure = "Api/secure/getOauthTokenFromUserToken.json"
@@ -70,21 +73,17 @@ class ClientHttp {
     }
     
     public func requestLogin(_ jsonData: Dictionary<String, Any>){
-        let apiPath:String? = ("\(url!)\(PathURL.apiLoginSecure)")
-        print(apiPath!)
+        let apiPath:String? = ("\(url!)\(PathURL.apiLogin)")
+        print("URL => \(apiPath!)")
         guard let realUrl = URL(string: apiPath!) else {
             return
         }
         
-        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
-            
-            switch response.result {
-            case .success:
-                FormatterResponse.parseJsonDataLogin(data: response.result.value as AnyObject)
-                break
-            case .failure(let error):
-                print(error)
-            }
+        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<LoginResponse>) in
+            let loginResponse = response.result.value
+            print("Result => \(String(describing: loginResponse?.result?.success))")
+    
+            SwiftEventBus.post("ResponseLogin", sender: loginResponse)
         }
     }
     

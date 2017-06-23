@@ -13,84 +13,11 @@ import SwiftEventBus
 class FormatterResponse {
     
     public static func parseJsonDataLogin(data: AnyObject) {
-        let jsonResult = data as? NSDictionary
-        print(jsonResult as AnyObject)
-        
-        // Parse JSON data
-        let jsonResponse = jsonResult?["result"] as AnyObject
-        let validate:String = (jsonResponse["Success"] as? String)!
-        
-        var loginResponse:LoginResponse = LoginResponse()
-        var result:LoginResult = LoginResult()
-        
-        if let eResult:String = jsonResponse["EResult"] as? String {
-            let decrypt = eResult.decryptData()
-            if validate == "OK" {
-                let jsonEResult = try! JSONSerialization.jsonObject(with: decrypt.data(using: .utf8)!, options: []) as? [String : Any]
-                let success:String = (jsonEResult!["Success"] as? String)!
-                
-                if success.isEmpty {
-                    let error:String = (jsonEResult!["Error"] as? String)!
-                    result.error = error
-                    result.success = success
-                }else{
-                    let jsonData = jsonEResult?["Data"] as AnyObject
-                    let jsonUser = jsonData["User"] as AnyObject
-                    let dynamicKey = jsonUser["dynamic_key"] as? String
-                    let token = jsonUser["token"] as? String
-                    
-                    result.success = success
-                    result.dynamicKey = dynamicKey!
-                    result.token = token!
-                    
-                }
-                
-                loginResponse.result = result
-                SwiftEventBus.post("ResponseLogin", sender: loginResponse)
-            }
-        }else{
-            result.success = ""
-            result.error = (jsonResponse["Error"] as? String)!
-            loginResponse.result = result
-            SwiftEventBus.post("ResponseLogin", sender: loginResponse)
-        }
+
     }
     
     public static func parseJsonDataRegister(data: AnyObject) {
-        let jsonResult = data as? NSDictionary
-        print(data)
         
-        // Parse JSON data
-        let jsonResponse = jsonResult?["result"] as AnyObject
-        let validate:String = (jsonResponse["Success"] as? String)!
-    
-        var loginResponse:LoginResponse = LoginResponse()
-        var result:LoginResult = LoginResult()
-        
-        if let eResult:String = jsonResponse["EResult"] as? String {
-            let decrypt = eResult.decryptData()
-            print(decrypt)
-            
-            if validate == "OK" {
-                let jsonEResult = try! JSONSerialization.jsonObject(with: decrypt.data(using: .utf8)!, options: []) as? [String : Any]
-                let success:String = (jsonEResult!["Success"] as? String)!
-                
-                result.success = success
-                
-                if success.isEmpty {
-                    let error:String = (jsonEResult!["Error"] as? String)!
-                    result.error = error
-                }
-                
-                loginResponse.result = result
-            }
-        }else{
-            result.error = (jsonResponse["Error"] as? String)!
-            result.success = ""
-            loginResponse.result = result
-        }
-        
-        SwiftEventBus.post("ResponseRegister", sender: loginResponse)
     }
     
     public static func parseJsonAuthToken(data: AnyObject){

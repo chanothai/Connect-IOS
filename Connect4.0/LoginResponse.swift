@@ -7,69 +7,58 @@
 //
 
 import Foundation
+import ObjectMapper
 
-struct LoginResponse {
-    private var _result:LoginResult?
+class LoginResponse: Mappable {
+    var result: LoginResult?
     
-    public var result:LoginResult {
-        get{
-            return _result!
-        }
-        set{
-            _result = newValue
-        }
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        result <- map["result"]
     }
 }
 
-struct LoginResult {
-    private var _error:String?
-    private var _success:String?
-    private var _dynamicKey:String?
-    private var _token:String?
-    private var _username:String?
+class LoginResult: Mappable {
+    var success: String?
+    var error: String?
+    var Eresult: LoginEResult?
     
-    public var error:String {
-        get{
-            return _error!
-        }
-        set{
-            _error = newValue
-        }
+    required init?(map: Map) {
+        
     }
     
-    public var success:String {
-        get{
-            return _success!
-        }
-        set{
-            _success = newValue
-        }
+    func mapping(map: Map) {
+        success <- map["Success"]
+        error <- map["Error"]
+        Eresult <- map["EResult"]
+    }
+}
+
+class LoginEResult: Mappable {
+    var user: LoginUser?
+    
+    required init?(map: Map) {
+        
     }
     
-    public var dynamicKey:String {
-        get{
-            return _dynamicKey!
-        }
-        set{
-            _dynamicKey = newValue
-        }
+    func mapping(map: Map) {
+        user <- map["User"]
+    }
+}
+
+class LoginUser: Mappable {
+    var dynamicKey: String?
+    var token: String?
+    
+    required init?(map: Map) {
+        
     }
     
-    public var token:String {
-        get{
-            return _token!
-        }
-        set{
-            _token = newValue
-        }
-    }
-    
-    public var username:String {
-        get{
-            return _username!
-        }
-        set{
-            _username = newValue
-        }
+    func mapping(map: Map) {
+        dynamicKey <- map["dynamic_key"]
+        token <- map["token"]
     }
 }

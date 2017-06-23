@@ -80,13 +80,13 @@ class RegisterViewController: BaseViewController {
     
     private func setEventBus(){
         SwiftEventBus.onMainThread(self, name: "ResponseRegister") { result in
-            let response:LoginResponse = result.object as! LoginResponse
+//            let response:LoginResponse = result.object as! LoginResponse
             
-            if response.result.success.isEmpty{
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
-            }else{
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
-            }
+//           if response.result.success.isEmpty{
+//                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
+//            }else{
+//                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
+//            }
             self.hideLoading()
         }
     }

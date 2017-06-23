@@ -11,7 +11,7 @@ import CryptoSwift
 
 struct KeyName {
     static var staticKey = "APuT9Gt43aGNLUwn+ewtjzV+1cXjdLcSe/TYXf7n8Vs="
-    static var byteIVStr = "ByteIV"
+    static var byteIVStr = ":"
 }
 
 struct RequireKey {

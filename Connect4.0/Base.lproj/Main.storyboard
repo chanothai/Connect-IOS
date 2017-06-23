@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JHP-Vf-PXH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uQB-nb-qec">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -488,13 +488,53 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan-screen" translatesAutoresizingMaskIntoConstraints="NO" id="6Py-KU-idK">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FXe-oh-Nuz">
+                                <rect key="frame" x="0.0" y="619" width="375" height="48"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Ggo-Be-Uv5">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFj-zT-ygw">
+                                                <rect key="frame" x="0.0" y="0.0" width="185.5" height="48"/>
+                                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="18"/>
+                                                <state key="normal" title="คลังภาพ">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pN-rd-qiq">
+                                                <rect key="frame" x="189.5" y="0.0" width="185.5" height="48"/>
+                                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="18"/>
+                                                <state key="normal" title="QR Code ของฉัน">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="1pN-rd-qiq" firstAttribute="width" secondItem="hFj-zT-ygw" secondAttribute="width" id="unc-pV-OQb"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ggo-Be-Uv5" secondAttribute="trailing" id="9JE-LH-GXp"/>
+                                    <constraint firstItem="Ggo-Be-Uv5" firstAttribute="top" secondItem="FXe-oh-Nuz" secondAttribute="top" id="FSw-p7-43m"/>
+                                    <constraint firstItem="Ggo-Be-Uv5" firstAttribute="leading" secondItem="FXe-oh-Nuz" secondAttribute="leading" id="KoW-S3-C08"/>
+                                    <constraint firstAttribute="height" constant="48" id="P72-xa-ee3"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ggo-Be-Uv5" secondAttribute="bottom" id="zxX-KC-amb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6Py-KU-idK" firstAttribute="top" secondItem="ZC2-iv-DkC" secondAttribute="bottom" id="4DZ-AQ-iYV"/>
                             <constraint firstItem="6Py-KU-idK" firstAttribute="leading" secondItem="8c8-gX-owt" secondAttribute="leading" id="64a-RO-4lX"/>
+                            <constraint firstItem="FXe-oh-Nuz" firstAttribute="leading" secondItem="8c8-gX-owt" secondAttribute="leading" id="AVT-nD-E5S"/>
                             <constraint firstItem="Srv-Kb-abH" firstAttribute="top" secondItem="6Py-KU-idK" secondAttribute="bottom" id="FAm-m1-yHy"/>
                             <constraint firstAttribute="trailing" secondItem="6Py-KU-idK" secondAttribute="trailing" id="MFV-na-X4y"/>
+                            <constraint firstItem="Srv-Kb-abH" firstAttribute="top" secondItem="FXe-oh-Nuz" secondAttribute="bottom" id="Nrm-NK-P1S"/>
+                            <constraint firstAttribute="trailing" secondItem="FXe-oh-Nuz" secondAttribute="trailing" id="tzm-wl-UEh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Scan QR" id="PS3-bs-P2f">
@@ -505,6 +545,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="layoutButton" destination="FXe-oh-Nuz" id="bv7-6Y-dt7"/>
                         <outlet property="scanScreen" destination="6Py-KU-idK" id="srr-ev-GzP"/>
                     </connections>
                 </viewController>
@@ -661,7 +702,7 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ใส่รหัสผ่าน" textAlignment="center" lineBreakMode="middleTruncation" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="pSH-0r-uqo">
                                         <rect key="frame" x="0.0" y="81" width="303" height="80.5"/>
-                                        <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="48"/>
+                                        <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="36"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1067,7 +1108,7 @@
                 <navigationController storyboardIdentifier="NavBlocController" automaticallyAdjustsScrollViewInsets="NO" id="sh9-aO-uNk" customClass="NavBlocController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Apb-PS-YX7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Apb-PS-YX7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1086,7 +1127,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavForgotPassword" automaticallyAdjustsScrollViewInsets="NO" id="BWK-7t-M3z" customClass="NavForgotPasswordNavigationController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="XHG-lf-cgY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XHG-lf-cgY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1104,7 +1145,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavAddContact" automaticallyAdjustsScrollViewInsets="NO" id="MV9-EX-XSR" customClass="NavContactController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="d8C-Ia-UhH">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="d8C-Ia-UhH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1122,7 +1163,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavNewPassword" automaticallyAdjustsScrollViewInsets="NO" id="XCe-d5-e53" customClass="NavNewPasswordController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="oYB-7Z-M5b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oYB-7Z-M5b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

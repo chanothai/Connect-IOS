@@ -19,9 +19,8 @@ class FormatterRequest {
         jsonData = [String : Any]()
     }
     
-    public func login(_ parameter:[String : String]) -> [String: String]{
+    public func loginSecure(_ parameter:[String : String]) -> [String: String]{
         jsonData?[LoginRequest.user] = parameter
-        print(jsonData!)
         
         resultJson![LoginSecure.data] = convertToJson(jsonData!)
         return resultJson!

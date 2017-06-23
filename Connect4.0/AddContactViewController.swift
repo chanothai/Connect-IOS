@@ -13,6 +13,7 @@ class AddContactViewController: BaseViewController {
 
     //Make: Outlet
     @IBOutlet var scanScreen: UIImageView!
+    @IBOutlet var layoutButton: UIView!
     
     
     //Make: Properties
@@ -58,7 +59,9 @@ class AddContactViewController: BaseViewController {
             
             captureSession?.startRunning()
             
+            // set layout show font of camera
             view.bringSubview(toFront: scanScreen)
+            view.bringSubview(toFront: layoutButton)
             
             qrCodeFrameView = UIView()
             

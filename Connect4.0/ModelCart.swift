@@ -15,7 +15,6 @@ class ModelCart {
     private var loginController:LoginViewController?
     
     init() {
-        logingResult = LoginResult()
         userInfo = UserInfoResponse()
     }
     

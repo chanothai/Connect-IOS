@@ -61,10 +61,10 @@ class LoginViewController: BaseViewController {
     private func setEventBus(){
         SwiftEventBus.onMainThread(self, name: "ResponseLogin") { result in
             let response:LoginResponse = result.object as! LoginResponse
-            if response.result.success.isEmpty{
-                AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: response.result.error, isAction: false)
+            if (response.result?.success?.isEmpty)!{
+                AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: (response.result?.error)!, isAction: false)
             }else{
-                AuthenLogin().storeLogin(self.arrDataRequest[0], response.result.token, response.result.dynamicKey)
+                AuthenLogin().storeLogin(self.arrDataRequest[0], (response.result?.Eresult?.user?.token)!, (response.result?.Eresult?.user?.dynamicKey)!)
                 self.intentToBloc()
             }
             
@@ -188,9 +188,16 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
         parameters[UserLogin.username] = arrDataRequest[0]
         parameters[UserLogin.password] = arrDataRequest[1]
         
+        var userPar = [String: Any]()
+        userPar[LoginRequest.user] = parameters
+        print(userPar)
         //        showLoading()
-        //        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).login(parameters))
-        intentToBloc()
+        let jsonParameter = FormatterRequest(key!).loginSecure(parameters)
+        print(jsonParameter)
+        
+        ClientHttp.getInstace().requestLogin(userPar)
+//        ClientHttp.getInstace().textMapObject()
+//        intentToBloc()
     }
     
     @objc func tapForgotPassword(sender: UITapGestureRecognizer) {

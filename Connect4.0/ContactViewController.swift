@@ -56,5 +56,11 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func selectPhone(){
         print("Phone")
+        guard let number = URL(string: "tel://" + "0832701128") else {
+            return
+        }
+        
+        UIApplication.shared.open(number, options: [:], completionHandler: nil)
+        
     }
 }
