@@ -64,7 +64,7 @@ class LoginViewController: BaseViewController {
             if (response.result?.success?.isEmpty)!{
                 AlertMessage.getInstance(self).showMessageAuthen(title: "Login", message: (response.result?.error)!, isAction: false)
             }else{
-                AuthenLogin().storeLogin(self.arrDataRequest[0], (response.result?.Eresult?.user?.token)!, (response.result?.Eresult?.user?.dynamicKey)!)
+                AuthenLogin().storeLogin(self.arrDataRequest[0], (response.result?.data?.user?.token)!, (response.result?.data?.user?.dynamicKey)!)
                 self.intentToBloc()
             }
             
@@ -191,11 +191,13 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
         var userPar = [String: Any]()
         userPar[LoginRequest.user] = parameters
         print(userPar)
-        //        showLoading()
+        
+        showLoading()
         let jsonParameter = FormatterRequest(key!).loginSecure(parameters)
         print(jsonParameter)
         
-        ClientHttp.getInstace().requestLogin(userPar)
+//        ClientHttp.getInstace().requestLogin(userPar)
+        ClientHttp.getInstace().requestLogin(FormatterRequest(key!).loginSecure(parameters))
 //        ClientHttp.getInstace().textMapObject()
 //        intentToBloc()
     }

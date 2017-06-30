@@ -34,6 +34,14 @@ class FormatterRequest {
         return resultJson!
     }
     
+    public func verify(_ parameters:[String: String]) -> [String: String] {
+        jsonData?[VerifyRequest.user] = parameters
+        print(jsonData!)
+        
+        resultJson![VerifySecure.data] = convertToJson(jsonData!)
+        return resultJson!
+    }
+    
     public func application(_ parameters:[String : Any], _ username:[String:String]) -> [String : Any]{
         var resultJson = [String:Any]()
         resultJson["Data"] = convertToJson(parameters)

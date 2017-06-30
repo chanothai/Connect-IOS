@@ -11,6 +11,7 @@ import UIKit
 import SwiftyJSON
 import AlamofireObjectMapper
 import SwiftEventBus
+import ObjectMapper
 
 struct PathURL {
     static var urlServer = "connect01.pakgon.com/"
@@ -18,8 +19,8 @@ struct PathURL {
     static var apiRegister = "Api/registerUser.json"
     static var apiRegisterSecure = "Api/secure/registerUser.json"
     
-    static var apiLogin = "ApiNotEncrypt/login.json"
-    static var apiLoginSecure = "Api/login.json"
+    static var apiLogin = "Api/login.json"
+    static var apiLoginSecure = "Api/secure/login.json"
     
     static var apiAuthToken = "Api/getOauthTokenFromUserToken.json"
     static var apiAuthSecure = "Api/secure/getOauthTokenFromUserToken.json"
@@ -29,7 +30,9 @@ struct PathURL {
     static var apiVersion = "Api/version.json"
     static var currentVersion = "0.0.1"
     
-    static var apiUserBloc = "Api/getUserBlocs.json?authToken="
+    static var apiUserBloc = "Api/userAccessControl.json?authToken="
+    
+    static var apiVerifyUserSecure = "Api/secure/verifyUser.json"
 }
 
 class ClientHttp {
@@ -39,7 +42,7 @@ class ClientHttp {
     private let header: HTTPHeaders?
     
     init() {
-        let https:String = "https://"
+        let https:String = "http://"
         self.url = "\(https)\(PathURL.urlServer)"
         
         header = ["Accept":"application/json"]
@@ -73,17 +76,29 @@ class ClientHttp {
     }
     
     public func requestLogin(_ jsonData: Dictionary<String, Any>){
-        let apiPath:String? = ("\(url!)\(PathURL.apiLogin)")
+        let apiPath:String? = ("\(url!)\(PathURL.apiLoginSecure)")
         print("URL => \(apiPath!)")
         guard let realUrl = URL(string: apiPath!) else {
             return
         }
         
-        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<LoginResponse>) in
-            let loginResponse = response.result.value
-            print("Result => \(String(describing: loginResponse?.result?.success))")
-    
-            SwiftEventBus.post("ResponseLogin", sender: loginResponse)
+        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<LoginResponseSecure>) in
+            
+            guard let loginResponse = response.result.value else {
+                print("Response was null")
+                return
+            }
+            
+            let data: String = (loginResponse.resultSecure?.eResult)!
+            let decrypt = data.decryptData()
+            print(decrypt)
+            
+            let decryptResponse = Mapper<LoginResponse>().map(JSONString: decrypt)
+            if let token: String = decryptResponse?.result?.data?.user?.token {
+                print("Token => " + token)
+            }
+            
+            SwiftEventBus.post("ResponseLogin", sender: decryptResponse)
         }
     }
     
@@ -93,14 +108,20 @@ class ClientHttp {
             return
         }
         
-        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
-            switch response.result {
-            case .success:
-                FormatterResponse.parseJsonDataRegister(data: response.result.value as AnyObject)
-                break
-            case .failure(let error):
-                print(error)
+        Alamofire.request(realUrl, method: .post, parameters: jsonData, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<RegisterResponseSecure>) in
+            
+            guard let registerResponse = response.result.value else {
+                print("Response was null")
+                print(response.error!)
+                return
             }
+            
+            let data: String = (registerResponse.result?.eResult)!
+            let decrypt: String = data.decryptData()
+            print(decrypt)
+            
+            let decryptResponse = Mapper<RegisterResponse>().map(JSONString: decrypt)
+            SwiftEventBus.post("ResponseRegister", sender: decryptResponse)
         }
     }
     
@@ -147,15 +168,44 @@ class ClientHttp {
             return
         }
         
-        Alamofire.request(realUrl, method: .get).responseJSON { (response) in
-            switch response.result {
-            case .success:
-                FormatterResponse.parseJsonUserBloc(data: response.result.value! as AnyObject)
-                break
-            case .failure(let error):
-                print(error)
-                break
+        Alamofire.request(realUrl, method: .get).responseObject(completionHandler: { (response: DataResponse<ResponseBloc>) in
+            
+            guard let resultResponse = response.result.value else {
+                print("Bloc was null")
+                return
             }
+            
+            print("Result => \(resultResponse)")
+            if let success = resultResponse.resultBloc?.success {
+                if success == "OK" {
+                    SwiftEventBus.post("UserBlocResponse", sender: resultResponse.resultBloc?.dataBloc)
+                }
+            }
+            
+        })
+    }
+    
+    public func verifyUser(_ verifyRequest: [String: Any]){
+        let apiPath:String? = "\(url!)\(PathURL.apiVerifyUserSecure)"
+        print(apiPath!)
+        guard let realUrl = URL(string: apiPath!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .post, parameters: verifyRequest, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<RegisterResponseSecure>) in
+            
+            guard let verifyResponse = response.result.value else {
+                print("Response was null")
+                return
+            }
+            
+            let data: String = (verifyResponse.result?.eResult)!
+            let decrypt = data.decryptData()
+            print(decrypt)
+            
+            let decryptResponse = Mapper<VerifyResponse>().map(JSONString: decrypt)
+            
+            SwiftEventBus.post("ResponseVerify", sender: decryptResponse)
         }
     }
 }

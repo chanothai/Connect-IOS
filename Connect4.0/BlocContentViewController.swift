@@ -22,7 +22,7 @@ class BlocContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initWebView()
-        if let url = URL(string: (blocInformation?.bloc_url)!) {
+        if let url = URL(string: (blocInformation?.blocURL)!) {
             let request = URLRequest(url: url)
             webView.load(request)
         }

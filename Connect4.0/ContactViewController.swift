@@ -60,7 +60,11 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        UIApplication.shared.open(number, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(number, options: [:], completionHandler: nil)
+        } else {
+            // Fallback on earlier versions
+        }
         
     }
 }

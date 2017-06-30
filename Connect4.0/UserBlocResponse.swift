@@ -7,207 +7,85 @@
 //
 
 import Foundation
+import ObjectMapper
 
-struct ResultCategory {
-    private var _resultCategory:BlocCategoryResponse?
-    private var _resultBloc:[Bloc]?
+class ResponseBloc: Mappable {
+    var resultBloc: ResultBloc?
+    required init?(map: Map) {
     
-    var resultCategory:BlocCategoryResponse {
-        get {
-            return _resultCategory!
-        }
-        set {
-            _resultCategory = newValue
-        }
     }
     
-    var resultBloc:[Bloc] {
-        get {
-            return _resultBloc!
-        }
-        set {
-            _resultBloc = newValue
-        }
+    func mapping(map: Map) {
+        resultBloc <- map["result"]
     }
 }
 
-struct BlocCategoryResponse {
-    private var _id:Int?
-    private var _bloc_category_name:String?
-    private var _sort_order:Int?
-    private var _created:String?
-    private var _modified:String?
-    private var _bloc_category_image_path:String?
+class ResultBloc: Mappable {
+    var success: String?
+    var dataBloc: [ResultCategory]?
     
-    var id:Int {
-        get{
-            return _id!
-        }
-        set{
-            _id = newValue
-        }
+    required init?(map: Map) {
+        
     }
-    var bloc_category_name:String {
-        get{
-            return _bloc_category_name!
-        }
-        set{
-            _bloc_category_name = newValue
-        }
-    }
-    var sort_order:Int {
-        get{
-            return _sort_order!
-        }
-        set{
-            _sort_order = newValue
-        }
-    }
-    var created:String {
-        get{
-            return _created!
-        }
-        set{
-            _created = newValue
-        }
-    }
-    var modified:String {
-        get{
-            return _modified!
-        }
-        set{
-            _modified = newValue
-        }
-    }
-    var bloc_category_image_path:String {
-        get{
-            return _bloc_category_image_path!
-        }
-        set{
-            _bloc_category_image_path = newValue
-        }
+    
+    func mapping(map: Map) {
+        success <- map["Success"]
+        dataBloc <- map["Data"]
     }
 }
 
-struct Bloc {
-    private var _id:Int?
-    private var _bloc_name:String?
-    private var _bloc_description:String?
-    private var _bloc_owner_id:Int?
-    private var _bloc_url:String?
-    private var _bloc_icon_path:String?
-    private var _bloc_image1_path:String?
-    private var _bloc_image2_path:String?
-    private var _bloc_image3_path:String?
-    private var _bloc_category_id:Int?
-    private var _created:String?
-    private var _modified:String?
-    
-    var id:Int {
-        get {
-            return _id!
-        }
-        set {
-            _id = newValue
-        }
+class ResultCategory: Mappable {
+    var category: CategoryBloc?
+    var bloc: [Bloc]?
+    required init?(map: Map) {
+        
     }
     
-    var bloc_name:String {
-        get {
-            return _bloc_name!
-        }
-        set {
-            _bloc_name = newValue
-        }
-    }
-    
-    var bloc_description:String {
-        get {
-            return _bloc_description!
-        }
-        set {
-            _bloc_description = newValue
-        }
-    }
-    
-    var bloc_owner_id:Int {
-        get {
-            return _bloc_owner_id!
-        }
-        set {
-            _bloc_owner_id = newValue
-        }
-    }
-    
-    var bloc_url:String {
-        get {
-            return _bloc_url!
-        }
-        set {
-            _bloc_url = newValue
-        }
-    }
-    
-    var bloc_icon_path:String {
-        get {
-            return _bloc_icon_path!
-        }
-        set {
-            _bloc_icon_path = newValue
-        }
-    }
-    
-    var bloc_image1_path:String {
-        get {
-            return _bloc_image1_path!
-        }
-        set {
-            _bloc_image1_path = newValue
-        }
-    }
-    
-    var bloc_image2_path:String {
-        get {
-            return _bloc_image2_path!
-        }
-        set {
-            _bloc_image2_path = newValue
-        }
-    }
-    
-    var bloc_image3_path:String {
-        get {
-            return _bloc_image3_path!
-        }
-        set {
-            _bloc_image3_path = newValue
-        }
-    }
-    
-    var bloc_category_id:Int {
-        get {
-            return _bloc_category_id!
-        }
-        set {
-            _bloc_category_id = newValue
-        }
-    }
-    
-    var created:String {
-        get {
-            return _created!
-        }
-        set {
-            _created = newValue
-        }
-    }
-    
-    var modified:String {
-        get {
-            return _modified!
-        }
-        set {
-            _modified = newValue
-        }
+    func mapping(map: Map) {
+        category <- map["Category"]
+        bloc <- map["App"]
     }
 }
+
+class CategoryBloc: Mappable {
+    var id: Int?
+    var categoryNameTH: String?
+    var categoryNameEN: String?
+    var orderSequence: Int?
+    var imagePath: String?
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        id <- map["id"]
+        categoryNameTH <- map["cat_name_th"]
+        categoryNameEN <- map["cat_name_en"]
+        orderSequence <- map["order_seq"]
+        imagePath <- map["cat_img_path"]
+    }
+}
+
+class Bloc: Mappable {
+    var id: Int?
+    var blocNameTH: String?
+    var blocNameEN: String?
+    var orderSequence: Int?
+    var imagePath: String?
+    var blocURL: String?
+
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        id <- map["id"]
+        blocNameTH <- map["app_name_th"]
+        blocNameEN <- map["app_name_en"]
+        orderSequence <- map["order_seq"]
+        imagePath <- map["app_img_path"]
+        blocURL <- map["app_url_path"]
+    }
+}
+

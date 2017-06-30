@@ -80,14 +80,39 @@ class RegisterViewController: BaseViewController {
     
     private func setEventBus(){
         SwiftEventBus.onMainThread(self, name: "ResponseRegister") { result in
-//            let response:LoginResponse = result.object as! LoginResponse
+            let response:RegisterResponse = result.object as! RegisterResponse
             
-//           if response.result.success.isEmpty{
-//                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.error, isAction: false)
-//            }else{
-//                AlertMessage.getInstance(self).showMessageAuthen(title: "Register", message: response.result.success, isAction: true)
-//            }
+            
+            if (response.result?.success) != "OK" {
+                AlertMessage.getInstance(self).showMessageRegister(title: "Register", message: (response.result?.error)!, isAction: false, username: "")
+            }else{
+                AlertMessage.getInstance(self).showMessageRegister(title: "Verify", message: (response.result?.eResult?.message)!, isAction: true, username: self.arrTextField[0])
+            }
+            
             self.hideLoading()
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "RegisterSuccess") { (result) in
+            guard let response = result.object as! [String: String]! else {
+                return
+            }
+            
+            self.showLoading()
+            ClientHttp.getInstace().verifyUser(FormatterRequest(RequireKey.key).verify(response))
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "ResponseVerify") { (result) in
+            guard let response = result.object as! VerifyResponse! else {
+                return
+            }
+            
+            if response.result?.success == "OK" {
+                let message:String = (response.result?.message)!
+                print(message)
+                
+                self.hideLoading()
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }
@@ -101,7 +126,7 @@ extension RegisterViewController {
     func iniArrayTextField(){
         arrTextField = [String]()
         
-        for _ in 0 ..< 9 {
+        for _ in 0 ..< 6 {
             arrTextField.append("")
         }
     }
@@ -140,7 +165,7 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if arrCellData[indexPath.row].cell == 8 {
+        if arrCellData[indexPath.row].cell == 5 {
             let cell = Bundle.main.loadNibNamed("ButtonCell", owner: self, options: nil)?.first as! ButtonCell
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
             cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
@@ -160,22 +185,22 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
-            if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 4 {
+            if arrCellData[indexPath.row].cell == 0 || arrCellData[indexPath.row].cell == 1 {
                 cell.inputData.keyboardType = UIKeyboardType.numberPad
             }
-            else if arrCellData[indexPath.row].cell == 3 {
-                let datePickerView:UIDatePicker = UIDatePicker()
-                datePickerView.datePickerMode = UIDatePickerMode.date
-                cell.inputData.inputView = datePickerView
-                datePickerView.addTarget(self, action: #selector(self.datePickerValueChanged), for: UIControlEvents.valueChanged)
-                
-                dateTextField = cell.inputData
-                
-            }
-            else if arrCellData[indexPath.row].cell == 5 {
+//            else if arrCellData[indexPath.row].cell == 3 {
+//                let datePickerView:UIDatePicker = UIDatePicker()
+//                datePickerView.datePickerMode = UIDatePickerMode.date
+//                cell.inputData.inputView = datePickerView
+//                datePickerView.addTarget(self, action: #selector(self.datePickerValueChanged), for: UIControlEvents.valueChanged)
+//                
+//                dateTextField = cell.inputData
+//                
+//            }
+            else if arrCellData[indexPath.row].cell == 2 {
                 cell.inputData.keyboardType = UIKeyboardType.emailAddress
             }
-            else if arrCellData[indexPath.row].cell == 6 || arrCellData[indexPath.row].cell == 7 {
+            else if arrCellData[indexPath.row].cell == 3 || arrCellData[indexPath.row].cell == 4 {
                 cell.inputData.isSecureTextEntry = true
             }
             
@@ -186,7 +211,7 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 8 {
+        if indexPath.row == 5 {
             if screenSize < baseScreen {
                 return 72
             }
@@ -203,18 +228,17 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
     
     @objc private func doRegister() {
         var parameters = [String : String]()
-        parameters[UserRegister.citizenID] = arrTextField[0]
-        parameters[UserRegister.firstName] = arrTextField[1]
-        parameters[UserRegister.lastName]  = arrTextField[2]
-        parameters[UserRegister.screenName] = "\(arrTextField[1]) \(arrTextField[2])"
-        parameters[UserRegister.birthDate] = arrTextField[3]
-        parameters[UserRegister.phone] = arrTextField[4]
-        parameters[UserRegister.username] = arrTextField[5]
-        parameters[UserRegister.password] = arrTextField[6]
-        parameters[UserRegister.rePassword] = arrTextField[7]
+        parameters[UserRegister.phone] = arrTextField[1]
+        parameters[UserRegister.username] = arrTextField[0]
+        parameters[UserRegister.password] = arrTextField[3]
+        parameters[UserRegister.email] = arrTextField[2]
         
-        showLoading()
-        ClientHttp.getInstace().requestRegister(FormatterRequest(RequireKey.key).register(parameters))
+        if arrTextField[3] == arrTextField[4] {
+            showLoading()
+            ClientHttp.getInstace().requestRegister(FormatterRequest(RequireKey.key).register(parameters))
+        }else{
+            print("Password was incorrect")
+        }
     }
     
     private func addDoneOnKeyBoard() -> UIToolbar {

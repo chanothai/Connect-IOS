@@ -11,7 +11,7 @@ import CryptoSwift
 
 struct KeyName {
     static var staticKey = "APuT9Gt43aGNLUwn+ewtjzV+1cXjdLcSe/TYXf7n8Vs="
-    static var byteIVStr = ":"
+    static var byteIVStr = "ByteIV"
 }
 
 struct RequireKey {
@@ -45,7 +45,7 @@ class EncryptionAES {
     
     func aesDecrypt(plainText:String, iv:[UInt8]) throws -> String {
         let data = Data(base64Encoded: plainText, options: Data.Base64DecodingOptions(rawValue: 0))!
-        let decrypted = try! AES(key: key!, iv: iv, blockMode: .CBC, padding: PKCS7()).decrypt([UInt8](data))
+        let decrypted = try! AES(key: key!, iv: iv, blockMode: .CBC, padding: ZeroPadding()).decrypt([UInt8](data))
         let decryptedData = Data(decrypted)
         return String(bytes: decryptedData.bytes, encoding: .utf8) ?? "Could not decrypt"
     }

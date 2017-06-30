@@ -21,22 +21,24 @@ class BlocViewController: BaseViewController {
     
     //MAKE : Properties
     private var categoryBlocView:[CategoryBlocView]?
-    var arrBloc:[ResultCategory]?
+    var arrBloc:[ResultCategory] = [ResultCategory]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.titleView = self.createTitleBarImage()
-        
         self.setSideBar()
-        setEventBus()
-    
         blocCollectionView.delegate = self
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard arrBloc.count == 0 else {
+            return
+        }
+        
+        setEventBus()
         initParameter()
+        
     }
     
     public func initParameter(){
@@ -44,9 +46,12 @@ class BlocViewController: BaseViewController {
         if (restoreInformation.count) > 0 {
             let key = [UInt8](Data(base64Encoded: (restoreInformation[2]))!)
             RequireKey.key = key
-            setModelUser(restoreInformation)
+            
+            showLoading()
+            ClientHttp.getInstace().requestUserBloc(restoreInformation[1])
+//            setModelUser(restoreInformation)
         }else{
-//            pushToLogin()
+            pushToLogin()
         }
     }
     
@@ -86,13 +91,21 @@ class BlocViewController: BaseViewController {
         
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
             if let responses:[ResultCategory] = result.object as? [ResultCategory] {
+                
                 self.arrBloc = responses
-                print(responses[0].resultBloc.count)
+                print(responses.count)
                 
-                let str:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[0])!
-                print(str.bloc_icon_path)
+                if let category:CategoryBloc = self.arrBloc[self.pageControl.currentPage].category {
+                    guard let imgCategory = category.imagePath else {
+                        print("image's category was null")
+                        return
+                    }
+                    
+                    print(imgCategory)
+                }
+                
+                
                 self.initCategory(responses)
-                
                 self.blocCollectionView.dataSource = self
             }
             
@@ -105,7 +118,7 @@ class BlocViewController: BaseViewController {
         for i in 0 ..< category.count {
             let categoryView:CategoryBlocView = Bundle.main.loadNibNamed("CategoryBloc", owner: self, options: nil)?.first as! CategoryBlocView
             
-            let url = URL(string: category[i].resultCategory.bloc_category_image_path)!
+            let url = URL(string: (category[i].category?.imagePath)!)!
             categoryView.categoryIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
             
             numberCategoryView.append(categoryView)
@@ -184,23 +197,25 @@ extension BlocViewController: UICollectionViewDelegateFlowLayout {
 extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     //Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (arrBloc?[pageControl.currentPage].resultBloc.count)!
+        return (arrBloc[pageControl.currentPage].bloc?.count)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BlocCell", for: indexPath) as! BlocCollectionViewCell
         
-        let bloc:Bloc = (self.arrBloc?[self.pageControl.currentPage].resultBloc[indexPath.row])!
-        let url = URL(string: bloc.bloc_icon_path)!
+        let bloc:Bloc = (self.arrBloc[self.pageControl.currentPage].bloc![indexPath.row])
         
-        cell.blocIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        if bloc.imagePath != nil {
+            let url = URL(string: bloc.imagePath!)
+            cell.blocIMG.af_setImage(withURL: url!, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        }
         
-        cell.blocLabel.text = bloc.bloc_name
+        cell.blocLabel.text = bloc.blocNameTH
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let blocInformation:Bloc = (arrBloc?[pageControl.currentPage].resultBloc[indexPath.row])!
+        let blocInformation:Bloc = (arrBloc[pageControl.currentPage].bloc![indexPath.row])
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let blocContent = storyBoard.instantiateViewController(withIdentifier: "ShowBlocDetail") as! BlocContentViewController
         blocContent.blocInformation = blocInformation

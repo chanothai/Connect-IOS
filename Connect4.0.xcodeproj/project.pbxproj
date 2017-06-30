@@ -25,7 +25,6 @@
 		DE3BF6B71ECEDC9200FBBB9F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6B61ECEDC9200FBBB9F /* BaseViewController.swift */; };
 		DE3BF6BA1ECEF66500FBBB9F /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6B91ECEF66500FBBB9F /* LoginRequest.swift */; };
 		DE3BF6BE1ECF124C00FBBB9F /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6BD1ECF124C00FBBB9F /* LoginResponse.swift */; };
-		DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BF6C01ECF270300FBBB9F /* RegisterRequest.swift */; };
 		DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44CB9B1ECD60420099A7D2 /* LoginViewController.swift */; };
 		DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44CB9D1ECD61110099A7D2 /* ManageKeyboard.swift */; };
 		DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E82751ED2B94E00667C5A /* ModelCart.swift */; };
@@ -48,9 +47,13 @@
 		DE7A9AA11EF9051E0012F0CD /* NavNewPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7A9AA01EF9051E0012F0CD /* NavNewPasswordController.swift */; };
 		DE7E9FA61EDEDD9A00112EC5 /* BlocCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */; };
 		DE7E9FA81EDEFF0B00112EC5 /* BlocCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */; };
+		DE7EC65B1F064CD600C08B89 /* Verify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7EC65A1F064CD600C08B89 /* Verify.swift */; };
 		DE8055521EF3BF0500EDBD68 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8055511EF3BF0500EDBD68 /* ContactViewController.swift */; };
 		DE8055551EF3C12900EDBD68 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8055541EF3C12900EDBD68 /* ContactTableViewCell.swift */; };
 		DE8055571EF3ED4C00EDBD68 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8055561EF3ED4C00EDBD68 /* AddContactViewController.swift */; };
+		DE8791051F04F923000DB86F /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8791041F04F923000DB86F /* RegisterResponse.swift */; };
+		DE8791071F04FF7A000DB86F /* RegisterResponseSecure.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8791061F04FF7A000DB86F /* RegisterResponseSecure.swift */; };
+		DE88919D1F026335007CAB7F /* LoginResponseSecure.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE88919C1F026335007CAB7F /* LoginResponseSecure.swift */; };
 		DE8A28671EE7CD810001E493 /* IDCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */; };
 		DE8A286A1EE7D13B0001E493 /* supermarket.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE8A28691EE7D13B0001E493 /* supermarket.ttf */; };
 		DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE90814E1EBC725100E90C16 /* AppDelegate.swift */; };
@@ -91,7 +94,6 @@
 		DE3BF6B61ECEDC9200FBBB9F /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DE3BF6B91ECEF66500FBBB9F /* LoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		DE3BF6BD1ECF124C00FBBB9F /* LoginResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		DE3BF6C01ECF270300FBBB9F /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		DE44CB9B1ECD60420099A7D2 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DE44CB9D1ECD61110099A7D2 /* ManageKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageKeyboard.swift; sourceTree = "<group>"; };
 		DE4E82751ED2B94E00667C5A /* ModelCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCart.swift; sourceTree = "<group>"; };
@@ -114,9 +116,13 @@
 		DE7A9AA01EF9051E0012F0CD /* NavNewPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavNewPasswordController.swift; sourceTree = "<group>"; };
 		DE7E9FA51EDEDD9A00112EC5 /* BlocCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE7E9FA71EDEFF0B00112EC5 /* BlocCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlocCell.xib; sourceTree = "<group>"; };
+		DE7EC65A1F064CD600C08B89 /* Verify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Verify.swift; sourceTree = "<group>"; };
 		DE8055511EF3BF0500EDBD68 /* ContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		DE8055541EF3C12900EDBD68 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		DE8055561EF3ED4C00EDBD68 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		DE8791041F04F923000DB86F /* RegisterResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
+		DE8791061F04FF7A000DB86F /* RegisterResponseSecure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterResponseSecure.swift; sourceTree = "<group>"; };
+		DE88919C1F026335007CAB7F /* LoginResponseSecure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponseSecure.swift; sourceTree = "<group>"; };
 		DE8A28661EE7CD810001E493 /* IDCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDCardTableViewCell.swift; sourceTree = "<group>"; };
 		DE8A28691EE7D13B0001E493 /* supermarket.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = supermarket.ttf; sourceTree = "<group>"; };
 		DE90814B1EBC725100E90C16 /* Connect4.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connect4.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +317,7 @@
 			children = (
 				DE3BF6B91ECEF66500FBBB9F /* LoginRequest.swift */,
 				DE3BF6BD1ECF124C00FBBB9F /* LoginResponse.swift */,
+				DE88919C1F026335007CAB7F /* LoginResponseSecure.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -318,7 +325,9 @@
 		DE3BF6BF1ECF26E500FBBB9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DE3BF6C01ECF270300FBBB9F /* RegisterRequest.swift */,
+				DE8791041F04F923000DB86F /* RegisterResponse.swift */,
+				DE8791061F04FF7A000DB86F /* RegisterResponseSecure.swift */,
+				DE7EC65A1F064CD600C08B89 /* Verify.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -721,13 +730,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */,
+				DE7EC65B1F064CD600C08B89 /* Verify.swift in Sources */,
 				DE79AC8C1EEACAC6009309D4 /* FingerPrintViewController.swift in Sources */,
 				DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */,
-				DE3BF6C11ECF270300FBBB9F /* RegisterRequest.swift in Sources */,
 				DE9081511EBC725100E90C16 /* RegisterViewController.swift in Sources */,
 				DE4E827E1ED304FD00667C5A /* UserInfoResponse.swift in Sources */,
+				DE88919D1F026335007CAB7F /* LoginResponseSecure.swift in Sources */,
 				DE516C991EE6A58100109A3D /* IDCardViewController.swift in Sources */,
 				DE3AF7CE1ED43C3D0013D526 /* SideMenuTableViewCell.swift in Sources */,
+				DE8791051F04F923000DB86F /* RegisterResponse.swift in Sources */,
 				D358D0691ED1DD7400B39E94 /* BlocViewController.swift in Sources */,
 				D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */,
 				D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */,
@@ -742,6 +753,7 @@
 				DE3BF6B41ECEDB3200FBBB9F /* BaseViewModel.swift in Sources */,
 				DE4E827C1ED2EC5600667C5A /* ApplicationResponse.swift in Sources */,
 				D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */,
+				DE8791071F04FF7A000DB86F /* RegisterResponseSecure.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
 				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,
 				DE44CB9E1ECD61110099A7D2 /* ManageKeyboard.swift in Sources */,
@@ -896,6 +908,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -911,6 +924,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = KRQZ9QT757;
 				INFOPLIST_FILE = Connect4.0/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zicure.CampusConnect;
 				PRODUCT_NAME = "$(TARGET_NAME)";

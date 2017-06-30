@@ -24,7 +24,7 @@ class LoginResponse: Mappable {
 class LoginResult: Mappable {
     var success: String?
     var error: String?
-    var Eresult: LoginEResult?
+    var data: DataLogin?
     
     required init?(map: Map) {
         
@@ -33,11 +33,11 @@ class LoginResult: Mappable {
     func mapping(map: Map) {
         success <- map["Success"]
         error <- map["Error"]
-        Eresult <- map["EResult"]
+        data <- map["Data"]
     }
 }
 
-class LoginEResult: Mappable {
+class DataLogin: Mappable {
     var user: LoginUser?
     
     required init?(map: Map) {
