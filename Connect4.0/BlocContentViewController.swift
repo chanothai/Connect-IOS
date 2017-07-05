@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class BlocContentViewController: UIViewController {
+class BlocContentViewController: BaseViewController {
 
     //MAKE: outlet
     var webView = WKWebView()
@@ -17,16 +17,16 @@ class BlocContentViewController: UIViewController {
     
     //MAKE: properties
     var pathURL:String?
-    var blocInformation:Bloc?
+    var urlBloc:String?
+    var titleName: String?  
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backScreen = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.titleView = self.customTitle(titleName!)
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backScreen
         initWebView()
-        if let url = URL(string: (blocInformation?.blocURL)!) {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-        view.addSubview(webView)
+        loadWebView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,7 +52,7 @@ class BlocContentViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
     }
-
+    
 
     /*
     // MARK: - Navigation
@@ -63,6 +63,19 @@ class BlocContentViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension BlocContentViewController {
+    func loadWebView() {
+        guard let url = URL(string: (urlBloc)!) else {
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        webView.load(request)
+        
+        view.addSubview(webView)
+    }
 }
 
 extension BlocContentViewController: WKNavigationDelegate {
@@ -77,6 +90,7 @@ extension BlocContentViewController: WKNavigationDelegate {
     func initWebView(){
         webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         webView.navigationDelegate = self
+        webView.scrollView.showsVerticalScrollIndicator = false
         
         progBar = UIProgressView(frame: CGRect(x: 0, y: 64, width: self.view.frame.width, height: 50))
         progBar.progress = 0.0

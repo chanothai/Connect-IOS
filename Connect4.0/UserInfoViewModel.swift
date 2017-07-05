@@ -12,6 +12,6 @@ protocol UserInfoViewModelProtocol {
     var userInfomation: UserInfoResponse {get set}
 }
 
-class UserInfoViewModel: BaseViewModel, UserInfoViewModelProtocol {
-    var userInfomation: UserInfoResponse = ModelCart.getInstance().getUserInfo
+class UserInfoViewModel: BaseViewModel {
+    
 }

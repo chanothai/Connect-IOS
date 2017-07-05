@@ -24,7 +24,6 @@ class IDCardViewController: BaseViewController {
     
     
     //Make: properties
-    var userInfomation: UserInfoResponse?
     var statusSwitch = 0
     var image:CIImage!
     var newImage:UIImage?

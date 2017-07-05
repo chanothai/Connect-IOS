@@ -152,7 +152,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             
             switch arrCellData[indexPath.row].cell {
             case 0:
-                cell.inputData.keyboardType = UIKeyboardType.emailAddress
+                cell.inputData.keyboardType = UIKeyboardType.numbersAndPunctuation
                 break
             case 1:
                 cell.inputData.isSecureTextEntry = true

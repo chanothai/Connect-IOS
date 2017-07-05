@@ -22,7 +22,7 @@ class ResponseBloc: Mappable {
 
 class ResultBloc: Mappable {
     var success: String?
-    var dataBloc: [ResultCategory]?
+    var dataBloc: DataBloc?
     
     required init?(map: Map) {
         
@@ -31,6 +31,42 @@ class ResultBloc: Mappable {
     func mapping(map: Map) {
         success <- map["Success"]
         dataBloc <- map["Data"]
+    }
+}
+
+class DataBloc: Mappable {
+    var resultCategories: [ResultCategory]?
+    var userInfo: UserInfo?
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        resultCategories <- map["UserAccessControl"]
+        userInfo <- map["UserInfo"]
+    }
+}
+
+class UserInfo: Mappable {
+    var firstNameTH: String?
+    var lastNameTH: String?
+    var firstNameEN: String?
+    var lastNameEN: String?
+    var point: Int?
+    var image: String?
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        firstNameTH <- map["firstname_th"]
+        lastNameTH <- map["lastname_th"]
+        firstNameEN <- map["firstname_en"]
+        lastNameEN <- map["lastname_en"]
+        point <- map["point"]
+        image <- map["img_path"]
     }
 }
 

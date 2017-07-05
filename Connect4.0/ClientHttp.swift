@@ -33,6 +33,8 @@ struct PathURL {
     static var apiUserBloc = "Api/userAccessControl.json?authToken="
     
     static var apiVerifyUserSecure = "Api/secure/verifyUser.json"
+    
+    static var apiPersonalQuiz = "Api/checkTakeQuiz.json?authToken="
 }
 
 class ClientHttp {
@@ -206,6 +208,23 @@ class ClientHttp {
             let decryptResponse = Mapper<VerifyResponse>().map(JSONString: decrypt)
             
             SwiftEventBus.post("ResponseVerify", sender: decryptResponse)
+        }
+    }
+    
+    public func requestQuiz(_ token: String){
+        let path: String? = "\(url!)\(PathURL.apiPersonalQuiz)\(token)"
+        print(path!)
+        guard let realUrl = URL(string: path!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<QuizResponse>) in
+            guard let responseQuiz = response.result.value else {
+                print(response.error!)
+                return
+            }
+
+            SwiftEventBus.post("ResponseQuiz", sender: responseQuiz.result)
         }
     }
 }

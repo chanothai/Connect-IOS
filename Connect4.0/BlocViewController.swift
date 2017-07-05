@@ -11,7 +11,13 @@ import IGListKit
 import SWRevealViewController
 import SwiftEventBus
 
+protocol UserInfoDelegate {
+    func getUserInfo( userInfo: UserInfo)
+}
+
 class BlocViewController: BaseViewController {
+    //Make: delegate
+    var delegate: UserInfoDelegate?
     
     //MAKE : outlet
     @IBOutlet var categoryScrollView: UIScrollView!
@@ -22,10 +28,14 @@ class BlocViewController: BaseViewController {
     //MAKE : Properties
     private var categoryBlocView:[CategoryBlocView]?
     var arrBloc:[ResultCategory] = [ResultCategory]()
+    var token: String?
+    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    var destinationController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.titleView = self.createTitleBarImage()
+
         self.setSideBar()
         blocCollectionView.delegate = self
     }
@@ -44,12 +54,12 @@ class BlocViewController: BaseViewController {
     public func initParameter(){
         var restoreInformation:[String] = AuthenLogin().restoreLogin() //0 user, 1 token, 2 dynamickey
         if (restoreInformation.count) > 0 {
+            token = restoreInformation[1]
             let key = [UInt8](Data(base64Encoded: (restoreInformation[2]))!)
             RequireKey.key = key
             
             showLoading()
-            ClientHttp.getInstace().requestUserBloc(restoreInformation[1])
-//            setModelUser(restoreInformation)
+            ClientHttp.getInstace().requestUserBloc(token!)
         }else{
             pushToLogin()
         }
@@ -84,32 +94,59 @@ class BlocViewController: BaseViewController {
             }
         }
         
-        SwiftEventBus.onMainThread(self, name: "UserInfoResponse") { (result) in
-            let response:UserInfoResponse = result.object as! UserInfoResponse
-            ModelCart.getInstance().getUserInfo = response
-        }
-        
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
-            if let responses:[ResultCategory] = result.object as? [ResultCategory] {
-                
-                self.arrBloc = responses
-                print(responses.count)
+            if let responses:DataBloc = result.object as? DataBloc {
+                self.arrBloc = responses.resultCategories!
+                print(self.arrBloc.count)
                 
                 if let category:CategoryBloc = self.arrBloc[self.pageControl.currentPage].category {
                     guard let imgCategory = category.imagePath else {
                         print("image's category was null")
                         return
                     }
-                    
                     print(imgCategory)
                 }
                 
-                
-                self.initCategory(responses)
+                self.initCategory(responses.resultCategories!)
                 self.blocCollectionView.dataSource = self
+                
+                if let point = responses.userInfo?.point {
+                    self.navigationItem.rightBarButtonItem = self.createItemRightBase(point)
+                }else {
+                    self.navigationItem.rightBarButtonItem = self.createItemRightBase(10000)
+                }
+                
+                self.delegate?.getUserInfo(userInfo: responses.userInfo!)
+                ModelCart.getInstance().getUserInfo.firstName = (responses.userInfo?.firstNameTH!)!
+                ModelCart.getInstance().getUserInfo.lastName = (responses.userInfo?.lastNameTH)!
+                
+                if let imagePath = responses.userInfo?.image {
+                    ModelCart.getInstance().getUserInfo.profile_image_path = imagePath
+                }
+                
+                ClientHttp.getInstace().requestQuiz(self.token!)
             }
-            
-            self.hideLoading()
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "ResponseQuiz") { (result) in
+            if let responses:QuizResult = result.object as? QuizResult {
+                if responses.success == "OK" {
+                    print((responses.data?.quiz?.url)!)
+                    
+                    guard let quiz = responses.data?.quiz?.url else {
+                        
+                        return
+                    }
+                    
+                    let destination = self.storyBoard.instantiateViewController(withIdentifier: "ShowBlocDetail") as! BlocContentViewController
+                    destination.urlBloc = quiz
+                    destination.titleName = "แบบสอบถาม"
+                    
+                    self.navigationController?.pushViewController(destination, animated: true)
+                }
+                
+                self.hideLoading()
+            }
         }
     }
     
@@ -119,7 +156,7 @@ class BlocViewController: BaseViewController {
             let categoryView:CategoryBlocView = Bundle.main.loadNibNamed("CategoryBloc", owner: self, options: nil)?.first as! CategoryBlocView
             
             let url = URL(string: (category[i].category?.imagePath)!)!
-            categoryView.categoryIMG.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+            categoryView.categoryIMG.af_setImage(withURL: url, placeholderImage: nil , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
             
             numberCategoryView.append(categoryView)
         }
@@ -207,7 +244,7 @@ extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSou
         
         if bloc.imagePath != nil {
             let url = URL(string: bloc.imagePath!)
-            cell.blocIMG.af_setImage(withURL: url!, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+            cell.blocIMG.af_setImage(withURL: url!, placeholderImage: nil , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
         }
         
         cell.blocLabel.text = bloc.blocNameTH
@@ -215,13 +252,44 @@ extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let blocInformation:Bloc = (arrBloc[pageControl.currentPage].bloc![indexPath.row])
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let blocContent = storyBoard.instantiateViewController(withIdentifier: "ShowBlocDetail") as! BlocContentViewController
-        blocContent.blocInformation = blocInformation
+        if indexPath.row == 0 || indexPath.row == 3 {
+            let blocInformation:Bloc = (arrBloc[pageControl.currentPage].bloc![indexPath.row])
+            let blocContent = storyBoard.instantiateViewController(withIdentifier: "ShowBlocDetail") as! BlocContentViewController
+            blocContent.urlBloc = blocInformation.blocURL
+            blocContent.titleName = blocInformation.blocNameTH
+            
+            navigationController?.pushViewController(blocContent, animated: true)
+        }
+        else if indexPath.row == 1 {
+            let backButton = UIBarButtonItem(image: UIImage(named:"back_screen"), style: .plain, target: self, action: #selector(backScreen))
+            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "IDCardController") as! IDCardViewController
+            destinationController?.navigationItem.leftBarButtonItem = backButton
+            destinationController?.navigationItem.titleView = self.createTitleBarImage()
+            
+            let nav = UINavigationController(rootViewController: destinationController!)
+            self.show(nav, sender: nil)
+        }
+        else if indexPath.row == 2 {
+            let backButton = UIBarButtonItem(image: UIImage(named:"back_screen"), style: .plain, target: self, action: #selector(backScreen))
+            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
+            destinationController?.navigationItem.leftBarButtonItem = backButton
+            destinationController?.navigationItem.titleView = self.createTitleBarImage()
+            destinationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
+            
+            let nav = UINavigationController(rootViewController: destinationController!)
+            self.show(nav, sender: nil)
+        }
         
-        navigationController?.pushViewController(blocContent, animated: true)
-//        performSegue(withIdentifier: "ShowBlocDetail", sender: self)
         collectionView.deselectItem(at: indexPath, animated: false)
+    }
+    
+    @objc func selectAddContact() {
+        print("Add Contact")
+        let navAddContactController = self.storyBoard.instantiateViewController(withIdentifier: "NavAddContact") as! NavContactController
+        self.destinationController?.show(navAddContactController, sender: nil)
+    }
+    
+    @objc func backScreen() {
+        destinationController?.dismiss(animated: true, completion: nil)
     }
 }

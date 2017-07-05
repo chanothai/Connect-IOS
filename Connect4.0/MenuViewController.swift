@@ -24,9 +24,8 @@ class MenuViewController: BaseViewController {
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     var blurEffectView:UIVisualEffectView?
     var destinationController:UIViewController?
+    var userInfo: UserInfoResponse?
     
-    lazy var viewModel: UserInfoViewModelProtocol = UserInfoViewModel(delegate: self)
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackground()
@@ -36,15 +35,16 @@ class MenuViewController: BaseViewController {
         profileIMG.layer.borderColor = UIColor.white.cgColor
         profileIMG.layer.borderWidth = CGFloat(2.0)
         
-        nameLabel?.text = viewModel.userInfomation.screenName
+        userInfo = ModelCart.getInstance().getUserInfo
+        nameLabel?.text = (userInfo?.firstName)! + " " + (userInfo?.lastName)!
         
-    
-        guard let url = URL(string: (viewModel.userInfomation.profile_image_path)) else {
+        guard let url = URL(string: (userInfo?.profile_image_path)!) else {
+            print("IMAGE was null")
+            profileIMG?.image = UIImage(named: "people")
             return
         }
         
         profileIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
-        
     }
     
     
@@ -130,27 +130,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             print("Feed")
             let mainBloc = storyBoard.instantiateViewController(withIdentifier: "NavBlocController") as! NavBlocController
             self.revealViewController().pushFrontViewController(mainBloc, animated: true)
-            break
-        case 1:
-            print("ข้อมูลส่วนตัว")
-            break
-        case 2:
-            let destinationController = self.storyBoard.instantiateViewController(withIdentifier: "IDCardController") as! IDCardViewController
-            destinationController.userInfomation = ModelCart.getInstance().getUserInfo
-            let nav = UINavigationController(rootViewController: destinationController)
-            destinationController.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
-            destinationController.navigationItem.titleView = self.createTitleBarImage()
-            self.revealViewController().pushFrontViewController(nav, animated: true)
-            
-            break
-        case 3:
-            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
-            let nav = UINavigationController(rootViewController: destinationController!)
-            destinationController?.navigationItem.leftBarButtonItem = self.createBarButtonItemBase()
-            destinationController?.navigationItem.titleView = self.createTitleBarImage()
-            destinationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
-            self.revealViewController().pushFrontViewController(nav, animated: true)
-            
             break
         default:
             print("ออกจากระบบ")

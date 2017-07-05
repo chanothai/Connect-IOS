@@ -11,7 +11,7 @@ import Foundation
 class SidebarMenuModel {
 
     public static func setMenu() -> [String] {
-        let titles = ["ฟีด", "ข้อมูลส่วนตัว", "บัตรประจำตัว", "เปิดใช้งานแอพพลิเคชั่น", "ออกจากระบบ"]
+        let titles = ["ฟีด","ออกจากระบบ"]
         var menu = [String]()
         for title in titles {
             menu.append(title)

@@ -55,8 +55,9 @@ extension ContactViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func selectPhone(){
-        print("Phone")
-        guard let number = URL(string: "tel://" + "0832701128") else {
+        let phone = "tel://\("0856607354")"
+        print(phone)
+        guard let number = URL(string: phone) else {
             return
         }
         

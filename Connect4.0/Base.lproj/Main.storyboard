@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uQB-nb-qec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1mr-bw-LpC">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -251,7 +251,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ชื่อ-นามสกุล" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hF-OB-pr9">
-                                                    <rect key="frame" x="0.0" y="88" width="102" height="20"/>
+                                                    <rect key="frame" x="0.0" y="88" width="83.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -616,12 +616,12 @@
                                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ไม่มีบัญชี?" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEc-sk-ghi">
                                                 <rect key="frame" x="0.0" y="0.0" width="183.5" height="48"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="สมัครสมาชิก" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGM-XP-YWG">
                                                 <rect key="frame" x="191.5" y="0.0" width="183.5" height="48"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="18"/>
                                                 <color key="textColor" red="0.1176470588" green="0.53333333329999999" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1120,7 +1120,7 @@
                 <navigationController storyboardIdentifier="NavBlocController" automaticallyAdjustsScrollViewInsets="NO" id="sh9-aO-uNk" customClass="NavBlocController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Apb-PS-YX7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Apb-PS-YX7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1139,7 +1139,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavForgotPassword" automaticallyAdjustsScrollViewInsets="NO" id="BWK-7t-M3z" customClass="NavForgotPasswordNavigationController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XHG-lf-cgY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="XHG-lf-cgY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1157,7 +1157,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavAddContact" automaticallyAdjustsScrollViewInsets="NO" id="MV9-EX-XSR" customClass="NavContactController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="d8C-Ia-UhH">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="d8C-Ia-UhH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1175,7 +1175,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavNewPassword" automaticallyAdjustsScrollViewInsets="NO" id="XCe-d5-e53" customClass="NavNewPasswordController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oYB-7Z-M5b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="oYB-7Z-M5b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

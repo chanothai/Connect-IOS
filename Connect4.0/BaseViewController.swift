@@ -31,12 +31,46 @@ extension BaseViewController {
         return toggle
     }
     
+    public func createItemRightBase(_ point: Int) -> UIBarButtonItem {
+        let widthToolbar = (navigationController?.view.frame.width)! / 3
+        
+        let layout = UIStackView(frame: CGRect(x: 0, y: 0, width: widthToolbar, height: (navigationController?.view.frame.height)!))
+        layout.spacing = 4
+        layout.alignment = .fill
+        
+        let icon = UIImageView(frame: CGRect(x: 0, y: 0, width: 30 , height: 30))
+        icon.image = UIImage(named: "point")
+        icon.contentMode = .scaleAspectFit
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: Int(icon.frame.width), height: Int(icon.frame.height)))
+        label.textAlignment = .right
+        label.text = String(point)
+        label.textColor = UIColor.darkGray
+        label.backgroundColor = UIColor.clear
+        
+        layout.addArrangedSubview(label)
+        layout.addArrangedSubview(icon)
+        
+        let barButton = UIBarButtonItem(customView: layout)
+        return barButton
+    }
+    
     public func createTitleBarImage() -> UIImageView {
         let logo = UIImage(named: "logo-titlebar")
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 38, height: 38))
         imgView.image = logo
         
         return imgView
+    }
+    
+    public func customTitle(_ title: String) -> UILabel {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width / 2 , height: (navigationController?.view.frame.height)!))
+        label.font = UIFont(name: "supermarket", size: 20)
+        label.textColor = UIColor.darkGray
+        label.text = title
+        label.textAlignment = .center
+        
+        return label
     }
 }
 
