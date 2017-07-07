@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftEventBus
 
 class IDCardViewController: BaseViewController {
 
@@ -14,7 +15,7 @@ class IDCardViewController: BaseViewController {
     @IBOutlet var userIMG: UIImageView!
     @IBOutlet var qrcodeIMG: UIImageView!
     @IBOutlet var switchIMG: UIButton!
-    @IBOutlet var fullNameLabel: UILabel!
+    @IBOutlet var fullNameTH: UILabel!
     @IBOutlet var userInformationTableView: UITableView!
     @IBOutlet var fullNameEn: UILabel!
     @IBOutlet var cameraChangeIMG: UIButton!
@@ -27,16 +28,16 @@ class IDCardViewController: BaseViewController {
     var statusSwitch = 0
     var image:CIImage!
     var newImage:UIImage?
+    var token: String?
+    var profiles: [ProfileData]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setSideBar()
-        setView()
-        newImage = generateQRCode(from: "1719900291478")!
+        onBindView()
         
-        userInformationTableView.setBaseTableStyle()
-        fullNameLabel.text = "Chanothai Duangrahva"
-        fullNameEn.text = "ชโนทัย ดวงระหว้า"
+        showLoading()
+        ClientHttp.getInstace().requestProfile(token!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,28 +45,48 @@ class IDCardViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setEventBus()
     }
-    */
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        SwiftEventBus.unregister(self)
+    }
+    
+    func setEventBus() {
+        SwiftEventBus.onMainThread(self, name: "ProfileResponse") { (result) in
+            let response = result.object as? ProfileResult
+
+            if response?.success == "OK" {
+                self.profiles = response?.profileData
+                self.setProfileData()
+            }
+            
+            self.hideLoading()
+        }
+    }
 }
+
 extension IDCardViewController {
-    func setView(){
+    func onBindView(){
         let screenSize:Int = Int(UIScreen.main.bounds.width / 1.6)
         print(screenSize)
         
-        if screenSize < 250 {
-            let font = UIFont(name: "supermarket", size: 18.0)
+        if screenSize < 225 {
+            let font = UIFont(name: baseFont, size: 18)
+            let fontHeight = NSLayoutConstraint(item: fullNameEn, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
             fullNameEn.font = font
-            fullNameLabel.font = font
+            fullNameEn.addConstraint(fontHeight)
+            
+            let fontHeightTH = NSLayoutConstraint(item: fullNameTH, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
+            fullNameTH.font = font
+            fullNameTH.addConstraint(fontHeightTH)
         }
         
+        userInformationTableView.setBaseTableStyle()
+
         setLayoutIMG(screenSize)
         setProfileIMG(screenSize)
         setIconQRCode(screenSize)
@@ -138,7 +159,13 @@ extension IDCardViewController {
             switchIMG.setImage(imgQrcode, for: .normal)
             statusSwitch = 0
             
-            userIMG.image = UIImage(named: "people")
+            guard let url = URL(string: (profiles?[0].imgPath)!) else {
+                userIMG?.image = UIImage(named: "people")
+                return
+            }
+            
+            userIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+            
             break
         }
     }
@@ -220,6 +247,38 @@ extension IDCardViewController {
     }
 }
 
+extension IDCardViewController {
+    func setProfileData() {
+        //set name user
+        let firstName:String = (profiles?[0].firstNameTH)!
+        let lastName:String = (profiles?[0].lastNameTH)!
+        fullNameTH.text = ("\(firstName) \(lastName)")
+        
+        let firstNameEN:String = (profiles?[0].firstNameEN)!
+        let lastNameEN:String = (profiles?[0].lastNameEN)!
+        fullNameEn.text = ("\(firstNameEN) \(lastNameEN)")
+        
+        guard let url = URL(string: (profiles?[0].imgPath)!) else {
+            userIMG?.image = UIImage(named: "people")
+            return
+        }
+        
+        //set image profile
+        newImage = generateQRCode(from: (profiles?[0].personCard)!)
+        userIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        
+        // set table view
+        if screenWidth < screenHeight {
+            userInformationTableView.rowHeight = 24
+        }else{
+            userInformationTableView.rowHeight = 36
+        }
+
+        userInformationTableView.dataSource = self
+        userInformationTableView.reloadData()
+    }
+}
+
 extension IDCardViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let selectImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -233,12 +292,38 @@ extension IDCardViewController: UIImagePickerControllerDelegate, UINavigationCon
 extension IDCardViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InformationCell") as! IDCardTableViewCell
-        cell.userDetailLabel.text = "Test"
+        
+        if screenWidth < screenHeight {
+            cell.userDetailLabel.font = UIFont(name: baseFont, size: 14)
+        }
+        
+        switch indexPath.row {
+        case 0:
+            cell.userDetailLabel.text = "เลขประจำตัว  : " + (profiles?[0].personCard)!
+            break
+        case 1:
+            cell.userDetailLabel.text = "มหาวิทยาลัย  : " + (profiles?[0].organization)!
+            break
+        case 2:
+            cell.userDetailLabel.text = "คณะ  : " + (profiles?[0].department)!
+            break
+        case 3:
+            cell.userDetailLabel.text = "สาขา  : " + (profiles?[0].section)!
+            break
+        case 4:
+            cell.userDetailLabel.text = "อีเมล  : " + (profiles?[0].email)!
+            break
+        case 5:
+            cell.userDetailLabel.text = "เบอร์ : " + (profiles?[0].mobileNo)!
+            break
+        default:
+            break
+        }
         
         return cell
     }

@@ -44,7 +44,7 @@ extension NewPasswordViewController: UITableViewDataSource, UITableViewDelegate 
             cell.confirmBtn.setTitle(arrCellData![indexPath.row].text, for: .normal)
             print(arrCellData![indexPath.row].text)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
             }
             return cell
@@ -53,7 +53,7 @@ extension NewPasswordViewController: UITableViewDataSource, UITableViewDelegate 
             cell.inputData.placeholder = arrCellData![indexPath.row].text
             cell.inputData.isSecureTextEntry = true
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
@@ -63,13 +63,13 @@ extension NewPasswordViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 2 {
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 return 72
             }
             return 88
         }
         
-        if screenSize < baseScreen {
+        if screenWidth < screenHeight {
             return 56
         }
         

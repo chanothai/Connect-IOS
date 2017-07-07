@@ -23,6 +23,7 @@ class ResponseBloc: Mappable {
 class ResultBloc: Mappable {
     var success: String?
     var dataBloc: DataBloc?
+    var error: String?
     
     required init?(map: Map) {
         
@@ -31,6 +32,7 @@ class ResultBloc: Mappable {
     func mapping(map: Map) {
         success <- map["Success"]
         dataBloc <- map["Data"]
+        error <- map["Error"]
     }
 }
 

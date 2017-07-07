@@ -48,7 +48,7 @@ extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSour
             cell.confirmBtn.addTarget(self, action: #selector(selectValidate), for: .touchUpInside)
             print(arrCellData![indexPath.row].text)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
             }
             return cell
@@ -56,7 +56,7 @@ extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSour
             let cell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
             cell.inputData.placeholder = arrCellData![indexPath.row].text
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
@@ -71,13 +71,13 @@ extension ForgotPasswordViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 2 {
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 return 72
             }
             return 88
         }
         
-        if screenSize < baseScreen {
+        if screenWidth < screenHeight {
             return 56
         }
         

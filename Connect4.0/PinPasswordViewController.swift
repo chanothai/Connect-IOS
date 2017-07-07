@@ -27,8 +27,8 @@ class PinPasswordViewController: BaseViewController {
         setBackground()
         createPinPassword()
         
-        if screenSize < baseScreen {
-            titlePinLabel.font = UIFont(name: "supermarket", size: 24.0)
+        if screenWidth < screenHeight {
+            titlePinLabel.font = UIFont(name: baseFont, size: 24.0)
         }
     }
 

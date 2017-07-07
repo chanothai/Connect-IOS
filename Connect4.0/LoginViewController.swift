@@ -125,7 +125,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
             cell.confirmBtn.addTarget(self, action: #selector(self.doLogin), for: .touchUpInside)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
             }
             
@@ -146,7 +146,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             cell.inputData.delegate = self
             cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
@@ -168,7 +168,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 2 {
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 return 72
             }
             return 88
@@ -176,7 +176,7 @@ extension LoginViewController: UITableViewDelegate, UITableViewDataSource {
             return 36
         }
         
-        if screenSize <= baseScreen {
+        if screenWidth <= screenHeight {
             return 56
         }
         

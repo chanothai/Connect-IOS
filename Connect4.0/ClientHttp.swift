@@ -35,6 +35,9 @@ struct PathURL {
     static var apiVerifyUserSecure = "Api/secure/verifyUser.json"
     
     static var apiPersonalQuiz = "Api/checkTakeQuiz.json?authToken="
+    static var apiProfile = "Api/profileData.json?authToken="
+    
+    static var apiContact = "Api/showContactList.json?authToken="
 }
 
 class ClientHttp {
@@ -173,16 +176,12 @@ class ClientHttp {
         Alamofire.request(realUrl, method: .get).responseObject(completionHandler: { (response: DataResponse<ResponseBloc>) in
             
             guard let resultResponse = response.result.value else {
-                print("Bloc was null")
+                print(response.error!)
                 return
             }
             
             print("Result => \(resultResponse)")
-            if let success = resultResponse.resultBloc?.success {
-                if success == "OK" {
-                    SwiftEventBus.post("UserBlocResponse", sender: resultResponse.resultBloc?.dataBloc)
-                }
-            }
+            SwiftEventBus.post("UserBlocResponse", sender: resultResponse.resultBloc)
             
         })
     }
@@ -225,6 +224,41 @@ class ClientHttp {
             }
 
             SwiftEventBus.post("ResponseQuiz", sender: responseQuiz.result)
+        }
+    }
+    
+    public func requestProfile(_ token: String) {
+        let path: String? = "\(url!)\(PathURL.apiProfile)\(token)"
+        print(path!)
+        guard let realUrl = URL(string: path!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<ProfileResponse>) in
+            guard let responseProfile = response.result.value else {
+                print(response.error!)
+                return
+            }
+            
+            print(responseProfile)
+            SwiftEventBus.post("ProfileResponse", sender: responseProfile.result)
+        }
+    }
+    
+    public func requestContactList(_ token: String) {
+        let path: String? = "\(url!)\(PathURL.apiContact)\(token)"
+        print(path!)
+        guard let realUrl = URL(string: path!) else {
+            return
+        }
+        
+        Alamofire.request(realUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: header).responseObject { (response: DataResponse<ContactResponse>) in
+            guard let contactResponse = response.result.value else {
+                print(response.error!)
+                return
+            }
+        
+            SwiftEventBus.post("ContactResponse", sender: contactResponse.result)
         }
     }
 }

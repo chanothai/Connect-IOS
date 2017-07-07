@@ -133,7 +133,7 @@ extension RegisterViewController {
     
     func resizeView() {
         titleTable.text = "ลงทะเบียน"
-        if screenSize < baseScreen {
+        if screenWidth < screenHeight {
             titleTable.font = UIFont(name: baseFont, size: 36)
         }
     }
@@ -170,7 +170,7 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
             cell.confirmBtn.setTitle(arrCellData[indexPath.row].text, for: .normal)
             cell.confirmBtn.addTarget(self, action: #selector(self.doRegister), for: .touchUpInside)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.confirmBtn.titleLabel?.font = UIFont(name: baseFont, size: 20)
             }
             return cell
@@ -181,7 +181,7 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
             cell.inputData.inputAccessoryView = addDoneOnKeyBoard()
             cell.inputData.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
             
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 cell.inputData.font = UIFont(name: baseFont, size: 20)
             }
             
@@ -212,14 +212,14 @@ extension RegisterViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 5 {
-            if screenSize < baseScreen {
+            if screenWidth < screenHeight {
                 return 72
             }
             
             return 88
         }
         
-        if screenSize <= baseScreen {
+        if screenWidth <= screenHeight {
             return 56
         }
         

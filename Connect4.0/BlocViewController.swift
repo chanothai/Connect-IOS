@@ -46,9 +46,15 @@ class BlocViewController: BaseViewController {
             return
         }
         
-        setEventBus()
         initParameter()
+        setEventBus()
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        SwiftEventBus.unregister(self)
     }
     
     public func initParameter(){
@@ -95,36 +101,40 @@ class BlocViewController: BaseViewController {
         }
         
         SwiftEventBus.onMainThread(self, name: "UserBlocResponse") { (result) in
-            if let responses:DataBloc = result.object as? DataBloc {
-                self.arrBloc = responses.resultCategories!
-                print(self.arrBloc.count)
-                
-                if let category:CategoryBloc = self.arrBloc[self.pageControl.currentPage].category {
-                    guard let imgCategory = category.imagePath else {
-                        print("image's category was null")
-                        return
+            if let responses:ResultBloc = result.object as? ResultBloc {
+                if responses.success == "OK" {
+                    self.arrBloc = (responses.dataBloc?.resultCategories)!
+                    print(self.arrBloc.count)
+                    
+                    if let category:CategoryBloc = self.arrBloc[self.pageControl.currentPage].category {
+                        guard let imgCategory = category.imagePath else {
+                            print("image's category was null")
+                            return
+                        }
+                        print(imgCategory)
                     }
-                    print(imgCategory)
+                    
+                    self.initCategory(self.arrBloc)
+                    self.blocCollectionView.dataSource = self
+                    
+                    if let point = responses.dataBloc?.userInfo?.point {
+                        self.navigationItem.rightBarButtonItem = self.createItemRightBase(point)
+                    }else {
+                        self.navigationItem.rightBarButtonItem = self.createItemRightBase(10000)
+                    }
+                    
+                    self.delegate?.getUserInfo(userInfo: (responses.dataBloc?.userInfo)!)
+                    ModelCart.getInstance().getUserInfo.firstName = (responses.dataBloc?.userInfo?.firstNameTH!)!
+                    ModelCart.getInstance().getUserInfo.lastName = (responses.dataBloc?.userInfo?.lastNameTH)!
+                    
+                    if let imagePath = responses.dataBloc?.userInfo?.image {
+                        ModelCart.getInstance().getUserInfo.profile_image_path = imagePath
+                    }
+                    
+                    ClientHttp.getInstace().requestQuiz(self.token!)
+                }else{
+                    self.pushToLogin()
                 }
-                
-                self.initCategory(responses.resultCategories!)
-                self.blocCollectionView.dataSource = self
-                
-                if let point = responses.userInfo?.point {
-                    self.navigationItem.rightBarButtonItem = self.createItemRightBase(point)
-                }else {
-                    self.navigationItem.rightBarButtonItem = self.createItemRightBase(10000)
-                }
-                
-                self.delegate?.getUserInfo(userInfo: responses.userInfo!)
-                ModelCart.getInstance().getUserInfo.firstName = (responses.userInfo?.firstNameTH!)!
-                ModelCart.getInstance().getUserInfo.lastName = (responses.userInfo?.lastNameTH)!
-                
-                if let imagePath = responses.userInfo?.image {
-                    ModelCart.getInstance().getUserInfo.profile_image_path = imagePath
-                }
-                
-                ClientHttp.getInstace().requestQuiz(self.token!)
             }
         }
         
@@ -262,21 +272,29 @@ extension BlocViewController : UICollectionViewDelegate, UICollectionViewDataSou
         }
         else if indexPath.row == 1 {
             let backButton = UIBarButtonItem(image: UIImage(named:"back_screen"), style: .plain, target: self, action: #selector(backScreen))
-            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "IDCardController") as! IDCardViewController
-            destinationController?.navigationItem.leftBarButtonItem = backButton
-            destinationController?.navigationItem.titleView = self.createTitleBarImage()
             
-            let nav = UINavigationController(rootViewController: destinationController!)
+            let destinationController = storyBoard.instantiateViewController(withIdentifier: "IDCardController") as! IDCardViewController
+            destinationController.token = self.token
+            destinationController.navigationItem.leftBarButtonItem = backButton
+            destinationController.navigationItem.titleView = self.createTitleBarImage()
+            
+            self.destinationController = destinationController
+            
+            let nav = UINavigationController(rootViewController: destinationController)
             self.show(nav, sender: nil)
         }
         else if indexPath.row == 2 {
             let backButton = UIBarButtonItem(image: UIImage(named:"back_screen"), style: .plain, target: self, action: #selector(backScreen))
-            destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
-            destinationController?.navigationItem.leftBarButtonItem = backButton
-            destinationController?.navigationItem.titleView = self.createTitleBarImage()
-            destinationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
             
-            let nav = UINavigationController(rootViewController: destinationController!)
+            let destinationController = self.storyBoard.instantiateViewController(withIdentifier: "ContactController") as! ContactViewController
+            destinationController.token = self.token
+            destinationController.navigationItem.leftBarButtonItem = backButton
+            destinationController.navigationItem.titleView = self.createTitleBarImage()
+            destinationController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"add-contact") , style: .plain, target: self, action: #selector(selectAddContact))
+            
+            self.destinationController = destinationController
+            
+            let nav = UINavigationController(rootViewController: destinationController)
             self.show(nav, sender: nil)
         }
         
