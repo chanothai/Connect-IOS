@@ -7,35 +7,38 @@
 //
 
 import Foundation
+import ObjectMapper
 
 class ModelCart {
     private static var me:ModelCart?
-    private var logingResult:LoginResult?
-    private var userInfo:UserInfoResponse?
-    private var loginController:LoginViewController?
+    var modelSlideMenu: ModelSlideMenu?
+    var location: LocationModel?
+    var storeUrl: StoreUrl?
     
     init() {
-        userInfo = UserInfoResponse()
+        modelSlideMenu = ModelSlideMenu()
+        location = LocationModel()
+        storeUrl = StoreUrl()
+        storeUrl?.url = ""
     }
     
     public static func getInstance() -> ModelCart {
         if me == nil {
             me = ModelCart()
         }
+        
         return me!
     }
     
-    public func getLoginResult() -> LoginResult {
-        return logingResult!
+    public func getModelSlideMenu() -> ModelSlideMenu {
+        return modelSlideMenu!
     }
     
+    public func getLocation() -> LocationModel {
+        return location!
+    }
     
-    var getUserInfo:UserInfoResponse {
-        get{
-            return userInfo!
-        }
-        set{
-            userInfo = newValue
-        }
+    public func getStoreUrl() -> StoreUrl {
+        return storeUrl!
     }
 }

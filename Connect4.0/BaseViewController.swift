@@ -11,7 +11,7 @@ import MBProgressHUD
 import SWRevealViewController
 
 class BaseViewController: UIViewController {
-
+    // Make : properties
     let screenWidth:Int = Int(UIScreen.main.bounds.width)
     let screenHeight:Int = 350
     let baseFont = "supermarket"
@@ -72,6 +72,8 @@ extension BaseViewController {
         
         return label
     }
+    
+    
 }
 
 extension BaseViewController: BaseViewModelDelegate {
@@ -111,6 +113,69 @@ extension UITableView {
         self.backgroundColor = UIColor.clear
         self.tableFooterView = UIView(frame: CGRect.zero) //remove empty rows of table
         self.separatorColor = UIColor.clear
+    }
+}
+
+extension UILabel {
+    func resizeFont(){
+        let currentFontName = self.font.fontName
+        let fontSize = self.font.pointSize
+        var calculatedFont: UIFont?
+        let height = UIScreen.main.bounds.size.height
+        switch height {
+        case 480.0: //Iphone 3,4,SE => 3.5 inch
+            calculatedFont = UIFont(name: currentFontName, size: fontSize)
+            self.font = calculatedFont
+            break
+        case 568.0: //iphone 5, 5s => 4 inch
+            calculatedFont = UIFont(name: currentFontName, size: fontSize - 4)
+            self.font = calculatedFont
+            break
+        case 667.0: //iphone 6, 6s => 4.7 inch
+            calculatedFont = UIFont(name: currentFontName, size: fontSize)
+            self.font = calculatedFont
+            break
+        case 736.0: //iphone 6s+ 6+ => 5.5 inch
+            calculatedFont = UIFont(name: currentFontName, size: fontSize)
+            self.font = calculatedFont
+            break
+        default:
+            print("not an iPhone")
+            break
+        }
+    }
+}
+
+extension UIImageView {
+    func multiSizeImage(layout: UIStackView){
+        let screen = UIScreen.main.bounds.size.height
+        switch screen {
+        case 568.0 :
+            let size: Int = 100
+            let heightImg = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(size))
+            
+            let widthImg = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(size))
+            
+            self.layer.cornerRadius = CGFloat(size / 2)
+            self.layer.borderColor = UIColor.lightGray.cgColor
+            self.layer.borderWidth = 1
+            
+            layout.addConstraints([widthImg,heightImg])
+            break
+        case 667.0:
+            break
+        default:
+            break
+        }
+    }
+}
+
+extension UIWebView {
+    func initWebView(_ url: String){
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.showsHorizontalScrollIndicator = false
+        let langStr = Locale.current.languageCode
+        self.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
     }
 }
 

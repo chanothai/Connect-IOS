@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        <h1>Demo App</h1>
+        
+        <p>Click the button to call native function.</p>
+        <button onclick="Native2.sayGreeting('Contact me', 'sua8051@gmail.com <Sua Le>');">Say Greeting</button>
+        
+        <button onclick="Native2.anotherSayGreetingName('Or Skype', 'thadieuchantrau');">Another Say Greeting</button>
+        <br/>
+        <button onclick="Native2.showDialog('UserInfo', 'Chanothai Duangrawa');">Show Dialog</button>
+        <button onclick="Login.onLogin('Chanothai', 'https://www.google.co.th/?gws_rd=cr&dcr=0&ei=ZVUBWtGCFIr6vASj_qnACw');">Login</button>
+        
+        <script>
+            function showAlert(agr1, agr2){
+                alert('agr1: ' + agr1 + ' - agr2: ' + agr2);
+                return 'return from javascript';
+            }
+        </script>
+    </body>
+</html>

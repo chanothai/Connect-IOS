@@ -16,15 +16,14 @@ class BlocContentViewController: BaseViewController {
     var progBar = UIProgressView()
     
     //MAKE: properties
-    var pathURL:String?
     var urlBloc:String?
     var titleName: String?  
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backScreen = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         self.navigationItem.titleView = self.customTitle(titleName!)
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backScreen
+        
+        print(urlBloc!)
         initWebView()
         loadWebView()
     }
@@ -32,11 +31,26 @@ class BlocContentViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func backWeb(_ sender: UIBarButtonItem) {
+        if(webView.canGoBack) {
+            webView.goBack()
+        } else {
+            //Pop view controller to preview view controller
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
+    @IBAction func backHome(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -52,41 +66,9 @@ class BlocContentViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension BlocContentViewController {
-    func loadWebView() {
-        guard let url = URL(string: (urlBloc)!) else {
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        webView.load(request)
-        
-        view.addSubview(webView)
-    }
-}
-
-extension BlocContentViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let restore = AuthenLogin().restoreLogin()
-        print(restore[1])
-        let injectToken:String = "javascript:(function() {var inputs = document.getElementById('UserToken');inputs.value='"+restore[1]+"';document.forms[0].submit();})();"
-        print(injectToken)
-        webView.evaluateJavaScript(injectToken, completionHandler: nil)
-    }
-    
     func initWebView(){
         webView = WKWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         webView.navigationDelegate = self
@@ -97,5 +79,34 @@ extension BlocContentViewController: WKNavigationDelegate {
         progBar.tintColor = UIColor.cyan
         progBar.alpha = 1.0
         webView.addSubview(progBar)
+    }
+    
+    func loadWebView() {
+        let langStr = Locale.current.languageCode
+        webView.load(WebAppRequest(url: urlBloc!).getUrlRequest(language: langStr!))
+        view.addSubview(webView)
+    }
+}
+
+extension BlocContentViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let restore = AuthenLogin().restoreLogin()
+        let injectToken:String = "javascript:(window.object = function() {var inputs = document.getElementById('UserToken');inputs.value='"+restore[1]+"';document.forms[0].submit();})();"
+        webView.evaluateJavaScript(injectToken, completionHandler: nil)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if (navigationAction.navigationType == WKNavigationType.linkActivated) {
+            //Detect click link from webview
+            let url = navigationAction.request.url?.absoluteString
+            print(url!)
+            
+            let checkFile = url?.components(separatedBy: ".")
+            if (checkFile?.count)! > 3 {
+                DownloadFile(self).pdf(url!)
+            }
+        }
+        
+        decisionHandler(WKNavigationActionPolicy.allow)
     }
 }

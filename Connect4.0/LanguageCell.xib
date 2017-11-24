@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="supermarket.ttf">
+            <string>supermarket</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="188" id="XFJ-HU-gNt" customClass="LanguageCell" customModule="Connect4_0" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="632" height="188"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XFJ-HU-gNt" id="DpJ-x9-x8N">
+                <rect key="frame" x="0.0" y="0.0" width="632" height="187.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bU8-dh-phO">
+                        <rect key="frame" x="24" y="8" width="600" height="171.5"/>
+                        <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="22"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="bU8-dh-phO" firstAttribute="leading" secondItem="DpJ-x9-x8N" secondAttribute="leading" constant="24" id="0cn-k7-E85"/>
+                    <constraint firstAttribute="trailing" secondItem="bU8-dh-phO" secondAttribute="trailing" constant="8" id="S5j-yE-byJ"/>
+                    <constraint firstItem="bU8-dh-phO" firstAttribute="top" secondItem="DpJ-x9-x8N" secondAttribute="top" constant="8" id="gfl-ct-xFN"/>
+                    <constraint firstAttribute="bottom" secondItem="bU8-dh-phO" secondAttribute="bottom" constant="8" id="unE-GJ-8dC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="titleLanguage" destination="bU8-dh-phO" id="JTn-AT-83o"/>
+            </connections>
+            <point key="canvasLocation" x="-108" y="13"/>
+        </tableViewCell>
+    </objects>
+</document>

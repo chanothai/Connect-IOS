@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="supermarket.ttf">
+            <string>supermarket</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CheckBoxCell" rowHeight="80" id="mob-my-N4u" customClass="CheckBoxCell" customModule="Connect4_0" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mob-my-N4u" id="fTF-e6-lbF">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6T-6Z-Qpw">
+                        <rect key="frame" x="8" y="22" width="36" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="Qmw-pH-sCT"/>
+                            <constraint firstAttribute="height" constant="36" id="v7K-Ah-ne1"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="uncheck"/>
+                        <state key="selected" backgroundImage="check"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ยอมรับข้อตกลง" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIr-f7-2lu">
+                        <rect key="frame" x="52" y="0.0" width="93" height="79.5"/>
+                        <fontDescription key="fontDescription" name="supermarket" family="supermarket" pointSize="18"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="XIr-f7-2lu" firstAttribute="top" secondItem="fTF-e6-lbF" secondAttribute="top" id="Ooc-QT-vfW"/>
+                    <constraint firstItem="h6T-6Z-Qpw" firstAttribute="centerY" secondItem="fTF-e6-lbF" secondAttribute="centerY" id="OwR-vS-d11"/>
+                    <constraint firstAttribute="bottom" secondItem="XIr-f7-2lu" secondAttribute="bottom" id="Sm3-ym-8fx"/>
+                    <constraint firstItem="h6T-6Z-Qpw" firstAttribute="leading" secondItem="fTF-e6-lbF" secondAttribute="leading" constant="8" id="XWK-qY-4Jc"/>
+                    <constraint firstItem="XIr-f7-2lu" firstAttribute="leading" secondItem="h6T-6Z-Qpw" secondAttribute="trailing" constant="8" id="Y4L-Tv-6eB"/>
+                    <constraint firstItem="XIr-f7-2lu" firstAttribute="centerY" secondItem="fTF-e6-lbF" secondAttribute="centerY" id="xyB-WY-F98"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="checkCondition" destination="h6T-6Z-Qpw" id="7uu-5f-b6k"/>
+            </connections>
+            <point key="canvasLocation" x="26.5" y="52"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="check" width="24" height="24"/>
+        <image name="uncheck" width="24" height="24"/>
+    </resources>
+</document>

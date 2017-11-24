@@ -43,41 +43,23 @@ class AlertMessage {
     }
 }
 
+
 extension AlertMessage {
-    public func showMessageRegister(title: String, message: String, isAction:Bool, username: String) {
-        self.username = username
-        
+    func showMessageForgotPassword(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
-        if isAction {
-            alertController.addTextField { (textField: UITextField) in
-                let height = NSLayoutConstraint(item: textField, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 36)
-                
-                textField.addConstraint(height)
-                textField.keyboardType = .numberPad
-                textField.placeholder = "PIN CODE"
-                textField.textColor = UIColor.darkGray
-                textField.font = UIFont(name: "supermarket", size: 28)
-                textField.addTarget(self, action: #selector(self.textFieldChange), for: UIControlEvents.editingChanged)
-            }
-            
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: actionPIN))
-        }else{
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        mySelf?.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension UIAlertController: UITextFieldDelegate {
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else {
+            return true
         }
         
-        self.mySelf?.show(alertController, sender: nil)
-    }
-    
-    @objc func textFieldChange(textField: UITextField) {
-        resultPin = textField.text
-    }
-    
-    func actionPIN(action: UIAlertAction) {
-        var parameters = [String: String]()
-        parameters[UserVerify.username] = username
-        parameters[UserVerify.pinCode] = resultPin
-        
-        SwiftEventBus.post("RegisterSuccess", sender: parameters)
+        let newLength = text.utf16.count + string.utf16.count - range.length
+        return newLength <= 4
     }
 }

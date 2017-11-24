@@ -9,6 +9,7 @@
 import UIKit
 import SWRevealViewController
 import AlamofireImage
+import CoreLocation
 
 class MenuViewController: BaseViewController {
     
@@ -16,35 +17,23 @@ class MenuViewController: BaseViewController {
     @IBOutlet var sidebarMenuTableView: UITableView!
     @IBOutlet var profileIMG: UIImageView!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var addressLabel: UILabel!
+    @IBOutlet var layoutProfile: UIStackView!
     
     
     //Make: property
     var arrMenu:[String]!
-    var arrImage:[String]!
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     var blurEffectView:UIVisualEffectView?
     var destinationController:UIViewController?
-    var userInfo: UserInfoResponse?
+    
+    fileprivate var viewModel: MenuSlideViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBackground()
-        sidebarMenuTableView.setBaseTableStyle()
-        arrImage = SidebarMenuModel.setImageMenu()
-        
-        profileIMG.layer.borderColor = UIColor.white.cgColor
-        profileIMG.layer.borderWidth = CGFloat(2.0)
-        
-        userInfo = ModelCart.getInstance().getUserInfo
-        nameLabel?.text = (userInfo?.firstName)! + " " + (userInfo?.lastName)!
-        
-        guard let url = URL(string: (userInfo?.profile_image_path)!) else {
-            print("IMAGE was null")
-            profileIMG?.image = UIImage(named: "people")
-            return
-        }
-        
-        profileIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+        initTableView()
+        initAddress()
+        initProfile()
     }
     
     
@@ -62,7 +51,74 @@ class MenuViewController: BaseViewController {
 }
 
 extension MenuViewController {
-    func actionSignOut(){
+    func initTableView(){
+        viewModel = MenuSlideViewModel()
+        viewModel?.clickDelegate = self
+        
+        viewModel?.reloadSection = {[weak self] (section: Int) in
+            self?.sidebarMenuTableView.beginUpdates()
+            self?.sidebarMenuTableView.reloadSections([section], with: .fade)
+            self?.sidebarMenuTableView.endUpdates()
+        }
+        
+        sidebarMenuTableView.dataSource = viewModel
+        sidebarMenuTableView.delegate = viewModel
+        sidebarMenuTableView.setBaseTableStyle()
+        
+        sidebarMenuTableView.register(LanguageCell.nib, forCellReuseIdentifier: LanguageCell.identifier)
+        sidebarMenuTableView.register(LogoutCell.nib, forCellReuseIdentifier: LogoutCell.identifier)
+        sidebarMenuTableView.register(HeaderLanguageView.nib, forHeaderFooterViewReuseIdentifier: HeaderLanguageView.identifier)
+    }
+    
+    func initProfile(){
+        let name = "\((ModelCart.getInstance().getModelSlideMenu().result.data?.profiles?.firstName)!) \((ModelCart.getInstance().getModelSlideMenu().result.data?.profiles?.lastName)!)"
+        
+        nameLabel.resizeFont()
+        nameLabel?.text = name
+        
+        profileIMG.multiSizeImage(layout: layoutProfile)
+        profileIMG.layer.borderWidth = 1
+        profileIMG.layer.borderColor = UIColor.darkGray.cgColor
+        guard let url = URL(string: (ModelCart.getInstance().getModelSlideMenu().result.data?.profiles?.imgPath)!) else {
+            print("IMAGE was null")
+            profileIMG?.image = UIImage(named: "people")
+            return
+        }
+        
+        profileIMG?.af_setImage(withURL: url, placeholderImage: UIImage(named: "people") , filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.5) , runImageTransitionIfCached: true, completion: nil)
+    }
+    
+    func initAddress(){
+        self.addressLabel.resizeFont()
+        if let lat = ModelCart.getInstance().getLocation().lat, let lon = ModelCart.getInstance().getLocation().long {
+            getAddressFromLatLon(latitude: lat, withLongitude: lon)
+        }else{
+            self.addressLabel.text = ""
+        }
+    }
+    
+    func getAddressFromLatLon(latitude: String, withLongitude longitude: String) {
+        var center: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        let lat: Double = Double("\(latitude)")!
+        let lon: Double = Double("\(longitude)")!
+        let geo: CLGeocoder = CLGeocoder()
+        
+        center.latitude = lat
+        center.longitude = lon
+        
+        let loc: CLLocation = CLLocation(latitude: center.latitude, longitude: center.longitude)
+        
+        geo.reverseGeocodeLocation(loc) { (placeMaker, error) in
+            let pm = placeMaker! as [CLPlacemark]
+            if (pm.count > 0) {
+                let pm = placeMaker![0]
+                
+                self.addressLabel.text = "\(pm.subLocality!), \(pm.thoroughfare!)"
+            }
+        }
+    }
+    
+    public func actionSignOut(){
         let optionMenu = UIAlertController(title: nil, message: "if you sign out of your account, all your information will be removed from this app", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -99,48 +155,12 @@ extension MenuViewController {
     }
 }
 
-extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        arrMenu = SidebarMenuModel.setMenu()
-        if (arrMenu?.count)! > 0 {
-            return (arrMenu?.count)!
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellMenuSideBar", for: indexPath) as! SideMenuTableViewCell
-        
-        cell.sectionImg.image = UIImage(named: arrImage[indexPath.row])
-        cell.sectionImg.image = cell.sectionImg.image!.withRenderingMode(.alwaysTemplate)
-        cell.sectionImg.tintColor = UIColor.lightGray
-        cell.backgroundColor = UIColor.clear
-        cell.sectionLabel.text = arrMenu[indexPath.row]
-        cell.sectionLabel.textColor = UIColor.white
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension MenuViewController: MenuSlideClickDelegat {
+    func menuClicked(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         sidebarMenuTableView.deselectRow(at: indexPath, animated: false)
         
-        switch indexPath.row {
-        case 0:
-            print("Feed")
-            let mainBloc = storyBoard.instantiateViewController(withIdentifier: "NavBlocController") as! NavBlocController
-            self.revealViewController().pushFrontViewController(mainBloc, animated: true)
-            break
-        default:
-            print("ออกจากระบบ")
-            self.actionSignOut()
-            break
+        if indexPath.section == 1 {
+            actionSignOut()
         }
-    }
-    
-    @objc func selectAddContact() {
-        print("Add Contact")
-        let navAddContactController = self.storyBoard.instantiateViewController(withIdentifier: "NavAddContact") as! NavContactController
-        self.destinationController?.show(navAddContactController, sender: nil)
     }
 }

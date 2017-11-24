@@ -9,10 +9,8 @@
 import Foundation
 
 struct DefaultKey {
-    static let usernameKey = "username_key"
+    static let webKey = "web_key"
     static let tokenKey = "token_key"
-    static let dynamicKey = "dynamic_key"
-    static let pinpasswordKey = "pinpassword_key"
 }
 class AuthenLogin {
     private var preference: UserDefaults?
@@ -21,39 +19,22 @@ class AuthenLogin {
         preference = UserDefaults.standard
     }
     
-    public func storePinPassword(_ pin: String) {
-        preference?.set(pin, forKey: DefaultKey.pinpasswordKey)
-        preference?.synchronize()
-    }
-    
-    public func restorePinPassword() -> String {
-        if let pinPassword = preference?.string(forKey: DefaultKey.pinpasswordKey){
-            return pinPassword
-        }
-        
-        return ""
-    }
-    
-    public func storeLogin(_ username:String, _ token:String, _ key:String) {
-        preference?.set(username, forKey: DefaultKey.usernameKey)
+    public func storeLogin(_ token:String, _ web:String) {
         preference?.set(token, forKey: DefaultKey.tokenKey)
-        preference?.set(key, forKey: DefaultKey.dynamicKey)
+        preference?.set(web, forKey: DefaultKey.webKey)
         preference?.synchronize()
     }
     
     public func restoreLogin() -> [String] {
         var arrLogin:[String] = [String]()
-        if let username = preference?.string(forKey: DefaultKey.usernameKey){
-            arrLogin.append(username)
-        }
-        
         if let token = preference?.string(forKey: DefaultKey.tokenKey) {
             arrLogin.append(token)
         }
         
-        if let dynamicKey = preference?.string(forKey: DefaultKey.dynamicKey){
-            arrLogin.append(dynamicKey)
+        if let web = preference?.string(forKey: DefaultKey.webKey){
+            arrLogin.append(web)
         }
+        
         return arrLogin
     }
 }

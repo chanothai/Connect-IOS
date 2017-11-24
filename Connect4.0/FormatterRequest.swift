@@ -19,37 +19,6 @@ class FormatterRequest {
         jsonData = [String : Any]()
     }
     
-    public func loginSecure(_ parameter:[String : String]) -> [String: String]{
-        jsonData?[LoginRequest.user] = parameter
-        
-        resultJson![LoginSecure.data] = convertToJson(jsonData!)
-        return resultJson!
-    }
-    
-    public func register(_ parameters:[String : String]) -> [String :String] {
-        jsonData?[RegisterRequest.user] = parameters
-        print(jsonData!)
-        
-        resultJson![RegisterSecure.data] = convertToJson(jsonData!)
-        return resultJson!
-    }
-    
-    public func verify(_ parameters:[String: String]) -> [String: String] {
-        jsonData?[VerifyRequest.user] = parameters
-        print(jsonData!)
-        
-        resultJson![VerifySecure.data] = convertToJson(jsonData!)
-        return resultJson!
-    }
-    
-    public func application(_ parameters:[String : Any], _ username:[String:String]) -> [String : Any]{
-        var resultJson = [String:Any]()
-        resultJson["Data"] = convertToJson(parameters)
-        resultJson["User"] = ["username" : username]
-        
-        return resultJson
-    }
-    
     private func convertToJson(_ json:[String : Any]) -> String{
         let convertToJson = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         let jsonString = String(data: convertToJson, encoding: .utf8)!
