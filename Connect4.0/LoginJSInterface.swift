@@ -12,20 +12,20 @@ import UIKit
 
 @objc protocol MyExport : JSExport
 {
-    func onLogin(_ arg1: String, _ arg2: String)
+    func onLogin(_ arg1: String, _ arg2: String, _ arg3: String)
 }
 
 protocol OnLoginDelegate {
-    func onLoginComplete(token :String, webURL :String)
+    func onLoginComplete(token :String, webURL :String, subscribe: String)
 }
 
 class JSInterface : NSObject, MyExport
 {
     public static var delegate: OnLoginDelegate?
-    func onLogin(_ arg1: String, _ arg2: String) {
+    func onLogin(_ arg1: String, _ arg2: String, _ arg3: String) {
         print("\(arg1), \(arg2)")
         if (!arg1.isEmpty && !arg2.isEmpty) {
-            JSInterface.delegate?.onLoginComplete(token: arg1, webURL: arg2)
+            JSInterface.delegate?.onLoginComplete(token: arg1, webURL: arg2, subscribe: arg3)
         }
     }
 }

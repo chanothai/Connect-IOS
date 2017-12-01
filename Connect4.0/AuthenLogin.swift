@@ -11,6 +11,7 @@ import Foundation
 struct DefaultKey {
     static let webKey = "web_key"
     static let tokenKey = "token_key"
+    static let subscriptKey = "subscribe_key"
 }
 class AuthenLogin {
     private var preference: UserDefaults?
@@ -19,9 +20,10 @@ class AuthenLogin {
         preference = UserDefaults.standard
     }
     
-    public func storeLogin(_ token:String, _ web:String) {
+    public func storeLogin(_ token:String, _ web:String, _ subscribe: String) {
         preference?.set(token, forKey: DefaultKey.tokenKey)
         preference?.set(web, forKey: DefaultKey.webKey)
+        preference?.set(subscribe, forKey: DefaultKey.subscriptKey)
         preference?.synchronize()
     }
     
@@ -33,6 +35,10 @@ class AuthenLogin {
         
         if let web = preference?.string(forKey: DefaultKey.webKey){
             arrLogin.append(web)
+        }
+        
+        if let sub = preference?.string(forKey: DefaultKey.subscriptKey){
+            arrLogin.append(sub)
         }
         
         return arrLogin

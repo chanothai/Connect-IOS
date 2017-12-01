@@ -16,7 +16,7 @@ class WebAppRequest {
         guard let url = URL(string: url) else {
             return
         }
-        urlRequest = URLRequest(url: url)
+        urlRequest = URLRequest(url: url,cachePolicy:NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,timeoutInterval: 10.0)
     }
     
     public func getUrlRequest(language: String) -> URLRequest{

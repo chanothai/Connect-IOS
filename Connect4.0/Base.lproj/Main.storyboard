@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uQB-nb-qec">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="17B48" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uQB-nb-qec">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -135,7 +135,14 @@
                             <constraint firstItem="6zE-Ct-BCq" firstAttribute="leading" secondItem="NcG-W8-Vui" secondAttribute="leading" id="fYu-Xe-zKM"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="K64-6W-r7K"/>
+                    <navigationItem key="navigationItem" id="K64-6W-r7K">
+                        <barButtonItem key="leftBarButtonItem" image="back_screen" id="mxV-Ip-iqn">
+                            <color key="tintColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backScreen:" destination="RN9-k9-aVr" id="SjZ-s8-Uu7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="6zE-Ct-BCq" id="KPE-to-euK"/>
                     </connections>
@@ -169,7 +176,14 @@
                             <constraint firstAttribute="trailing" secondItem="RkT-l6-bjV" secondAttribute="trailing" id="nvu-1u-jMa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mpo-Bb-ZnN"/>
+                    <navigationItem key="navigationItem" id="mpo-Bb-ZnN">
+                        <barButtonItem key="leftBarButtonItem" image="back_screen" id="jj3-pe-ZdX">
+                            <color key="tintColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backScreen:" destination="yqx-k1-FgJ" id="C1G-Q1-Pr8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="RkT-l6-bjV" id="3HE-ui-J4q"/>
                     </connections>
@@ -236,7 +250,14 @@
                             <constraint firstAttribute="trailing" secondItem="C13-FS-dh6" secondAttribute="trailing" id="VC1-y4-gVW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="06p-H0-S7X"/>
+                    <navigationItem key="navigationItem" id="06p-H0-S7X">
+                        <barButtonItem key="leftBarButtonItem" image="back_screen" id="fXZ-vS-1oZ">
+                            <color key="tintColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="backScreen:" destination="ADH-0V-S09" id="HJG-5O-A5U"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="C13-FS-dh6" id="fvO-Fo-TpY"/>
                     </connections>
@@ -425,7 +446,7 @@
         <!--Custom Tabbar Controller View Controller-->
         <scene sceneID="t2Q-y3-x11">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="gfu-PU-iTi" customClass="CustomTabbarControllerViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="CustomTabbarController" automaticallyAdjustsScrollViewInsets="NO" id="gfu-PU-iTi" customClass="CustomTabbarControllerViewController" customModule="Connect4_0" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="lDS-CY-PxC">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

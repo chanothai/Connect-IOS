@@ -15,6 +15,9 @@ class TabNoticViewController: BaseViewController {
     
     // Make: properties
     var titleBarItem: String?
+    var beginLanguage: String?
+    var url = "http://connect06.pakgon.com/core/Homes/alert"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         titleBarItem = "การแจ้งเตือน"
@@ -24,9 +27,24 @@ class TabNoticViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        webView.initWebView("http://connect06.pakgon.com/core/Homes/alert")
+        initWebView(url)
+    }
+    
+    func initWebView(_ url: String){
+        webView.scrollView.showsVerticalScrollIndicator = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
+        webView.scrollView.bounces = false
         
-        self.tabBarItem.badgeValue = .none
+        if let beginLanguage = beginLanguage {
+            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
+            
+        }else{
+            let langStr = Locale.current.languageCode
+            let regionCode = Locale.current.regionCode
+            print("Language-Code : \(langStr!)")
+            print("Region-Code : \(regionCode!)")
+            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +52,16 @@ class TabNoticViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
         
     }
+    
+    @IBAction func backScreen(_ sender: UIBarButtonItem) {
+        if(webView.canGoBack) {
+            webView.goBack()
+        } else {
+            //Pop view controller to preview view controller
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     
     /*
     // MARK: - Navigation
@@ -44,5 +72,4 @@ class TabNoticViewController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

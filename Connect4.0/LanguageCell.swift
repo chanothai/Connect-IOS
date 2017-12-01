@@ -13,7 +13,7 @@ class LanguageCell: UITableViewCell {
     // Make: outlet
     @IBOutlet var titleLanguage: UILabel!
     
-    var item: LanguageSlideMenu? {
+    var item: ListLanguage? {
         didSet {
             
             if let language = item?.languageTH {

@@ -64,7 +64,6 @@ extension LoginViewController {
 //        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
 //        let blocViewController = storyBoard.instantiateViewController(withIdentifier: "BlocController") as! BlocViewController
 //        self.show(blocViewController, sender: nil)
-
     }
 }
 
@@ -75,9 +74,9 @@ extension LoginViewController: UIWebViewDelegate {
 }
 
 extension LoginViewController: OnLoginDelegate {
-    func onLoginComplete(token: String, webURL: String) {
+    func onLoginComplete(token: String, webURL: String, subscribe: String) {
         print(token)
-        AuthenLogin().storeLogin(token, webURL)
+        AuthenLogin().storeLogin(token, webURL, subscribe)
         intentToBloc()
     }
 }

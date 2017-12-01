@@ -75,10 +75,19 @@ extension TabScanQRController {
                     
                 }else{
                     print("Message: \((response?.result?.data?.message)!)")
+                    AlertMessage(self).showMessageScan(title: "Add Success", message:(response?.result?.data?.message)!, isAction: true)
                 }
+                
                 self.hideLoading()
             }else{
                 print(response?.status! ?? "")
+            }
+        }
+        
+        SwiftEventBus.onMainThread(self, name: "SubmissComplete") { (result) in
+            let actionOK = result.object as? Bool
+            if actionOK! {
+                self.photo = 0
             }
         }
     }

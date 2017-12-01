@@ -21,17 +21,11 @@ class ClientHttp {
     private let url:String?
     private static var me:ClientHttp?
     private var mySelf:BaseViewController?
-    private let header: HTTPHeaders?
+    private var token: String?
     
     init() {
         let https:String = "http://"
         self.url = "\(https)\(PathURL.urlServer)"
-        
-        let api = AuthenLogin().restoreLogin()
-        let token = "Bearer \(api[0])"
-        
-        header = ["Authorization": token,"Accept-Language": "en;q=1.0", "Accept":"application/json", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"]
-        
     }
     
     public static func getInstace() -> ClientHttp {
@@ -45,7 +39,16 @@ class ClientHttp {
         return url!
     }
     
-    public func getHeader() -> HTTPHeaders {
-        return header!
+    public func getHeaderOriginal() -> HTTPHeaders {
+        let header = ["Authorization": token!, "Accept":"application/json", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"]
+        return header
+    }
+    
+    public func getHeader(language: String) -> HTTPHeaders {
+        let api = AuthenLogin().restoreLogin()
+        token = "Bearer \(api[0])"
+        
+        let header = ["Authorization": token!,"Accept-Language": language, "Accept":"application/json", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"]
+        return header
     }
 }

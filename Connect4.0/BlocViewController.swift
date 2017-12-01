@@ -27,23 +27,22 @@ class BlocViewController: BaseViewController {
     var region:[CLBeaconRegion]?
     var count:Int = 0
     var urlBloc: String?
+    var beginLanguage: String?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = self.createTitleBarImage()
-        self.setSideBar()
-        self.tabBarController?.delegate = self
-        //Subscribe to a topic after got a FCM Register token
-        Messaging.messaging().subscribe(toTopic: "/topics/coffee")
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear")
-        initBlocMain()
+        self.navigationItem.titleView = self.createTitleBarImage()
+        self.setSideBar()
+        
         setEventBus()
-        initBadge()
+        initBlocMain()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -51,14 +50,10 @@ class BlocViewController: BaseViewController {
         print("viewDidDisappear")
         locationManager?.stopUpdatingLocation()
         region?.forEach((locationManager?.stopRangingBeacons(in:))!)
-        SwiftEventBus.unregister(self)
         ModelCart.getInstance().getStoreUrl().url = ""
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
         SwiftEventBus.unregister(self)
     }
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -67,12 +62,6 @@ class BlocViewController: BaseViewController {
 }
 
 extension BlocViewController {
-    func initBadge() {
-        let tabArray = self.tabBarController?.tabBar.items as NSArray!
-        let tabItem = tabArray?.object(at: 1) as! UITabBarItem
-        tabItem.badgeValue = ""
-    }
-    
     func initLocationManager() {
         beaconList = [(CLBeaconRegion, CLBeacon)]()
         locationManager = CLLocationManager()
@@ -89,21 +78,40 @@ extension BlocViewController {
     }
     
     public func initBlocMain(){
-        let restoreInformation:[String] = AuthenLogin().restoreLogin() //0 token, 1 web browser
+        let restoreInformation:[String] = AuthenLogin().restoreLogin() //0 token, 1 web browser, subscribe for topic firebase
         token = restoreInformation[0]
         urlBloc = restoreInformation[1]
+        let sub = restoreInformation[2]
+        print(sub)
+        
+        //Subscribe to a topic after got a FCM Register token
+        Messaging.messaging().subscribe(toTopic: "/topics/\(sub)")
         initWebView(urlBloc!)
         initLocationManager()
-        
-        showLoading()
-        SlideMenuRequest().request()
     }
     
     func initWebView(_ url: String){
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.showsHorizontalScrollIndicator = false
-        let langStr = Locale.current.languageCode
-        webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+        webView.scrollView.bounces = false
+        
+        if let beginLanguage = beginLanguage {
+            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
+            
+            var parameter = [String: String]()
+            parameter["language"] = beginLanguage
+            
+            SlideMenuRequest().request(parameter)
+            
+        }else{
+            let langStr = Locale.current.languageCode
+            let regionCode = Locale.current.regionCode
+            print("Language-Code : \(langStr!)")
+            print("Region-Code : \(regionCode!)")
+            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+            
+            SlideMenuRequest().requestNonParameter()
+        }
     }
     
     func pushToLogin() {
@@ -117,7 +125,6 @@ extension BlocViewController {
             let response = result.object as! ResponseSlideMenu
             if response.status == "Success" {
                 ModelCart.getInstance().getModelSlideMenu().result = response.result! // store data
-                self.hideLoading()
             }
             
             print(response.status ?? "")
@@ -169,10 +176,3 @@ extension BlocViewController : CLLocationManagerDelegate {
         }
     }
 }
-
-extension BlocViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        initWebView(urlBloc!)
-    }
-}
-

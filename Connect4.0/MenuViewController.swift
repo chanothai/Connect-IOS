@@ -10,6 +10,7 @@ import UIKit
 import SWRevealViewController
 import AlamofireImage
 import CoreLocation
+import SwiftEventBus
 
 class MenuViewController: BaseViewController {
     
@@ -26,6 +27,7 @@ class MenuViewController: BaseViewController {
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     var blurEffectView:UIVisualEffectView?
     var destinationController:UIViewController?
+    var beginLanguage: String?
     
     fileprivate var viewModel: MenuSlideViewModel?
     
@@ -34,12 +36,23 @@ class MenuViewController: BaseViewController {
         initTableView()
         initAddress()
         initProfile()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setEventBus()
     }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        SwiftEventBus.unregister(self)
     }
     
     // MARK: - Navigation
@@ -51,6 +64,22 @@ class MenuViewController: BaseViewController {
 }
 
 extension MenuViewController {
+    func setEventBus() {
+        SwiftEventBus.onMainThread(self, name: "ResponseSlideMenu") { (result) in
+            let response = result.object as? ResponseSlideMenu
+            if response?.status == "Success" {
+                ModelCart.getInstance().getModelSlideMenu().result = (response?.result)!
+                
+                self.initProfile()
+                self.sidebarMenuTableView.reloadData()
+                self.hideLoading()
+                CustomTabbarControllerViewController.beginLanguage = self.beginLanguage
+                let tabbar = self.storyBoard.instantiateViewController(withIdentifier: "CustomTabbarController") as! CustomTabbarControllerViewController
+                self.revealViewController().pushFrontViewController(tabbar, animated: true)
+            }
+        }
+    }
+    
     func initTableView(){
         viewModel = MenuSlideViewModel()
         viewModel?.clickDelegate = self
@@ -79,6 +108,7 @@ extension MenuViewController {
         profileIMG.multiSizeImage(layout: layoutProfile)
         profileIMG.layer.borderWidth = 1
         profileIMG.layer.borderColor = UIColor.darkGray.cgColor
+        
         guard let url = URL(string: (ModelCart.getInstance().getModelSlideMenu().result.data?.profiles?.imgPath)!) else {
             print("IMAGE was null")
             profileIMG?.image = UIImage(named: "people")
@@ -134,7 +164,6 @@ extension MenuViewController {
     }
     
     func intentToLogin(){
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
         
         self.present(loginController, animated: true) {
@@ -161,6 +190,13 @@ extension MenuViewController: MenuSlideClickDelegat {
         
         if indexPath.section == 1 {
             actionSignOut()
+        }else{
+            var parameter = [String: String]()
+            parameter["language"] = ModelCart.getInstance().getModelSlideMenu().result.data?.languages?.listLanguage?[indexPath.row].languageDesc
+            beginLanguage = parameter["language"]
+            
+            showLoading()
+            SlideMenuRequest().request(parameter)
         }
     }
 }

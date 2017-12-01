@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        //UIApplication.shared.applicationIconBadgeNumber = 0
+        
         checkLogin()
         UINavigationBar.appearance().tintColor = UIColor.darkGray
         
@@ -33,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Start register for remote
         if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().delegate = self
             //For ios10 display notification (sent via APNS)
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { (_, _) in})
@@ -124,27 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-@available(iOS 10, *)
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    //Receive display notification for ios 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        print("Message ID: \(userInfo["gcm.message_id"] ?? "")")
-        print("UserInfo: \(userInfo)")
-        
-        // Change this to your preferred presentation option
-        completionHandler([.alert, .sound])
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        print("Message ID: \(userInfo["gcm.message_id"] ?? "")")
-        print("UserInfo: \(userInfo)")
-        
-        // Change this to your preferred presentation option
-        completionHandler()
-    }
-}
 
 extension AppDelegate: MessagingDelegate {
     // Start refresh Token

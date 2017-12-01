@@ -45,7 +45,7 @@ class MenuSlideViewModel: NSObject {
     override init() {
         super.init()
         
-        guard let language = ModelCart.getInstance().getModelSlideMenu().result.data?.languages else {
+        guard let language = ModelCart.getInstance().getModelSlideMenu().result.data?.languages?.listLanguage else {
             return
         }
         if !language.isEmpty {
@@ -162,7 +162,7 @@ class MenuSlideLanguageItem: MenuSlideViewModelItem {
     }
     
     var sectionTitle: String {
-        return "Language"
+        return (ModelCart.getInstance().getModelSlideMenu().result.data?.languages?.title)!
     }
     
     var isCollapsible: Bool {
@@ -175,9 +175,9 @@ class MenuSlideLanguageItem: MenuSlideViewModelItem {
         return languages.count
     }
     
-    var languages: [LanguageSlideMenu]
+    var languages: [ListLanguage]
     
-    init(languages: [LanguageSlideMenu]) {
+    init(languages: [ListLanguage]) {
         self.languages = languages
     }
 }

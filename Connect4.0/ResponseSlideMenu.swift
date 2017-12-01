@@ -12,6 +12,7 @@ import SwiftyJSON
 import SwiftEventBus
 import Alamofire
 import AlamofireImage
+import AlamofireLogger
 
 class ResponseSlideMenu: Mappable {
     var status: String?
@@ -43,7 +44,7 @@ class ResultSlideMenu: Mappable {
 
 class DataSlideMenu: Mappable {
     var menus: [MenusSlide]?
-    var languages: [LanguageSlideMenu]?
+    var languages: LanguageSlideMenu?
     var profiles: UserProfile?
 
     required init?(map: Map) {
@@ -72,6 +73,21 @@ class MenusSlide: Mappable {
 }
 
 class LanguageSlideMenu: Mappable {
+    var title: String?
+    var listLanguage: [ListLanguage]?
+    
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        title <- map["label"]
+        listLanguage <- map["list"]
+    }
+}
+
+class ListLanguage: Mappable {
     var languageDesc: String?
     var languageTH: String?
     
@@ -104,23 +120,53 @@ class UserProfile: Mappable {
 }
 
 class SlideMenuRequest {
-    func request() {
-        let path: String = "\(ClientHttp.getInstace().getUrl())Profiles"
+    func request(_ parameter: [String: String]) {
+        let path: String = "\(ClientHttp.getInstace().getUrl())Profiles/info"
 //        let path: String = "\(ClientHttp.getInstace().getUrl())Connects/language"
         print(path)
         guard let url = URL(string: path) else {
             return
         }
         
-        Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeader()).responseObject { (response: DataResponse<ResponseSlideMenu>) in
+        //let result = "\(parameter["language"]!);q=1.0"
+        
+        
+        Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeaderOriginal()).logRequest(.verbose).logResponse(.simple).responseObject { (response: DataResponse<ResponseSlideMenu>) in
             
-            guard let response = response.result.value else {
+            guard let responses = response.result.value else {
+                print(response)
                 print("Response was null")
                 return
             }
             
-            SwiftEventBus.post("ResponseSlideMenu", sender: response)
+            SwiftEventBus.post("ResponseSlideMenu", sender: responses)
         }
+    }
+    
+    func requestNonParameter() {
+        let path: String = "\(ClientHttp.getInstace().getUrl())Profiles/info"
+        //        let path: String = "\(ClientHttp.getInstace().getUrl())Connects/language"
+        print(path)
+        guard let url = URL(string: path) else {
+            return
+        }
+        
+        let langStr = Locale.current.languageCode
+        let regionCode = Locale.current.regionCode
+        let result = "\(langStr!)-\(regionCode!),\(langStr!);q=1.0"
+        print("Result: \(result)")
+        
+        Alamofire.request(url, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeader(language: result)).logRequest(.verbose).logResponse(.simple).responseObject { (response: DataResponse<ResponseSlideMenu>) in
+            
+            guard let responses = response.result.value else {
+                print(response)
+                print("Response was null")
+                return
+            }
+            
+            SwiftEventBus.post("ResponseSlideMenu", sender: responses)
+        }
+
     }
 }
 

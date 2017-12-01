@@ -58,7 +58,7 @@ class RequestScanQR {
             return
         }
         
-        Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeader()).responseObject { (response:DataResponse<ResponseScanQR>) in
+        Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeaderOriginal()).responseObject { (response:DataResponse<ResponseScanQR>) in
             
             guard let result = response.result.value else {
                 print(response.error!)

@@ -26,7 +26,7 @@ class AlertMessage {
         return me!
     }
     
-    public func showMessageAuthen(title: String, message: String, isAction:Bool) {
+    public func showMessageScan(title: String, message: String, isAction:Bool) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if isAction {
@@ -39,7 +39,7 @@ class AlertMessage {
     }
     
     private func setAction(action: UIAlertAction) {
-        SwiftEventBus.post("LoginSuccess", sender: true)
+        SwiftEventBus.post("SubmissComplete", sender: true)
     }
 }
 
