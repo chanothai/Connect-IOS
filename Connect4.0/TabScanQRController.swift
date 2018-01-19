@@ -151,11 +151,21 @@ extension TabScanQRController: AVCaptureMetadataOutputObjectsDelegate {
                 if photo == 1 {
                     print(metadataObj.stringValue)
                     
-                    var parameters = [String: String]()
-                    parameters["code"] = metadataObj.stringValue
-                    
-                    showLoading()
-                    RequestScanQR().request(parameter: parameters)
+                    let value = metadataObj.stringValue.components(separatedBy: "|")
+                    if value.count > 1 {
+                        var parameters = [String: String]()
+                        parameters["code"] = metadataObj.stringValue
+                        
+                        showLoading()
+                        RequestScanQR().request(parameter: parameters)
+                    }else{
+                        let alertController = UIAlertController(title: "Message", message: "QRCode was incorrect.", preferredStyle: .alert)
+                        
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.photo = 0
+                        }))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
                 }
             }
         }

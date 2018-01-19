@@ -18,7 +18,11 @@ class CustomTabbarControllerViewController: UITabBarController {
     var conListName: TabListNameController?
     var conProfile: TabProfileController?
     
+    var urlBloc: String?
+    var webView: UIWebView?
+    
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +38,8 @@ class CustomTabbarControllerViewController: UITabBarController {
         if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
             conHome?.beginLanguage = beginLanguage
         }
-        
+    
+        conHome?.tabBarItem.title = "หน้าหลัก"
         conHome?.tabBarItem.tag = 1
         conHome?.tabBarItem.image = UIImage(named: "tabbar_home")
         let navHome = UINavigationController(rootViewController: conHome!)
@@ -47,6 +52,7 @@ class CustomTabbarControllerViewController: UITabBarController {
             conNotic?.tabBarItem.badgeValue = .none
         }
         
+        conNotic?.tabBarItem.title = "แจ้งเตือน"
         conNotic?.tabBarItem.tag = 2
         if #available(iOS 10.0, *) {
             conNotic?.tabBarItem.badgeColor = UIColor.red
@@ -62,11 +68,13 @@ class CustomTabbarControllerViewController: UITabBarController {
         conScanQR.tabBarItem.image = UIImage(named: "")
         
         conListName = storyBoard.instantiateViewController(withIdentifier: "TabListNameController") as? TabListNameController
+        conListName?.tabBarItem.title = "รายชื่อ"
         conListName?.tabBarItem.tag = 4
         conListName?.tabBarItem.image = UIImage(named: "tabbar_contact")
         let navListName = UINavigationController(rootViewController: conListName!)
         
         conProfile = storyBoard.instantiateViewController(withIdentifier: "TabProfileController") as? TabProfileController
+        conProfile?.tabBarItem.title = "โปรไฟล์"
         conProfile?.tabBarItem.tag = 5
         conProfile?.tabBarItem.image = UIImage(named: "tabbar_profile")
         let navListProfile = UINavigationController(rootViewController: conProfile!)
@@ -163,6 +171,8 @@ extension CustomTabbarControllerViewController: UITabBarControllerDelegate {
             if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
                 conHome?.beginLanguage = beginLanguage
             }
+            
+            conHome?.initWebView((conHome?.getUrl())!, webview: (conHome?.getWebview())!)
             self.selectedIndex = 0
             
             break
@@ -170,6 +180,11 @@ extension CustomTabbarControllerViewController: UITabBarControllerDelegate {
             if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
                 conNotic?.beginLanguage = beginLanguage
             }
+            
+            if (conNotic?.getLoadFirst())! {
+                conNotic?.initWebView((conNotic?.getUrl())!, webview: (conNotic?.getWebview())!)
+            }
+            
             self.selectedIndex = 1
             if UIApplication.shared.applicationIconBadgeNumber > 0 {
                 conNotic?.tabBarItem.badgeValue = ""
@@ -182,12 +197,22 @@ extension CustomTabbarControllerViewController: UITabBarControllerDelegate {
             if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
                 conListName?.beginLanguage = beginLanguage
             }
+            
+            if (conListName?.getLoadFirst())! {
+                conListName?.initWebView((conListName?.getUrl())!, webview: (conListName?.getWebview())!)
+            }
+            
             self.selectedIndex = 3
             break
         case 4:
             if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
                 conProfile?.beginLanguage = beginLanguage
             }
+            
+            if(conProfile?.getLoadFirst())! {
+                conProfile?.initWebView((conProfile?.getUrl())!, webview: (conProfile?.getWebview())!)
+            }
+            
             self.selectedIndex = 4
             break
         default:

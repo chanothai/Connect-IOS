@@ -139,6 +139,7 @@ class SlideMenuRequest {
                 return
             }
             
+            print("Response: \(responses)")
             SwiftEventBus.post("ResponseSlideMenu", sender: responses)
         }
     }

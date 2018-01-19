@@ -22,13 +22,13 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        JSInterface.delegate = self
-        initWebView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        JSInterface.delegate = self
+        initWebView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +64,8 @@ extension LoginViewController {
 //        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
 //        let blocViewController = storyBoard.instantiateViewController(withIdentifier: "BlocController") as! BlocViewController
 //        self.show(blocViewController, sender: nil)
+        let result = webView.callJSMethod(name: "ShowAlert", agruments: "", "")
+        print("CallJavascript: \(result!)")
     }
 }
 

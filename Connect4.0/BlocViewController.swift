@@ -23,7 +23,6 @@ class BlocViewController: BaseViewController {
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
     var locationManager:CLLocationManager?
-    var beaconList:[(CLBeaconRegion, CLBeacon)]?
     var region:[CLBeaconRegion]?
     var count:Int = 0
     var urlBloc: String?
@@ -49,7 +48,6 @@ class BlocViewController: BaseViewController {
         super.viewDidDisappear(animated)
         print("viewDidDisappear")
         locationManager?.stopUpdatingLocation()
-        region?.forEach((locationManager?.stopRangingBeacons(in:))!)
         ModelCart.getInstance().getStoreUrl().url = ""
         SwiftEventBus.unregister(self)
     }
@@ -63,7 +61,6 @@ class BlocViewController: BaseViewController {
 
 extension BlocViewController {
     func initLocationManager() {
-        beaconList = [(CLBeaconRegion, CLBeacon)]()
         locationManager = CLLocationManager()
         if CLLocationManager.locationServicesEnabled() {
             locationManager?.delegate = self
@@ -86,17 +83,25 @@ extension BlocViewController {
         
         //Subscribe to a topic after got a FCM Register token
         Messaging.messaging().subscribe(toTopic: "/topics/\(sub)")
-        initWebView(urlBloc!)
+        initWebView(urlBloc!, webview: webView)
         initLocationManager()
     }
     
-    func initWebView(_ url: String){
-        webView.scrollView.showsVerticalScrollIndicator = false
-        webView.scrollView.showsHorizontalScrollIndicator = false
-        webView.scrollView.bounces = false
+    public func getWebview() -> UIWebView {
+        return webView
+    }
+    
+    public func getUrl() -> String {
+        return urlBloc!
+    }
+    
+    func initWebView(_ url: String, webview: UIWebView){
+        webview.scrollView.showsVerticalScrollIndicator = false
+        webview.scrollView.showsHorizontalScrollIndicator = false
+        webview.scrollView.bounces = false
         
         if let beginLanguage = beginLanguage {
-            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
+            webview.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
             
             var parameter = [String: String]()
             parameter["language"] = beginLanguage
@@ -134,38 +139,11 @@ extension BlocViewController {
 
 //Make: IBeacon
 extension BlocViewController : CLLocationManagerDelegate {
-    func rangeBeacon() {
-        region = [CLBeaconRegion]()
-        region = [CLBeaconRegion(proximityUUID: UUID(uuidString: "7739BAE7-1027-4F48-8003-2C8140423002")! , identifier: "Beacon2"), CLBeaconRegion(proximityUUID: UUID(uuidString: "5152554E-F99B-4A3B-86D0-947070693A78")! , identifier: "Beacon1")]
-        
-        region?.forEach((locationManager?.startRangingBeacons(in:))!)
-    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
-            rangeBeacon()
+            
         }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        guard let discoveredBeaconProximity = beacons.first?.proximity else {
-            print("Cloudn't find the beacon")
-            return
-        }
-        
-        count += 1
-        
-        let seeUuid:String = (beacons.first?.proximityUUID.uuidString)!
-        print("\(count) Beacon: " + seeUuid)
-        
-        let backgroundColor: UIColor = {
-            switch discoveredBeaconProximity {
-            case .unknown: return UIColor.black
-            default : return UIColor.green
-            }
-        }()
-        
-        view.backgroundColor = backgroundColor
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

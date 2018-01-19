@@ -41,6 +41,7 @@ class ClientHttp {
     
     public func getHeaderOriginal() -> HTTPHeaders {
         let header = ["Authorization": token!, "Accept":"application/json", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"]
+        print("token: \(token!)")
         return header
     }
     

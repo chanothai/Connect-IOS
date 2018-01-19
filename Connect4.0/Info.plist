@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -19,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>2.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -32,7 +30,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>9</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -40,12 +40,16 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We use bluetooth for scan beacon</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need to access your camera for scanning QR Code.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need to know if there are beacons around!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to check beacon&apos;s location.</string>
+	<string>We need your location to check beacon's location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We ues for scan beacon</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>You need to grant the app access to your photo library</string>
 	<key>UIAppFonts</key>

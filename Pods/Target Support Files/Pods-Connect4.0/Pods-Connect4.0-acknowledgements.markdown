@@ -132,6 +132,18 @@ Copyright 2017 Google
 
 Copyright 2017 Google
 
+## GoogleInterchangeUtilities
+
+Copyright 2016 Google
+
+## GoogleNetworkingUtilities
+
+Copyright 2016 Google
+
+## GoogleSymbolUtilities
+
+Copyright 2016 Google
+
 ## GoogleToolboxForMac
 
 
@@ -338,6 +350,10 @@ Copyright 2017 Google
    limitations under the License.
 
 
+## GoogleUtilities
+
+Copyright 2016 Google
+
 ## MBProgressHUD
 
 Copyright © 2009-2016 Matej Bukovinski
@@ -359,6 +375,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+## NearbyMessages
+
+Copyright 2016 Google
 
 ## ObjectMapper
 

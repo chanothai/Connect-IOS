@@ -19,9 +19,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var messageMgr: GNSMessageManager?
+    var publication: GNSPublication?
+    var subscription: GNSSubscription?
+    var nearbyPermission: GNSPermission?
+    var blocViewController: BlocViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        //UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        /*
+        nearbyPermission = GNSPermission(changedHandler: { (granted: Bool) in
+            //Update the UI here
+            if granted {
+                print("Deny")
+                GNSPermission.setGranted(false)
+            }else{
+                print("Allow")
+                GNSPermission.setGranted(true)
+            }
+        })
+         */
+        
+        GNSPermission.setGranted(true)
+ 
+        
+        
+        // Enable debug logging to help track down problems.
+        //GNSMessageManager.setDebugLoggingEnabled(true)
+        
+        // Create the message manager, which lets you publish messages and subscribe to messages
+        // published by nearby devices.
+        
+         messageMgr = GNSMessageManager(apiKey: "AIzaSyAXEoq9fS9iT3ShvcMD_DiJOZdbOZ-SEbs", paramsBlock: { (params: GNSMessageManagerParams?) -> Void in
+            guard let params = params else { return }
+            // This is called when microphone permission is enabled or disabled by the user.
+            params.microphonePermissionErrorHandler = { hasError in
+                if (hasError) {
+                    print("Nearby works better if microphone use is allowed")
+                }
+            }
+            
+            // This is called when Bluetooth permission is enabled or disabled by the user.
+            params.bluetoothPermissionErrorHandler = { hasError in
+                if (hasError) {
+                    print("Nearby works better if Bluetooth use is allowed")
+                }
+            }
+            
+            // This is called when Bluetooth is powered on or off by the user.
+            params.bluetoothPowerErrorHandler = { hasError in
+                if (hasError) {
+                    print("Nearby works better if Bluetooth is turned on")
+                }
+            }
+         })
+        
+        setupStartStop()
+        
         
         checkLogin()
         UINavigationBar.appearance().tintColor = UIColor.darkGray
@@ -30,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = UIColor.white
         
         Messaging.messaging().delegate = self
+        
         //Firebase
         FirebaseApp.configure()
         
@@ -45,6 +100,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         return true
+    }
+    
+    func setupStartStop() {
+        let isSharing = (publication != nil)
+        if isSharing {
+            print("Stop")
+            stopSharing()
+        }else{
+            print("Start")
+            startSharingWithRandomName()
+        }
+    }
+    
+    /// Starts sharing with a randomized name.
+    func startSharingWithRandomName() {
+        hasDeviceKey(uuid: String(format:"Anonymous %d", arc4random() % 100))
+    }
+    
+    /// Stops publishing/subscribing.
+    func stopSharing() {
+        publication = nil
+        subscription = nil
+        setupStartStop()
+    }
+    
+    func hasDeviceKey(uuid: String) {
+        let preference = UserDefaults.standard
+        if let key = preference.string(forKey: "UUID_KEY"){
+            startSharing(withName: key)
+        }else{
+            preference.set(uuid, forKey: "UUID_KEY")
+            startSharing(withName: uuid)
+        }
+    }
+    
+    /// Starts publishing the specified name and scanning for nearby devices that are publishing
+    /// their names.
+    func startSharing(withName name: String) {
+        if let messageMgr = self.messageMgr {
+            // Show the name in the message view title and set up the Stop button.
+            print("Name: \(name)")
+            
+            // Publish the name to nearby devices.
+            let pubMessage: GNSMessage = GNSMessage(content: name.data(using: .utf8, allowLossyConversion: true))
+            publication = messageMgr.publication(with: pubMessage)
+            
+            // Subscribe to messages from nearby devices and display them in the message view.
+            subscription = messageMgr.subscription(messageFoundHandler: {(message: GNSMessage?) -> Void in
+                guard let message = message else { return }
+                
+                print("MessageEDDFoundHandler: \(String(data: message.content, encoding:.utf8) ?? "Message was nil")")
+                print("MessageSpace: \(message.description)")
+                
+                
+                let localNotification = UILocalNotification()
+                localNotification.alertBody = String(data: message.content, encoding:.utf8)
+                UIApplication.shared.presentLocalNotificationNow(localNotification)
+                
+                // Send a local notification if not in the foreground.
+                if UIApplication.shared.applicationState != .active {
+                    
+                }
+            },messageLostHandler: {(message: GNSMessage?) -> Void in
+                    guard let message = message else { return }
+                    print("MessageEDDLostHandler: \(String(data: message.content, encoding:.utf8) ?? "Message was bank")")
+            },paramsBlock: { (params: GNSSubscriptionParams!) in
+                params.deviceTypesToDiscover = .bleBeacon
+                params.beaconStrategy = GNSBeaconStrategy(paramsBlock: { (params: GNSBeaconStrategyParams!) in
+                    params.includeIBeacons = false
+                    params.lowPowerPreferred = false
+                })
+                params.permissionRequestHandler = { (permissionHandler: GNSPermissionHandler!) in
+                    // Show your custom dialog here, and don't forget to call permissionHandler after it is dismissed
+                    print("Dialog dismissed")
+                }
+            })
+        }
     }
 
     func checkLogin() {

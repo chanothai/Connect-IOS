@@ -13,5 +13,6 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON', :branch =>
 pod 'AlamofireObjectMapper', '~> 4.0'
 pod 'AlamofireLogger', :git => 'https://github.com/dclelland/AlamofireLogger', :branch => "master"
 pod 'Firebase/Core'
-pod ‘Firebase/Messaging’
+pod 'Firebase/Messaging'
+pod 'NearbyMessages'
 end
