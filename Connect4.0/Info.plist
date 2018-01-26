@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>10</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,8 +44,6 @@
 	<string>We use bluetooth for scan beacon</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need to access your camera for scanning QR Code.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need to know if there are beacons around!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to check beacon's location.</string>
 	<key>NSMicrophoneUsageDescription</key>

@@ -34,14 +34,14 @@ class MenuViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initTableView()
-        initAddress()
-        initProfile()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setEventBus()
+        initAddress()
+        initProfile()
     }
     
     
@@ -120,11 +120,33 @@ extension MenuViewController {
     
     func initAddress(){
         self.addressLabel.resizeFont()
-        if let lat = ModelCart.getInstance().getLocation().lat, let lon = ModelCart.getInstance().getLocation().long {
+        guard let lat = ModelCart.getInstance().getLocation().lat else {
+            self.addressLabel.text = ""
+            return
+        }
+        
+        guard let lon = ModelCart.getInstance().getLocation().long else {
+            self.addressLabel.text = ""
+            return
+        }
+        
+        if !lat.isEmpty && !lon.isEmpty {
+            self.addressLabel.textColor = UIColor.white
+            self.addressLabel.isUserInteractionEnabled = false
             getAddressFromLatLon(latitude: lat, withLongitude: lon)
         }else{
-            self.addressLabel.text = ""
+            self.addressLabel.text = "Your location was disable"
+            self.addressLabel.textColor = UIColor.red
+            self.addressLabel.isUserInteractionEnabled = true
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(actionToSetting))
+            self.addressLabel.addGestureRecognizer(tap)
         }
+    }
+    
+    @objc func actionToSetting(sender:UITapGestureRecognizer){
+        let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.shared.openURL(openSettingsUrl!)
     }
     
     func getAddressFromLatLon(latitude: String, withLongitude longitude: String) {

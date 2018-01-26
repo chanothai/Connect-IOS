@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>531697897089-p4u6sacfjn4u27dg6bgldgcle6l8icjm.apps.googleusercontent.com</string>
+	<string>324794602648-fncje1n3jfa2vofjadpbnh223i9chocs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.531697897089-p4u6sacfjn4u27dg6bgldgcle6l8icjm</string>
+	<string>com.googleusercontent.apps.324794602648-fncje1n3jfa2vofjadpbnh223i9chocs</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDI_j_P-gNXbewi0P9TbxwVUqaVcvmLKNI</string>
+	<string>AIzaSyBzsJhC7HdpcV94wnSxeM61LQhp2epR5s0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>531697897089</string>
+	<string>324794602648</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.zicure.connect</string>
 	<key>PROJECT_ID</key>
-	<string>connect40-75d5d</string>
+	<string>connect-pk</string>
 	<key>STORAGE_BUCKET</key>
-	<string>connect40-75d5d.appspot.com</string>
+	<string>connect-pk.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:531697897089:ios:06274769f0d82cc8</string>
+	<string>1:324794602648:ios:06274769f0d82cc8</string>
 	<key>DATABASE_URL</key>
-	<string>https://connect40-75d5d.firebaseio.com</string>
+	<string>https://connect-pk.firebaseio.com</string>
 </dict>
 </plist>

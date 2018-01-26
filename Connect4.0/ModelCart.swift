@@ -18,6 +18,9 @@ class ModelCart {
     init() {
         modelSlideMenu = ModelSlideMenu()
         location = LocationModel()
+        location?.lat = ""
+        location?.long = ""
+        
         storeUrl = StoreUrl()
         storeUrl?.url = ""
     }

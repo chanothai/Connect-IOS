@@ -15,6 +15,10 @@ class LoginViewController: BaseViewController {
     // Make: View
     @IBOutlet var webView: UIWebView!
     
+    //Properties
+    var url_test = "http://connect05.pakgon.com/cake_v3/core"
+    var url = "http://connect06.pakgon.com/core"
+    
     var progBar = UIProgressView()
     
     // MAKE: properties
@@ -39,10 +43,6 @@ class LoginViewController: BaseViewController {
         super.viewDidDisappear(animated)
         self.webView.removeJavascriptInterfaces()
     }
-    
-//    deinit {
-//        self.webView.removeJavascriptInterfaces()
-//    }
 }
 
 extension LoginViewController {
@@ -56,7 +56,7 @@ extension LoginViewController {
     
     func loadWebView() {
         let langStr = Locale.current.languageCode
-        self.webView.loadRequest(WebAppRequest(url: "http://connect06.pakgon.com/core").getUrlRequest(language: langStr!))
+        self.webView.loadRequest(WebAppRequest(url: url_test).getUrlRequest(language: langStr!, token: ""))
     }
     
     func intentToBloc() {
@@ -80,20 +80,5 @@ extension LoginViewController: OnLoginDelegate {
         print(token)
         AuthenLogin().storeLogin(token, webURL, subscribe)
         intentToBloc()
-    }
-}
-
-extension UIWebView {
-    func callJSMethod(name: String, agruments: String...) -> String?{
-        var agrumentString = ""
-        for agrument in agruments {
-            if agrumentString.characters.count > 0 {
-                agrumentString = "\(agrumentString),"
-            }
-            agrumentString = "\(agrumentString)'\(agrument)'"
-        }
-        
-        print(agrumentString)
-        return self.stringByEvaluatingJavaScript(from: "\(name)(\(agrumentString))")
     }
 }

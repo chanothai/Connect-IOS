@@ -60,7 +60,8 @@
 		DEBC3D801FB05B7000ED0BDF /* UIWebViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBC3D7F1FB05B7000ED0BDF /* UIWebViewExt.swift */; };
 		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
 		DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FD1EC473DF00F08763 /* ClientHttp.swift */; };
-		DEEF0A3D1FC40C7800900DC2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEEF0A3C1FC40C7800900DC2 /* GoogleService-Info.plist */; };
+		E2749383201B18F40008BFF8 /* BeaconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2749382201B18F40008BFF8 /* BeaconModel.swift */; };
+		E2913C3F2019B86C007B2640 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2913C3E2019B86C007B2640 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,7 +124,8 @@
 		DEBC3D7F1FB05B7000ED0BDF /* UIWebViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWebViewExt.swift; sourceTree = "<group>"; };
 		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
 		DEE609FD1EC473DF00F08763 /* ClientHttp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHttp.swift; sourceTree = "<group>"; };
-		DEEF0A3C1FC40C7800900DC2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E2749382201B18F40008BFF8 /* BeaconModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconModel.swift; sourceTree = "<group>"; };
+		E2913C3E2019B86C007B2640 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 		D3F26FF71EBCE72C0019C805 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E2749380201B15380008BFF8 /* Nearby */,
 				DE2259491FBC299500779BF9 /* TabMenu */,
 				D358D06A1ED1DE7100B39E94 /* SideMenu */,
 				D358D0641ED1DC7C00B39E94 /* Bloc */,
@@ -432,7 +435,7 @@
 		DEAD703A1EC575090057B448 /* Supportting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DEEF0A3C1FC40C7800900DC2 /* GoogleService-Info.plist */,
+				E2913C3E2019B86C007B2640 /* GoogleService-Info.plist */,
 				DE90814E1EBC725100E90C16 /* AppDelegate.swift */,
 				DE90815A1EBC725100E90C16 /* Info.plist */,
 			);
@@ -483,6 +486,22 @@
 				DE6875C01FBAD16B00B4A9E8 /* WebAppRequest.swift */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		E2749380201B15380008BFF8 /* Nearby */ = {
+			isa = PBXGroup;
+			children = (
+				E2749381201B153F0008BFF8 /* model */,
+			);
+			name = Nearby;
+			sourceTree = "<group>";
+		};
+		E2749381201B153F0008BFF8 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				E2749382201B18F40008BFF8 /* BeaconModel.swift */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,7 +578,7 @@
 			files = (
 				DE1D167D1F9A0ACC007A3916 /* CheckBoxCell.xib in Resources */,
 				DE52874F1FB19D3E00843AEE /* index.html in Resources */,
-				DEEF0A3D1FC40C7800900DC2 /* GoogleService-Info.plist in Resources */,
+				E2913C3F2019B86C007B2640 /* GoogleService-Info.plist in Resources */,
 				DE9081591EBC725100E90C16 /* LaunchScreen.storyboard in Resources */,
 				DE64D7761ED5679000FE71CC /* CategoryBloc.xib in Resources */,
 				DE9081561EBC725100E90C16 /* Assets.xcassets in Resources */,
@@ -668,6 +687,7 @@
 				DE44CB9C1ECD60420099A7D2 /* LoginViewController.swift in Sources */,
 				DE22594F1FBC2A9000779BF9 /* TabListNameController.swift in Sources */,
 				DE4E82761ED2B94E00667C5A /* ModelCart.swift in Sources */,
+				E2749383201B18F40008BFF8 /* BeaconModel.swift in Sources */,
 				DE3AF7CE1ED43C3D0013D526 /* SideMenuTableViewCell.swift in Sources */,
 				DE94069F1FB43F5B00D56DD2 /* ResponseSlideMenu.swift in Sources */,
 				DE1D16921F9A0CF2007A3916 /* DownloadFile.swift in Sources */,

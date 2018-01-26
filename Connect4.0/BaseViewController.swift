@@ -128,7 +128,7 @@ extension UILabel {
             self.font = calculatedFont
             break
         case 568.0: //iphone 5, 5s => 4 inch
-            calculatedFont = UIFont(name: currentFontName, size: fontSize - 4)
+            calculatedFont = UIFont(name: currentFontName, size: fontSize)
             self.font = calculatedFont
             break
         case 667.0: //iphone 6, 6s => 4.7 inch
@@ -175,7 +175,20 @@ extension UIWebView {
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         let langStr = Locale.current.languageCode
-        self.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+        self.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!, token: ""))
+    }
+    
+    func callJSMethod(name: String, agruments: String...) -> String?{
+        var agrumentString = ""
+        for agrument in agruments {
+            if agrumentString.characters.count > 0 {
+                agrumentString = "\(agrumentString),"
+            }
+            agrumentString = "\(agrumentString)'\(agrument)'"
+        }
+        
+        print(agrumentString)
+        return self.stringByEvaluatingJavaScript(from: "\(name)(\(agrumentString))")
     }
 }
 

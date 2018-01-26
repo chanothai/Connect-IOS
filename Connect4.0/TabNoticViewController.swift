@@ -55,14 +55,14 @@ class TabNoticViewController: BaseViewController {
         webView.scrollView.bounces = false
         
         if let beginLanguage = beginLanguage {
-            webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
+            webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage, token: BlocViewController.token!))
             
         }else{
             let langStr = Locale.current.languageCode
             let regionCode = Locale.current.regionCode
             print("Language-Code : \(langStr!)")
             print("Region-Code : \(regionCode!)")
-            webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+            webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!, token: BlocViewController.token!))
         }
     }
 

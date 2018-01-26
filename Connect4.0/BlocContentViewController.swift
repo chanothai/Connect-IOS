@@ -83,7 +83,7 @@ extension BlocContentViewController {
     
     func loadWebView() {
         let langStr = Locale.current.languageCode
-        webView.load(WebAppRequest(url: urlBloc!).getUrlRequest(language: langStr!))
+        webView.load(WebAppRequest(url: urlBloc!).getUrlRequest(language: langStr!, token: ""))
         view.addSubview(webView)
     }
 }

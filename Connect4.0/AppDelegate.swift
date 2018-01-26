@@ -76,7 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupStartStop()
         
-        
         checkLogin()
         UINavigationBar.appearance().tintColor = UIColor.darkGray
         
@@ -150,21 +149,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             subscription = messageMgr.subscription(messageFoundHandler: {(message: GNSMessage?) -> Void in
                 guard let message = message else { return }
                 
-                print("MessageEDDFoundHandler: \(String(data: message.content, encoding:.utf8) ?? "Message was nil")")
+                // Add device to stack for send data to webview
+                let device = String(data: message.content, encoding:.utf8)
+                
+                if NearbyManager.getInstance().getListBeacon().listBeacon.count == 1 {
+                    NearbyManager.getInstance().getListBeacon().listBeacon[0].device = device!
+                }else{
+                    let model = BeaconModel()
+                    model.device = device!
+                    NearbyManager.getInstance().getListBeacon().listBeacon.append(model)
+                }
+                
+                
+                print("MessageEDDHandlerFound: \(String(describing: NearbyManager.getInstance().getListBeacon().listBeacon))")
                 print("MessageSpace: \(message.description)")
                 
-                
-                let localNotification = UILocalNotification()
-                localNotification.alertBody = String(data: message.content, encoding:.utf8)
-                UIApplication.shared.presentLocalNotificationNow(localNotification)
-                
-                // Send a local notification if not in the foreground.
-                if UIApplication.shared.applicationState != .active {
-                    
-                }
             },messageLostHandler: {(message: GNSMessage?) -> Void in
-                    guard let message = message else { return }
-                    print("MessageEDDLostHandler: \(String(data: message.content, encoding:.utf8) ?? "Message was bank")")
+                guard let message = message else { return }
+                
+                let device = String(data: message.content, encoding:.utf8)
+                for i in 0 ..< NearbyManager.getInstance().getListBeacon().listBeacon.count {
+                    if device == NearbyManager.getInstance().getListBeacon().listBeacon[i].device {
+                        NearbyManager.getInstance().getListBeacon().listBeacon.remove(at: i)
+                    }
+                }
+                
+                print("MessageEDDHandlerLost: \(device ?? "Message was bank")")
             },paramsBlock: { (params: GNSSubscriptionParams!) in
                 params.deviceTypesToDiscover = .bleBeacon
                 params.beaconStrategy = GNSBeaconStrategy(paramsBlock: { (params: GNSBeaconStrategyParams!) in

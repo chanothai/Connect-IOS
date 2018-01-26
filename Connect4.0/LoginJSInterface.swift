@@ -13,10 +13,15 @@ import UIKit
 @objc protocol MyExport : JSExport
 {
     func onLogin(_ arg1: String, _ arg2: String, _ arg3: String)
+    func getData()
 }
 
 protocol OnLoginDelegate {
     func onLoginComplete(token :String, webURL :String, subscribe: String)
+}
+
+protocol OnBeaconManager {
+    func sendData()
 }
 
 class JSInterface : NSObject, MyExport
@@ -27,6 +32,11 @@ class JSInterface : NSObject, MyExport
         if (!arg1.isEmpty && !arg2.isEmpty) {
             JSInterface.delegate?.onLoginComplete(token: arg1, webURL: arg2, subscribe: arg3)
         }
+    }
+    
+    public static var delegateBeacon: OnBeaconManager?
+    func getData() {
+        JSInterface.delegateBeacon?.sendData()
     }
 }
 

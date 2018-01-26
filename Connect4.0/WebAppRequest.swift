@@ -19,8 +19,10 @@ class WebAppRequest {
         urlRequest = URLRequest(url: url,cachePolicy:NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData,timeoutInterval: 10.0)
     }
     
-    public func getUrlRequest(language: String) -> URLRequest{
+    public func getUrlRequest(language: String, token: String) -> URLRequest{
+        let result = "Bearer \(token)"
         urlRequest?.addValue("\(language);q=1.0", forHTTPHeaderField: "Accept-Language")
+        urlRequest?.addValue(result, forHTTPHeaderField: "Authorization")
         
         return urlRequest!
     }

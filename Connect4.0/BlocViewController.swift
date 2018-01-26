@@ -12,6 +12,7 @@ import SwiftEventBus
 import CoreLocation
 import UserNotifications
 import Firebase
+import EventKit
 
 
 class BlocViewController: BaseViewController {
@@ -19,7 +20,7 @@ class BlocViewController: BaseViewController {
     @IBOutlet var webView: UIWebView!
 
     //MAKE : Properties
-    public var token: String?
+    public static var token: String?
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
     var locationManager:CLLocationManager?
@@ -28,10 +29,8 @@ class BlocViewController: BaseViewController {
     var urlBloc: String?
     var beginLanguage: String?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,9 +38,12 @@ class BlocViewController: BaseViewController {
         print("viewWillAppear")
         self.navigationItem.titleView = self.createTitleBarImage()
         self.setSideBar()
-        
         setEventBus()
+        
+        locationManager = CLLocationManager()
         initBlocMain()
+        
+        JSInterface.delegateBeacon = self
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -51,7 +53,6 @@ class BlocViewController: BaseViewController {
         ModelCart.getInstance().getStoreUrl().url = ""
         SwiftEventBus.unregister(self)
     }
-   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -61,22 +62,17 @@ class BlocViewController: BaseViewController {
 
 extension BlocViewController {
     func initLocationManager() {
-        locationManager = CLLocationManager()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.delegate = self
-            locationManager?.requestAlwaysAuthorization()
-            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager?.startUpdatingLocation()
-        }
+        self.locationManager?.delegate = self
+        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
-        if (CLLocationManager.authorizationStatus() != CLAuthorizationStatus.authorizedWhenInUse) {
-            locationManager?.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager?.startUpdatingLocation()
         }
     }
     
     public func initBlocMain(){
         let restoreInformation:[String] = AuthenLogin().restoreLogin() //0 token, 1 web browser, subscribe for topic firebase
-        token = restoreInformation[0]
+        BlocViewController.token = restoreInformation[0]
         urlBloc = restoreInformation[1]
         let sub = restoreInformation[2]
         print(sub)
@@ -101,7 +97,7 @@ extension BlocViewController {
         webview.scrollView.bounces = false
         
         if let beginLanguage = beginLanguage {
-            webview.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage))
+            webview.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage, token: BlocViewController.token!))
             
             var parameter = [String: String]()
             parameter["language"] = beginLanguage
@@ -113,7 +109,7 @@ extension BlocViewController {
             let regionCode = Locale.current.regionCode
             print("Language-Code : \(langStr!)")
             print("Region-Code : \(regionCode!)")
-            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!))
+            self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!, token: BlocViewController.token!))
             
             SlideMenuRequest().requestNonParameter()
         }
@@ -140,9 +136,43 @@ extension BlocViewController {
 //Make: IBeacon
 extension BlocViewController : CLLocationManagerDelegate {
     
+    func actionToSetting(){
+        let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable location services in setting", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Open Setting", style: .default, handler: { (UIAlertAction) in
+            let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(openSettingsUrl!)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
+        
+        switch status {
+        case .notDetermined:
+            print("Home Screen: notDetermined")
+            DispatchQueue.main.async {
+                self.locationManager?.requestWhenInUseAuthorization()
+            }
+            break
+        case .denied, .restricted:
+            print("Home Screen: denied")
+            DispatchQueue.main.async {
+                ModelCart.getInstance().getLocation().lat = ""
+                ModelCart.getInstance().getLocation().long = ""
+                self.actionToSetting()
+            }
             
+            break
+        default:
+            print("Home Screen: Not me")
+            break
         }
     }
     
@@ -152,5 +182,12 @@ extension BlocViewController : CLLocationManagerDelegate {
             ModelCart.getInstance().getLocation().lat = "\(location.coordinate.latitude)"
             ModelCart.getInstance().getLocation().long = "\(location.coordinate.longitude)"
         }
+    }
+}
+
+/** Beacon manager **/
+extension BlocViewController: OnBeaconManager {
+    func sendData() {
+        print("Beacon: Test send data beacon")
     }
 }
