@@ -16,7 +16,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet var webView: UIWebView!
     
     //Properties
-    var url_test = "http://connect05.pakgon.com/cake_v3/core"
+    var url_test = "http://connect05.pakgon.com/core"
     var url = "http://connect06.pakgon.com/core"
     
     var progBar = UIProgressView()

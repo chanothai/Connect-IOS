@@ -79,8 +79,17 @@ extension BlocViewController {
         
         //Subscribe to a topic after got a FCM Register token
         Messaging.messaging().subscribe(toTopic: "/topics/\(sub)")
+        
+        /*
+        let url = Bundle.main.url(forResource: "index", withExtension:"html")
+        let request = URLRequest(url: url!)
+        webView.addJavascriptInterface(JSInterface(), forKey: "Beacon")
+        webView.loadRequest(request)
+ */
+        
         initWebView(urlBloc!, webview: webView)
         initLocationManager()
+
     }
     
     public func getWebview() -> UIWebView {
@@ -95,6 +104,7 @@ extension BlocViewController {
         webview.scrollView.showsVerticalScrollIndicator = false
         webview.scrollView.showsHorizontalScrollIndicator = false
         webview.scrollView.bounces = false
+        webview.addJavascriptInterface(JSInterface(), forKey: "Beacon")
         
         if let beginLanguage = beginLanguage {
             webview.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage, token: BlocViewController.token!))
@@ -188,6 +198,11 @@ extension BlocViewController : CLLocationManagerDelegate {
 /** Beacon manager **/
 extension BlocViewController: OnBeaconManager {
     func sendData() {
-        print("Beacon: Test send data beacon")
+        let listBeacon = NearbyManager.getInstance().getListBeacon()
+        print("Beacon: \(NearbyManager.getInstance().convertModel(model: listBeacon))")
+        
+        DispatchQueue.main.async {
+            self.webView.callUpdateBeacon(name: "updateBeacon", listBeacon: NearbyManager.getInstance().convertModel(model: listBeacon), token: BlocViewController.token!)
+        }
     }
 }

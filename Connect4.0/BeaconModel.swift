@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 
 class BeaconModel {
     var _device: String?
@@ -40,9 +41,23 @@ class BeaconModel {
     }
 }
 
+class Beacon: Mappable {
+    var device:String?
+    var distance: String?
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        device <- map["device"]
+        distance <- map["distance"]
+    }
+}
+
 class StoreBeacon {
-    var _listBeacon: [BeaconModel]?
-    var listBeacon: [BeaconModel] {
+    var _listBeacon: [[String: String]]?
+    var listBeacon: [[String: String]] {
         get {
             return _listBeacon!
         }
@@ -58,9 +73,7 @@ public class NearbyManager {
     
     init() {
         listBeacon = StoreBeacon()
-        let model = BeaconModel()
-        model.device = ""
-        listBeacon?.listBeacon = [model]
+        listBeacon?.listBeacon = [[String: String]]()
     }
     
     static func getInstance() -> NearbyManager {
@@ -71,7 +84,26 @@ public class NearbyManager {
         return nearby!
     }
     
-    func getListBeacon() -> StoreBeacon {
-        return listBeacon!
+    func setlistBeacon(model: [String: String]) {
+        listBeacon?.listBeacon.append(model)
+    }
+    
+    func getListBeacon() -> [[String: String]] {
+        return (listBeacon?.listBeacon)!
+    }
+    
+    func updateListBeacon(arrBeacon: [[String: String]]) {
+        listBeacon?.listBeacon = arrBeacon
+    }
+    
+    func convertModel(model: [[String: String]]) -> [String]{
+        var result = [String]()
+        for i in 0 ..< model.count {
+            let beacon = Beacon(JSON: model[i])
+            let jsonString = beacon?.toJSONString(prettyPrint: false)
+            result.append(jsonString!)
+        }
+        
+        return result
     }
 }

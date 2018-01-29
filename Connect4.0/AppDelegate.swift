@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var subscription: GNSSubscription?
     var nearbyPermission: GNSPermission?
     var blocViewController: BlocViewController?
+    
+    var listBeacon:[BeaconModel]?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -152,29 +155,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Add device to stack for send data to webview
                 let device = String(data: message.content, encoding:.utf8)
                 
-                if NearbyManager.getInstance().getListBeacon().listBeacon.count == 1 {
-                    NearbyManager.getInstance().getListBeacon().listBeacon[0].device = device!
-                }else{
-                    let model = BeaconModel()
-                    model.device = device!
-                    NearbyManager.getInstance().getListBeacon().listBeacon.append(model)
-                }
+                var parameter = [String: String]()
+                parameter["device"] = device
                 
-                
-                print("MessageEDDHandlerFound: \(String(describing: NearbyManager.getInstance().getListBeacon().listBeacon))")
+                NearbyManager.getInstance().setlistBeacon(model: parameter)
+            
+                print("MessageEDDHandlerFoundDevice: \(device ?? "Null"))")
+                print("MessageEDDHandlerFound: \(NearbyManager.getInstance().getListBeacon())")
                 print("MessageSpace: \(message.description)")
                 
             },messageLostHandler: {(message: GNSMessage?) -> Void in
                 guard let message = message else { return }
                 
                 let device = String(data: message.content, encoding:.utf8)
-                for i in 0 ..< NearbyManager.getInstance().getListBeacon().listBeacon.count {
-                    if device == NearbyManager.getInstance().getListBeacon().listBeacon[i].device {
-                        NearbyManager.getInstance().getListBeacon().listBeacon.remove(at: i)
+                let listBeacon = NearbyManager.getInstance().getListBeacon()
+                
+                for i in 0 ..< listBeacon.count {
+                    if device == listBeacon[i]["device"] {
+                        var listBeacon = NearbyManager.getInstance().getListBeacon()
+                        listBeacon.remove(at: i)
+                        NearbyManager.getInstance().updateListBeacon(arrBeacon: listBeacon)
+                        print("MessageEDDHandlerLost: \(NearbyManager.getInstance().getListBeacon())")
                     }
                 }
-                
-                print("MessageEDDHandlerLost: \(device ?? "Message was bank")")
             },paramsBlock: { (params: GNSSubscriptionParams!) in
                 params.deviceTypesToDiscover = .bleBeacon
                 params.beaconStrategy = GNSBeaconStrategy(paramsBlock: { (params: GNSBeaconStrategyParams!) in
