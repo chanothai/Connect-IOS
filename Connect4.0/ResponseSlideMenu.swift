@@ -122,14 +122,10 @@ class UserProfile: Mappable {
 class SlideMenuRequest {
     func request(_ parameter: [String: String]) {
         let path: String = "\(ClientHttp.getInstace().getUrl())Profiles/info"
-//        let path: String = "\(ClientHttp.getInstace().getUrl())Connects/language"
         print(path)
         guard let url = URL(string: path) else {
             return
         }
-        
-        //let result = "\(parameter["language"]!);q=1.0"
-        
         
         Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: ClientHttp.getInstace().getHeaderOriginal()).logRequest(.verbose).logResponse(.simple).responseObject { (response: DataResponse<ResponseSlideMenu>) in
             
@@ -139,7 +135,9 @@ class SlideMenuRequest {
                 return
             }
             
-            print("Response: \(responses)")
+            let menu = responses.toJSONString()
+            
+            print("Response: \(menu ?? "Null ")")
             SwiftEventBus.post("ResponseSlideMenu", sender: responses)
         }
     }

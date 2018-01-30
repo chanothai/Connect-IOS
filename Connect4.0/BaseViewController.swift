@@ -191,7 +191,7 @@ extension UIWebView {
         return self.stringByEvaluatingJavaScript(from: "\(name)(\(agrumentString))")
     }
     
-    func callUpdateBeacon(name: String, listBeacon: [String], token: String) {
+    func callUpdateBeacon(name: String, listBeacon: String, token: String) {
         print("Stript: \(name)('\(listBeacon)','\(token)')")
 
         self.stringByEvaluatingJavaScript(from: "\(name)('\(listBeacon)','\(token)')")

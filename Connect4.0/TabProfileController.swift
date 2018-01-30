@@ -15,7 +15,7 @@ class TabProfileController: BaseViewController {
     
 
     //Make: properies
-    var url = "http://connect06.pakgon.com/core/Profiles"
+    var url = "http://connect05.pakgon.com/core/Profiles"
     var beginLanguage: String?
     var loadFirst = false
     

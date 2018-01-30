@@ -73,6 +73,7 @@ extension MenuViewController {
                 self.initProfile()
                 self.sidebarMenuTableView.reloadData()
                 self.hideLoading()
+                
                 CustomTabbarControllerViewController.beginLanguage = self.beginLanguage
                 let tabbar = self.storyBoard.instantiateViewController(withIdentifier: "CustomTabbarController") as! CustomTabbarControllerViewController
                 self.revealViewController().pushFrontViewController(tabbar, animated: true)

@@ -96,14 +96,10 @@ public class NearbyManager {
         listBeacon?.listBeacon = arrBeacon
     }
     
-    func convertModel(model: [[String: String]]) -> [String]{
-        var result = [String]()
-        for i in 0 ..< model.count {
-            let beacon = Beacon(JSON: model[i])
-            let jsonString = beacon?.toJSONString(prettyPrint: false)
-            result.append(jsonString!)
-        }
+    func convertModel(model: [[String: String]]) -> String {
+        let data = try? JSONSerialization.data(withJSONObject: model, options: [])
+        let json = String(data: data!, encoding: .utf8)
         
-        return result
+        return json!
     }
 }

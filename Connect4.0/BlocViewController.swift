@@ -31,6 +31,7 @@ class BlocViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +53,7 @@ class BlocViewController: BaseViewController {
         locationManager?.stopUpdatingLocation()
         ModelCart.getInstance().getStoreUrl().url = ""
         SwiftEventBus.unregister(self)
+        self.webView.removeJavascriptInterfaces()
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,17 +110,13 @@ extension BlocViewController {
         
         if let beginLanguage = beginLanguage {
             webview.loadRequest(WebAppRequest(url: url).getUrlRequest(language: beginLanguage, token: BlocViewController.token!))
-            
-            var parameter = [String: String]()
-            parameter["language"] = beginLanguage
-            
-            SlideMenuRequest().request(parameter)
-            
+        
         }else{
             let langStr = Locale.current.languageCode
             let regionCode = Locale.current.regionCode
             print("Language-Code : \(langStr!)")
             print("Region-Code : \(regionCode!)")
+            
             self.webView.loadRequest(WebAppRequest(url: url).getUrlRequest(language: langStr!, token: BlocViewController.token!))
             
             SlideMenuRequest().requestNonParameter()
@@ -140,6 +138,37 @@ extension BlocViewController {
             
             print(response.status ?? "")
         }
+    }
+}
+
+// Webview Delegate
+extension BlocViewController: UIWebViewDelegate {
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.linkClicked {
+            print("History URL: \(request.url!)")
+            
+            if let beginLanguage = beginLanguage {
+                webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: beginLanguage, token: BlocViewController.token!))
+                
+            }else{
+                let langStr = Locale.current.languageCode
+                let regionCode = Locale.current.regionCode
+                print("Language-Code : \(langStr!)")
+                print("Region-Code : \(regionCode!)")
+                
+                webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+            }
+        }
+        
+        return true
     }
 }
 
@@ -199,8 +228,7 @@ extension BlocViewController : CLLocationManagerDelegate {
 extension BlocViewController: OnBeaconManager {
     func sendData() {
         let listBeacon = NearbyManager.getInstance().getListBeacon()
-        print("Beacon: \(NearbyManager.getInstance().convertModel(model: listBeacon))")
-        
+                
         DispatchQueue.main.async {
             self.webView.callUpdateBeacon(name: "updateBeacon", listBeacon: NearbyManager.getInstance().convertModel(model: listBeacon), token: BlocViewController.token!)
         }

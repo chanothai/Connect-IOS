@@ -145,8 +145,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Name: \(name)")
             
             // Publish the name to nearby devices.
+            /*
             let pubMessage: GNSMessage = GNSMessage(content: name.data(using: .utf8, allowLossyConversion: true))
             publication = messageMgr.publication(with: pubMessage)
+ */
             
             // Subscribe to messages from nearby devices and display them in the message view.
             subscription = messageMgr.subscription(messageFoundHandler: {(message: GNSMessage?) -> Void in
