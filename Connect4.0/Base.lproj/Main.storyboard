@@ -83,28 +83,13 @@
                     <view key="view" contentMode="scaleToFill" id="mhU-pE-2fh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GT7-R1-s19">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="790"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="GT7-R1-s19" firstAttribute="top" secondItem="snQ-GN-RKx" secondAttribute="bottom" constant="-64" id="BVD-NV-YAI"/>
-                            <constraint firstAttribute="trailing" secondItem="GT7-R1-s19" secondAttribute="trailing" id="Gux-WH-Sex"/>
-                            <constraint firstItem="GT7-R1-s19" firstAttribute="leading" secondItem="mhU-pE-2fh" secondAttribute="leading" id="q6d-UK-NoS"/>
-                            <constraint firstItem="02S-Rf-aWg" firstAttribute="top" secondItem="GT7-R1-s19" secondAttribute="bottom" constant="-54" id="vw2-Yf-PIY"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="O5f-0u-Hx7">
                         <barButtonItem key="leftBarButtonItem" image="menu_toggle" id="qvz-Vz-Zv1">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="GT7-R1-s19" id="3g3-dc-JQr"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDK-jL-avV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -121,19 +106,7 @@
                     <view key="view" contentMode="scaleToFill" id="NcG-W8-Vui">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6zE-Ct-BCq">
-                                <rect key="frame" x="0.0" y="-64" width="414" height="854"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6zE-Ct-BCq" firstAttribute="top" secondItem="NcG-W8-Vui" secondAttribute="top" constant="-64" id="8Sa-cg-svT"/>
-                            <constraint firstAttribute="trailing" secondItem="6zE-Ct-BCq" secondAttribute="trailing" id="IaQ-Ns-Pu4"/>
-                            <constraint firstAttribute="bottom" secondItem="6zE-Ct-BCq" secondAttribute="bottom" constant="-54" id="SeL-jg-G3I"/>
-                            <constraint firstItem="6zE-Ct-BCq" firstAttribute="leading" secondItem="NcG-W8-Vui" secondAttribute="leading" id="fYu-Xe-zKM"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="K64-6W-r7K">
                         <barButtonItem key="leftBarButtonItem" image="back_screen" id="mxV-Ip-iqn">
@@ -143,9 +116,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="6zE-Ct-BCq" id="KPE-to-euK"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XKG-dP-fQB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -162,19 +132,7 @@
                     <view key="view" contentMode="scaleToFill" id="bR3-LF-dHW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RkT-l6-bjV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="790"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="RkT-l6-bjV" firstAttribute="leading" secondItem="bR3-LF-dHW" secondAttribute="leading" id="4ql-sV-eBB"/>
-                            <constraint firstItem="AxJ-hJ-3ZF" firstAttribute="top" secondItem="RkT-l6-bjV" secondAttribute="bottom" constant="-54" id="W44-SP-sKu"/>
-                            <constraint firstItem="RkT-l6-bjV" firstAttribute="top" secondItem="0V4-Zw-rvh" secondAttribute="bottom" constant="-64" id="ndB-jx-mod"/>
-                            <constraint firstAttribute="trailing" secondItem="RkT-l6-bjV" secondAttribute="trailing" id="nvu-1u-jMa"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mpo-Bb-ZnN">
                         <barButtonItem key="leftBarButtonItem" image="back_screen" id="jj3-pe-ZdX">
@@ -184,9 +142,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="RkT-l6-bjV" id="3HE-ui-J4q"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agX-70-iP8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -236,19 +191,7 @@
                     <view key="view" contentMode="scaleToFill" id="J1g-RF-dJw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C13-FS-dh6">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="790"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="C13-FS-dh6" firstAttribute="leading" secondItem="J1g-RF-dJw" secondAttribute="leading" id="NTk-Yi-C91"/>
-                            <constraint firstItem="7tz-Kl-NIS" firstAttribute="top" secondItem="C13-FS-dh6" secondAttribute="bottom" constant="-54" id="QYz-Cv-Zhl"/>
-                            <constraint firstItem="C13-FS-dh6" firstAttribute="top" secondItem="CWe-AY-66j" secondAttribute="bottom" constant="-64" id="Tql-iy-ia2"/>
-                            <constraint firstAttribute="trailing" secondItem="C13-FS-dh6" secondAttribute="trailing" id="VC1-y4-gVW"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="06p-H0-S7X">
                         <barButtonItem key="leftBarButtonItem" image="back_screen" id="fXZ-vS-1oZ">
@@ -258,9 +201,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="C13-FS-dh6" id="fvO-Fo-TpY"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m7p-hB-JEM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -17,7 +17,7 @@ import EventKit
 
 class BlocViewController: BaseViewController {
     //MAKE : outlet
-    @IBOutlet var webView: UIWebView!
+    var webView: UIWebView!
 
     //MAKE : Properties
     public static var token: String?
@@ -31,12 +31,15 @@ class BlocViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        self.view.addSubview(webView)
         webView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear")
+        
         self.navigationItem.titleView = self.createTitleBarImage()
         self.setSideBar()
         setEventBus()
@@ -189,7 +192,6 @@ extension BlocViewController : CLLocationManagerDelegate {
         
         self.present(alert, animated: true, completion: nil)
     }
-
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         

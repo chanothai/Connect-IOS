@@ -11,7 +11,7 @@ import UIKit
 class TabProfileController: BaseViewController {
     
     //Make: outlet
-    @IBOutlet var webView: UIWebView!
+    var webView: UIWebView!
     
 
     //Make: properies
@@ -22,6 +22,9 @@ class TabProfileController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        self.view.addSubview(webView)
+        webView.delegate = self
         let titleBarItem = "โปรไฟล์"
         self.navigationItem.titleView = self.customTitle(titleBarItem)
         
@@ -90,4 +93,29 @@ class TabProfileController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension TabProfileController: UIWebViewDelegate {
+    func requestHeader(webView: UIWebView, request: URLRequest){
+        if let beginLanguage = beginLanguage {
+            webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: beginLanguage, token: BlocViewController.token!))
+            
+        }else{
+            let langStr = Locale.current.languageCode
+            let regionCode = Locale.current.regionCode
+            print("Language-Code : \(langStr!)")
+            print("Region-Code : \(regionCode!)")
+            
+            webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+        }
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.linkClicked || navigationType == UIWebViewNavigationType.formSubmitted {
+            print("History URL: \(request.url!)")
+            requestHeader(webView: webView, request: request)
+        }
+        
+        return true
+    }
 }

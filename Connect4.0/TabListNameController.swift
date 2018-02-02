@@ -11,7 +11,7 @@ import UIKit
 class TabListNameController: BaseViewController {
 
     //Make : outlet
-    @IBOutlet var webView: UIWebView!
+    var webView: UIWebView!
     
     //Make: properties
     var url = "http://connect06.pakgon.com/core/Homes/contact"
@@ -21,6 +21,10 @@ class TabListNameController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        self.view.addSubview(webView)
+        webView.delegate = self
+        
         let titleBarItem = "รายชื่อติดต่อ"
         self.navigationItem.titleView = self.customTitle(titleBarItem)
         loadFirst = true
@@ -88,4 +92,26 @@ class TabListNameController: BaseViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension TabListNameController: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == UIWebViewNavigationType.linkClicked {
+            print("History URL: \(request.url!)")
+            
+            if let beginLanguage = beginLanguage {
+                webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: beginLanguage, token: BlocViewController.token!))
+                
+            }else{
+                let langStr = Locale.current.languageCode
+                let regionCode = Locale.current.regionCode
+                print("Language-Code : \(langStr!)")
+                print("Region-Code : \(regionCode!)")
+                
+                webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+            }
+        }
+        
+        return true
+    }
 }
