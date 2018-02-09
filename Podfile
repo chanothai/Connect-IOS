@@ -15,4 +15,5 @@ pod 'AlamofireLogger', :git => 'https://github.com/dclelland/AlamofireLogger', :
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
 pod 'NearbyMessages'
+pod 'Localize-Swift', '~> 2.0'
 end

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class TabProfileController: BaseViewController {
     
@@ -25,7 +26,7 @@ class TabProfileController: BaseViewController {
         webView = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.view.addSubview(webView)
         webView.delegate = self
-        let titleBarItem = "โปรไฟล์"
+        let titleBarItem = "Profile".localized()
         self.navigationItem.titleView = self.customTitle(titleBarItem)
         
         loadFirst = true
@@ -106,7 +107,13 @@ extension TabProfileController: UIWebViewDelegate {
             print("Language-Code : \(langStr!)")
             print("Region-Code : \(regionCode!)")
             
-            webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+            let split = request.url?.absoluteString.components(separatedBy: "#")
+            print(split!)
+            
+            if (split?.count)! <= 1 {
+                webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+            }
+        
         }
     }
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class TabNoticViewController: BaseViewController {
 
@@ -25,7 +26,7 @@ class TabNoticViewController: BaseViewController {
         self.view.addSubview(webView)
         webView.delegate = self
         
-        titleBarItem = "การแจ้งเตือน"
+        titleBarItem = "Notification".localized()
         self.navigationItem.titleView = self.customTitle(titleBarItem!)
         
         self.loadFirst = true

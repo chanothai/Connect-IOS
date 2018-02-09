@@ -61,6 +61,7 @@
 		DEE609FB1EC466D900F08763 /* ManagementProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */; };
 		DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE609FD1EC473DF00F08763 /* ClientHttp.swift */; };
 		E2749383201B18F40008BFF8 /* BeaconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2749382201B18F40008BFF8 /* BeaconModel.swift */; };
+		E28569DF202DA97E00A19BDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E28569E1202DA97E00A19BDD /* Localizable.strings */; };
 		E2913C3F2019B86C007B2640 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2913C3E2019B86C007B2640 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,10 @@
 		DEE609FA1EC466D900F08763 /* ManagementProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagementProtocol.swift; sourceTree = "<group>"; };
 		DEE609FD1EC473DF00F08763 /* ClientHttp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHttp.swift; sourceTree = "<group>"; };
 		E2749382201B18F40008BFF8 /* BeaconModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconModel.swift; sourceTree = "<group>"; };
+		E28569DB202DA7F600A19BDD /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Main.strings; sourceTree = "<group>"; };
+		E28569DC202DA7F600A19BDD /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E28569E0202DA97E00A19BDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E28569E3202DA98600A19BDD /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2913C3E2019B86C007B2640 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -449,6 +454,7 @@
 				DEAD703D1EC575D60057B448 /* Storyboard */,
 				DE9081551EBC725100E90C16 /* Assets.xcassets */,
 				DEAD703C1EC575790057B448 /* Xib */,
+				E28569E1202DA97E00A19BDD /* Localizable.strings */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -560,6 +566,7 @@
 			knownRegions = (
 				en,
 				Base,
+				th,
 			);
 			mainGroup = DE9081421EBC725100E90C16;
 			productRefGroup = DE90814C1EBC725100E90C16 /* Products */;
@@ -589,6 +596,7 @@
 				DE55A68A1FB98D6F00A7EC74 /* HeaderLanguageView.xib in Resources */,
 				DE9406981FB419EE00D56DD2 /* LanguageCell.xib in Resources */,
 				DE8A286A1EE7D13B0001E493 /* supermarket.ttf in Resources */,
+				E28569DF202DA97E00A19BDD /* Localizable.strings in Resources */,
 				DE55A6811FB941A500A7EC74 /* LogoutCell.xib in Resources */,
 				DE9081691EBC9F1C00E90C16 /* TextFieldCell.xib in Resources */,
 			);
@@ -610,6 +618,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -626,6 +635,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
@@ -652,7 +662,9 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GNSSharedResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_expand_more.xcassets",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ic_nearby_48pt.xcassets",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -732,6 +744,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DE9081531EBC725100E90C16 /* Base */,
+				E28569DB202DA7F600A19BDD /* th */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -740,8 +753,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				DE9081581EBC725100E90C16 /* Base */,
+				E28569DC202DA7F600A19BDD /* th */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E28569E1202DA97E00A19BDD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E28569E0202DA97E00A19BDD /* Base */,
+				E28569E3202DA98600A19BDD /* th */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -751,6 +774,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -801,6 +825,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

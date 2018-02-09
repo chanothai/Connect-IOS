@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Connect4.0
+
+  Created by Macintosh on 9/2/18.
+  Copyright © 2018 Pakgon. All rights reserved.
+*/
+
+// Tab bottom
+"Home" = "หน้าหลัก";
+"Alert" = "แจ้งเตือน";
+"Contact" = "รายชื่อ";
+"Profile" = "โปรไฟล์";
+
+//Title Screen
+"Notification" = "การแจ้งเตือน";
+"Contact_ListName" = "รายชื่อติดต่อ";

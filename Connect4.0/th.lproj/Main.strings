@@ -1,0 +1,12 @@
+
+/* Class = "UITabBarItem"; title = "การแจ้งเตือน"; ObjectID = "4Qb-Jt-FGJ"; */
+"4Qb-Jt-FGJ.title" = "การแจ้งเตือน";
+
+/* Class = "UILabel"; text = "ชื่อ-นามสกุล"; ObjectID = "Fmg-sI-TYy"; */
+"Fmg-sI-TYy.text" = "ชื่อ-นามสกุล";
+
+/* Class = "UILabel"; text = "ที่อยุ่"; ObjectID = "d9D-DR-IVh"; */
+"d9D-DR-IVh.text" = "ที่อยุ่";
+
+/* Class = "UITabBarItem"; title = "หน้าหลัก"; ObjectID = "xT4-61-0Bc"; */
+"xT4-61-0Bc.title" = "หน้าหลัก";

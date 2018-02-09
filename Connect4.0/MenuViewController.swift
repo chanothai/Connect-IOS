@@ -11,6 +11,8 @@ import SWRevealViewController
 import AlamofireImage
 import CoreLocation
 import SwiftEventBus
+import Firebase
+import Localize_Swift
 
 class MenuViewController: BaseViewController {
     
@@ -187,6 +189,10 @@ extension MenuViewController {
     }
     
     func intentToLogin(){
+        let restoreInformation:[String] = AuthenLogin().restoreLogin()
+        let subscribe = restoreInformation[2]
+        Messaging.messaging().unsubscribe(fromTopic: "/topics/\(subscribe)")
+        
         let loginController = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginViewController
         
         self.present(loginController, animated: true) {
@@ -217,6 +223,12 @@ extension MenuViewController: MenuSlideClickDelegat {
             var parameter = [String: String]()
             parameter["language"] = ModelCart.getInstance().getModelSlideMenu().result.data?.languages?.listLanguage?[indexPath.row].languageDesc
             beginLanguage = parameter["language"]
+            
+            if beginLanguage == "th" {
+                Localize.setCurrentLanguage(beginLanguage!)
+            }else{
+                Localize.setCurrentLanguage("en")
+            }
             
             showLoading()
             SlideMenuRequest().request(parameter)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class TabListNameController: BaseViewController {
 
@@ -25,7 +26,7 @@ class TabListNameController: BaseViewController {
         self.view.addSubview(webView)
         webView.delegate = self
         
-        let titleBarItem = "รายชื่อติดต่อ"
+        let titleBarItem = "Contact_ListName".localized()
         self.navigationItem.titleView = self.customTitle(titleBarItem)
         loadFirst = true
     }

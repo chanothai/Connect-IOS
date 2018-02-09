@@ -28,6 +28,7 @@ class BlocViewController: BaseViewController {
     var count:Int = 0
     var urlBloc: String?
     var beginLanguage: String?
+    var sub:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,7 @@ class BlocViewController: BaseViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
+    
     }
 }
 
@@ -79,11 +80,11 @@ extension BlocViewController {
         let restoreInformation:[String] = AuthenLogin().restoreLogin() //0 token, 1 web browser, subscribe for topic firebase
         BlocViewController.token = restoreInformation[0]
         urlBloc = restoreInformation[1]
-        let sub = restoreInformation[2]
-        print(sub)
+        sub = restoreInformation[2]
+        print("Subscribe: \(sub!)")
         
         //Subscribe to a topic after got a FCM Register token
-        Messaging.messaging().subscribe(toTopic: "/topics/\(sub)")
+        Messaging.messaging().subscribe(toTopic: "/topics/\(sub!)")
         
         /*
         let url = Bundle.main.url(forResource: "index", withExtension:"html")
@@ -154,9 +155,28 @@ extension BlocViewController: UIWebViewDelegate {
         
     }
     
+    private func setButtonSlideBar(){
+        let buttonBack = UIBarButtonItem(image: UIImage(named: "back_screen") , style: .plain, target: self, action: #selector(backScreen))
+        self.navigationItem.leftBarButtonItem = buttonBack
+    }
+    
+    private func resetButtonSlideBar(){
+        let buttonToggle = UIBarButtonItem(image: UIImage(named: "menu_toggle"), style: .plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
+        
+        self.navigationItem.leftBarButtonItem = buttonToggle
+    }
+    
+    @objc func backScreen(){
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == UIWebViewNavigationType.linkClicked {
             print("History URL: \(request.url!)")
+            
+            setButtonSlideBar()
             
             if let beginLanguage = beginLanguage {
                 webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: beginLanguage, token: BlocViewController.token!))
@@ -168,6 +188,11 @@ extension BlocViewController: UIWebViewDelegate {
                 print("Region-Code : \(regionCode!)")
                 
                 webView.loadRequest(WebAppRequest(url: (request.url?.absoluteString)!).getRequestWhenLink(request: request, language: langStr!, token: BlocViewController.token!))
+            }
+        }else {
+            
+            if request.url?.absoluteString == self.urlBloc {
+                resetButtonSlideBar()
             }
         }
         
@@ -230,7 +255,6 @@ extension BlocViewController : CLLocationManagerDelegate {
 extension BlocViewController: OnBeaconManager {
     func sendData() {
         let listBeacon = NearbyManager.getInstance().getListBeacon()
-                
         DispatchQueue.main.async {
             self.webView.callUpdateBeacon(name: "updateBeacon", listBeacon: NearbyManager.getInstance().convertModel(model: listBeacon), token: BlocViewController.token!)
         }

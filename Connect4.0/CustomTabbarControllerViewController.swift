@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import Localize_Swift
 
 class CustomTabbarControllerViewController: UITabBarController {
     
@@ -38,8 +39,8 @@ class CustomTabbarControllerViewController: UITabBarController {
         if let beginLanguage = CustomTabbarControllerViewController.beginLanguage {
             conHome?.beginLanguage = beginLanguage
         }
-    
-        conHome?.tabBarItem.title = "หน้าหลัก"
+        
+        conHome?.tabBarItem.title = "Home".localized()
         conHome?.tabBarItem.tag = 1
         conHome?.tabBarItem.image = UIImage(named: "tabbar_home")
         let navHome = UINavigationController(rootViewController: conHome!)
@@ -52,7 +53,7 @@ class CustomTabbarControllerViewController: UITabBarController {
             conNotic?.tabBarItem.badgeValue = .none
         }
         
-        conNotic?.tabBarItem.title = "แจ้งเตือน"
+        conNotic?.tabBarItem.title = "Alert".localized()
         conNotic?.tabBarItem.tag = 2
         if #available(iOS 10.0, *) {
             conNotic?.tabBarItem.badgeColor = UIColor.red
@@ -68,13 +69,13 @@ class CustomTabbarControllerViewController: UITabBarController {
         conScanQR.tabBarItem.image = UIImage(named: "")
         
         conListName = storyBoard.instantiateViewController(withIdentifier: "TabListNameController") as? TabListNameController
-        conListName?.tabBarItem.title = "รายชื่อ"
+        conListName?.tabBarItem.title = "Contact".localized()
         conListName?.tabBarItem.tag = 4
         conListName?.tabBarItem.image = UIImage(named: "tabbar_contact")
         let navListName = UINavigationController(rootViewController: conListName!)
         
         conProfile = storyBoard.instantiateViewController(withIdentifier: "TabProfileController") as? TabProfileController
-        conProfile?.tabBarItem.title = "โปรไฟล์"
+        conProfile?.tabBarItem.title = "Profile".localized()
         conProfile?.tabBarItem.tag = 5
         conProfile?.tabBarItem.image = UIImage(named: "tabbar_profile")
         let navListProfile = UINavigationController(rootViewController: conProfile!)
