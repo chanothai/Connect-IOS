@@ -26,10 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var blocViewController: BlocViewController?
     
     var listBeacon:[BeaconModel]?
-    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
         
+        checkLogin()
+        UINavigationBar.appearance().tintColor = UIColor.darkGray
+        UITabBar.appearance().tintColor = UIColor.black
+        UITabBar.appearance().barTintColor = UIColor.white
+
         /*
         nearbyPermission = GNSPermission(changedHandler: { (granted: Bool) in
             //Update the UI here
@@ -45,15 +50,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GNSPermission.setGranted(true)
  
-        
-        
         // Enable debug logging to help track down problems.
         //GNSMessageManager.setDebugLoggingEnabled(true)
         
         // Create the message manager, which lets you publish messages and subscribe to messages
         // published by nearby devices.
+        createMessageManager()
+        setupStartStop()
         
-         messageMgr = GNSMessageManager(apiKey: "AIzaSyAXEoq9fS9iT3ShvcMD_DiJOZdbOZ-SEbs", paramsBlock: { (params: GNSMessageManagerParams?) -> Void in
+        //Firebase
+        FirebaseApp.configure()
+        
+        //Start register for remote
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { (_, _) in})
+        
+        application.registerForRemoteNotifications()
+        return true
+    }
+    
+    func applicationStateString() -> String {
+        if UIApplication.shared.applicationState == .active {
+            return "active"
+        } else if UIApplication.shared.applicationState == .background {
+            return "background"
+        } else {
+            return "inactive"
+        }
+    }
+    
+    func setupStartStop() {
+        let isSharing = (publication != nil)
+        if isSharing {
+            print("Stop")
+            stopSharing()
+        }else{
+            print("Start")
+            startSharingWithRandomName()
+        }
+    }
+    
+    func createMessageManager(){
+        messageMgr = GNSMessageManager(apiKey: "AIzaSyAXEoq9fS9iT3ShvcMD_DiJOZdbOZ-SEbs", paramsBlock: { (params: GNSMessageManagerParams?) -> Void in
             guard let params = params else { return }
             // This is called when microphone permission is enabled or disabled by the user.
             params.microphonePermissionErrorHandler = { hasError in
@@ -75,45 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("Nearby works better if Bluetooth is turned on")
                 }
             }
-         })
-        
-        setupStartStop()
-        
-        checkLogin()
-        UINavigationBar.appearance().tintColor = UIColor.darkGray
-        
-        UITabBar.appearance().tintColor = UIColor.black
-        UITabBar.appearance().barTintColor = UIColor.white
-        
-        Messaging.messaging().delegate = self
-        
-        //Firebase
-        FirebaseApp.configure()
-        
-        //Start register for remote
-        if #available(iOS 10.0, *) {
-            //For ios10 display notification (sent via APNS)
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { (_, _) in})
-        }else {
-            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
-        return true
+        })
     }
     
-    func setupStartStop() {
-        let isSharing = (publication != nil)
-        if isSharing {
-            print("Stop")
-            stopSharing()
-        }else{
-            print("Start")
-            startSharingWithRandomName()
-        }
-    }
     
     /// Starts sharing with a randomized name.
     func startSharingWithRandomName() {
@@ -209,6 +211,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return true
     }
@@ -221,10 +225,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Start Receive Message
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
         print("Message Id: \((userInfo["gcm.message_id"])!)")
-        print("UserInfo: \(userInfo)")
+        print("UserInfo2: \(userInfo)")
     }
-    
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         //Let FCM know about message for anlytice etc.
@@ -234,7 +239,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Message ID: \((userInfo["gcm.message_id"])!)")
         
         //Print full message
-        print("UserInfo : \(userInfo)")
+        print("UserInfo title : \(userInfo["title"] ?? "")")
+        print("UserInfo body : \(userInfo["body"] ?? "")")
+        print("UserInfo badge : \(userInfo["badge"] ?? "")")
+        
+        guard let title = userInfo["title"], let body = userInfo["body"], let badge = userInfo["badge"] else {
+            return
+        }
+        
+        if #available(iOS 10.0, *) {
+            let notify = UNMutableNotificationContent()
+            notify.title = title as! String
+            notify.body = body as! String
+            notify.badge = badge as? NSNumber
+            
+            UIApplication.shared.applicationIconBadgeNumber = Int(badge as! String)!
+            
+            let request = UNNotificationRequest(identifier: "notify_content", content: notify, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false))
+            
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+                print(error as Any)
+            })
+            
+        } else {
+            // Fallback on earlier versions
+        }
         
         completionHandler(UIBackgroundFetchResult.newData)
     }
@@ -249,48 +278,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
-        if Messaging.messaging().shouldEstablishDirectChannel {
-            print("Disconnect from FCM.1")
-        }else{
-            print("Disconnect from FCM.2")
-        }
+        print("AppState : EnterBackground")
     }
+    
     //End disconnect from fcm
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        print("AppState : EnterForeground")
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        print("AppState : WillTerminate")
     }
 }
 
-
-extension AppDelegate: MessagingDelegate {
-    // Start refresh Token
-    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        print("Firebase register token: \(fcmToken)")
+@available(iOS 10.0, *)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        completionHandler([.sound, .badge, .alert])
     }
-    // End RefreshToken
     
-    // [START ios_10_data_message]
-    // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
-    // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print("Received data message: \(remoteMessage.appData)")
-        
-        
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
     }
-    // [END ios_10_data_message]
 }
-

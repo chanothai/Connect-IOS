@@ -13,6 +13,7 @@ import CoreLocation
 import UserNotifications
 import Firebase
 import EventKit
+import ObjectMapper
 
 
 class BlocViewController: BaseViewController {
@@ -140,7 +141,8 @@ extension BlocViewController {
                 ModelCart.getInstance().getModelSlideMenu().result = response.result! // store data
             }
             
-            print(response.status ?? "")
+            let jsonString = Mapper().toJSONString(response)
+            print("Response_SlideMenu: \(jsonString ?? "")")
         }
     }
 }

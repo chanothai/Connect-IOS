@@ -125,11 +125,21 @@ class CustomTabbarControllerViewController: UITabBarController {
 @available(iOS 10.0, *)
 extension CustomTabbarControllerViewController: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
+    
         let userInfo = notification.request.content.userInfo
+        print("Notify : \(userInfo)")
+        
+        
+        if UIApplication.shared.applicationIconBadgeNumber > 0 {
+            conNotic?.tabBarItem.badgeValue = ""
+        }else{
+            conNotic?.tabBarItem.badgeValue = .none
+        }
+        
+        completionHandler([.alert, .badge,.sound])
         
         guard let aps = userInfo["aps"] as? NSDictionary, let alert = aps["alert"] as? NSDictionary, let body = alert["body"] as? String, let title = alert["title"] as? String, let badge = aps["badge"] as? Int else {
-            
+        
             return
         }
         
@@ -139,23 +149,18 @@ extension CustomTabbarControllerViewController: UNUserNotificationCenterDelegate
         print("Title : \(title)")
         print("Badge : \(badge)")
         
-        if title != "check notification" {
+        if !title.isEmpty {
             // Change this to your preferred presentation option
             completionHandler([.alert, .badge,.sound])
         }
         
         UIApplication.shared.applicationIconBadgeNumber = badge
         print("Badge count: \(UIApplication.shared.applicationIconBadgeNumber)")
-        
-        if badge > 0 {
-            conNotic?.tabBarItem.badgeValue = ""
-        }else{
-            conNotic?.tabBarItem.badgeValue = .none
-        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
+        print("Notify : \(userInfo)")
         print("Message ID: \(userInfo["gcm.message_id"] ?? "")")
         print("UserInfo: \(userInfo)")
         

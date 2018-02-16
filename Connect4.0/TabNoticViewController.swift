@@ -35,6 +35,12 @@ class TabNoticViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         initWebView(url, webview: self.webView)
+        
+        if UIApplication.shared.applicationIconBadgeNumber > 0 {
+            self.tabBarItem.badgeValue = ""
+        }else{
+            self.tabBarItem.badgeValue = .none
+        }
     }
     
     public func getLoadFirst() -> Bool {

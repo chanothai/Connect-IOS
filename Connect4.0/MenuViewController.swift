@@ -149,7 +149,7 @@ extension MenuViewController {
     
     @objc func actionToSetting(sender:UITapGestureRecognizer){
         let openSettingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-        UIApplication.shared.openURL(openSettingsUrl!)
+        UIApplication.shared.canOpenURL(openSettingsUrl!)
     }
     
     func getAddressFromLatLon(latitude: String, withLongitude longitude: String) {
@@ -178,6 +178,7 @@ extension MenuViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         let callActionHandler = { (action:UIAlertAction!) -> Void in
+            UIApplication.shared.applicationIconBadgeNumber = 0
             self.intentToLogin()
         }
         
