@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C941430545E52F9C8727A65 /* Pods_Connect4_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */; };
-		D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */; };
 		D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0601ED1539300B39E94 /* AuthenLogin.swift */; };
-		D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0621ED161B000B39E94 /* FormatterRequest.swift */; };
 		D358D0691ED1DD7400B39E94 /* BlocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0681ED1DD7400B39E94 /* BlocViewController.swift */; };
 		D358D06D1ED1DEBA00B39E94 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D06C1ED1DEBA00B39E94 /* MenuViewController.swift */; };
 		D358D0711ED1E0A700B39E94 /* NavBlocController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358D0701ED1E0A700B39E94 /* NavBlocController.swift */; };
@@ -69,10 +66,7 @@
 		4A1A49EDB747B220D85478B9 /* Pods-Connect4.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Connect4.0.release.xcconfig"; path = "Pods/Target Support Files/Pods-Connect4.0/Pods-Connect4.0.release.xcconfig"; sourceTree = "<group>"; };
 		9147E7DA346EB7DFEE48F097 /* Pods-Connect4.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Connect4.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Connect4.0/Pods-Connect4.0.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB0C138640047693CBEB808 /* Pods_Connect4_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Connect4_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionAES.swift; sourceTree = "<group>"; };
-		D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterResponse.swift; sourceTree = "<group>"; };
 		D358D0601ED1539300B39E94 /* AuthenLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenLogin.swift; sourceTree = "<group>"; };
-		D358D0621ED161B000B39E94 /* FormatterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterRequest.swift; sourceTree = "<group>"; };
 		D358D0681ED1DD7400B39E94 /* BlocViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlocViewController.swift; sourceTree = "<group>"; };
 		D358D06C1ED1DEBA00B39E94 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		D358D0701ED1E0A700B39E94 /* NavBlocController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavBlocController.swift; sourceTree = "<group>"; };
@@ -169,7 +163,6 @@
 		D358D05F1ED14D8900B39E94 /* Security */ = {
 			isa = PBXGroup;
 			children = (
-				D30B32C91ED0B120006B6B67 /* EncryptionAES.swift */,
 				D358D0601ED1539300B39E94 /* AuthenLogin.swift */,
 			);
 			name = Security;
@@ -486,8 +479,6 @@
 			isa = PBXGroup;
 			children = (
 				DEE609FD1EC473DF00F08763 /* ClientHttp.swift */,
-				D30B32CB1ED0C8D2006B6B67 /* FormatterResponse.swift */,
-				D358D0621ED161B000B39E94 /* FormatterRequest.swift */,
 				DE1D16911F9A0CF2007A3916 /* DownloadFile.swift */,
 				DE6875C01FBAD16B00B4A9E8 /* WebAppRequest.swift */,
 			);
@@ -616,14 +607,12 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireLogger/AlamofireLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SWRevealViewController/SWRevealViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/SmileLock/SmileLock.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftEventBus/SwiftEventBus.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -633,14 +622,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWRevealViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SmileLock.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEventBus.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -707,14 +694,11 @@
 				D358D0691ED1DD7400B39E94 /* BlocViewController.swift in Sources */,
 				DE52874D1FB18FCC00843AEE /* LoginJSInterface.swift in Sources */,
 				D358D0611ED1539300B39E94 /* AuthenLogin.swift in Sources */,
-				D30B32CC1ED0C8D2006B6B67 /* FormatterResponse.swift in Sources */,
 				DE10FFE51FBBFF5A00B8F873 /* TabNoticViewController.swift in Sources */,
 				DE3BF6B71ECEDC9200FBBB9F /* BaseViewController.swift in Sources */,
-				D30B32CA1ED0B120006B6B67 /* EncryptionAES.swift in Sources */,
 				DE9406941FB4092C00D56DD2 /* MenuSlideViewModel.swift in Sources */,
 				DE2259481FBC1F4B00779BF9 /* CustomTabbarControllerViewController.swift in Sources */,
 				DE3BF6B41ECEDB3200FBBB9F /* BaseViewModel.swift in Sources */,
-				D358D0631ED161B000B39E94 /* FormatterRequest.swift in Sources */,
 				DE90814F1EBC725100E90C16 /* AppDelegate.swift in Sources */,
 				DE22758D1FC6C60C007251E7 /* ResponseScanQR.swift in Sources */,
 				DEE609FE1EC473DF00F08763 /* ClientHttp.swift in Sources */,

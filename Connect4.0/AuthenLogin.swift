@@ -13,6 +13,7 @@ struct DefaultKey {
     static let tokenKey = "token_key"
     static let subscriptKey = "subscribe_key"
 }
+
 class AuthenLogin {
     private var preference: UserDefaults?
     
